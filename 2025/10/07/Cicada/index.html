@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Recon初步嗅探发现开了好多端口 看这架势后期肯定是域渗透没跑了 ❯ sudo nmap  10.10.11.35 Starting Nmap 7.98 ( https:&#x2F;&#x2F;nmap.org ) at 2025-10-07 23:10 +0800 Nmap scan report for 10.10.11.35 (10.10.11.35) Host is up (0.30s latency)">
+    <meta name="description" content="Cicada is an easy-difficult Windows machine that focuses on beginner Active Directory enumeration and exploitation. In this machine, players will enumerate the domain, identify users, navigate shares,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cicada">
 <meta property="og:url" content="http://dawoxiansigema.github.io/2025/10/07/Cicada/index.html">
 <meta property="og:site_name" content="Eur3ka&#39;s Studio">
-<meta property="og:description" content="Recon初步嗅探发现开了好多端口 看这架势后期肯定是域渗透没跑了 ❯ sudo nmap  10.10.11.35 Starting Nmap 7.98 ( https:&#x2F;&#x2F;nmap.org ) at 2025-10-07 23:10 +0800 Nmap scan report for 10.10.11.35 (10.10.11.35) Host is up (0.30s latency)">
+<meta property="og:description" content="Cicada is an easy-difficult Windows machine that focuses on beginner Active Directory enumeration and exploitation. In this machine, players will enumerate the domain, identify users, navigate shares,">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-07T15:12:25.000Z">
-<meta property="article:modified_time" content="2025-10-08T14:13:44.321Z">
+<meta property="article:modified_time" content="2025-10-08T14:35:38.505Z">
 <meta property="article:author" content="Xu Haoxiang">
 <meta property="article:tag" content="HTB">
 <meta name="twitter:card" content="summary">
@@ -213,7 +213,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-10-08 22:13:44" itemprop="dateModified" datetime="2025-10-08T22:13:44+08:00">2025-10-08</time>
+      <time title="Modified: 2025-10-08 22:35:38" itemprop="dateModified" datetime="2025-10-08T22:35:38+08:00">2025-10-08</time>
     </span>
 
   
@@ -225,7 +225,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+    <div class="post-body" itemprop="articleBody"><p>Cicada is an easy-difficult Windows machine that focuses on beginner Active Directory enumeration and exploitation. In this machine, players will enumerate the domain, identify users, navigate shares, uncover plaintext passwords stored in files, execute a password spray, and use the <code>SeBackupPrivilege</code> to achieve full system compromise.</p>
+<span id="more"></span>
 
 <h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><p>初步嗅探发现开了好多端口 看这架势后期肯定是域渗透没跑了</p>
 <pre><code>❯ sudo nmap  10.10.11.35
